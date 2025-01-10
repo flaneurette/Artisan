@@ -21,3 +21,5 @@ By default, Mollie determines what type of payment method is chosen based upon c
 
 # Requirements
 PHP >= 7.2|^8.0, MySQL, mod_rewrite
+
+MySQL STRICT_TRANS_TABLES need to be disabled!
