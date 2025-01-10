@@ -1,6 +1,8 @@
 # Artisan
 Artisan is a simple yet complete modern shopping cart software, specifically engineered for Artisans who want to sell their products online. The dashboard is intuitive and easy to use, and also comes with a default Artisan storefront.
 
+<img src="https://github.com/flaneurette/Artisan/blob/main/assets/images/demo.png" />
+
 # Installation
 
 0. Download or clone Artisan.
