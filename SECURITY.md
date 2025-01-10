@@ -19,3 +19,6 @@ All data is checked upon database insertion, and properly binded as per the indu
 
 ### Sessions
 Session data is protected and checked for any DDos attacks, if detected, a warning will be visible, and it won't be possible to modify data or to proceed further. This prevent overwriting and bruteforcing session data.
+
+### Reporting
+If you find a new security flaw, please open up an issue.
