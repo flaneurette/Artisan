@@ -1,0 +1,16 @@
+Options All -Indexes
+Options +FollowSymLinks
+
+RewriteEngine On
+
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+RewriteRule ^cart/delete/([a-z-0-9]+)/([a-z-0-9]+)/$ site/cart/index.php?delete=$1&token=$2 [NC,L]
+RewriteRule ^cart/$ site/cart/index.php [NC,L]
+RewriteRule ^checkout/$ site/checkout/index.php [NC,L]
+RewriteRule ^checkout/pay/$ site/checkout/pay.php [NC,L]
+RewriteRule ^search/$ site/search/index.php [NC,L]
+RewriteRule ^category/([a-z-0-9]+)/$ site/category/index.php?category=$1 [NC,L]
+RewriteRule ^pages/([a-z-0-9]+)/$ components/Pages.php?page=$1 [NC,L]
+RewriteRule ^shop/([0-9]+)/([a-z-0-9]+)/$ components/ShopItem.php?id=$1&item=$2 [NC,L]
