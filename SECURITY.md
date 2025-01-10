@@ -15,7 +15,7 @@ All pages are protected against CSRF (cross site request forgery) and only the a
 Where possible, all pages are protected against XSS, Header forgery and Iframe inclusion. Be mindful, though, as HTML is allowed in components. Yet, all HTML and possbbile scripts are encoded and stored as such in the database.
 
 ### SQL injection
-All data is checked upon database insertion, and properly binded as per the industry standard. Integers are casted, and htmlspecialchars is used for strings.
+All data is checked upon database insertion, and properly binded as per the industry standard. 
 
 ### Sessions
 Session data is protected and checked for any DDos attacks, if detected, a warning will be visible, and it won't be possible to modify data or to proceed further. This prevent overwriting and bruteforcing session data.
