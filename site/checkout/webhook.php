@@ -62,19 +62,21 @@ if(isset($status)) {
 	}
 	
 	if($status == 'paid') {
-			// Update the inventory
+		// Update the inventory
+		if(isset($_REQUEST['cartid'])) { 
 			$table_inventory     = '`shop.cart`';
 			$column_inventory    = '`cart.id`';
 			$value_inventory     =  $shop->clean($_REQUEST['cartid'],'encode');
 			$operator_inventory  = '*';
 			$result_inventory = $db->select($table_inventory ,$operator_inventory ,$column_inventory ,$value_inventory );
 			if(isset($result_inventory)) {
-				if(count($result_inventory) >=1) {
+					if(count($result_inventory) >=1) {
 					for($i=0;$i<count($result_inventory);$i++) {
 						$db->query("UPDATE `shop` SET `product.stock` = `product.stock` - ".$db->intcast($result_inventory[$i]['cart.qty']). " WHERE id = ".$db->intcast($result_inventory[$i]['cart.product.id']));
 					}
 				}
 			}
+		}
 	}
 	
 }
