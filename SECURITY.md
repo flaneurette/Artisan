@@ -1,6 +1,6 @@
 # Security
 
-Security declaration: This CMS was built with a highest degree of security in mind, following the OWASP guidelines for security.
+Security declaration: This software was built with the highest degree of security in mind, following the OWASP guidelines for security.
 
 ### Password
 By default the admin password is admin. Upon login, this can be changed under settings. The password is stored encrypted with bcrypt.
