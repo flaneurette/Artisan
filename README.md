@@ -1,12 +1,13 @@
 # Artisan
 Artisan is a simple yet complete modern shopping cart software, specifically engineered for Artisans who want to sell their products online. The dashboard is intuitive and easy to use, and also comes with a default Artisan storefront.
 
-# Manual Installation
+# Installation
 
+0. Download or clone Artisan.
 1. Edit dashboard/configuration.php and define the database and paths.
 2. Import the Artisan SQL file into MySQL, goto the /dashboard/ and login with: username: admin, password: admin.
 
-   the password can be changed in the admin panel under settings.
+   The password can be changed in the admin panel under settings.
 
 # Payment
 
