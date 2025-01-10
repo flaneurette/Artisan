@@ -40,6 +40,7 @@ try {
     }
 } catch (\Mollie\Api\Exceptions\ApiException $e) {
     echo "API call failed: " . \htmlspecialchars($e->getMessage());
+	echo "<p>Make sure the API key is correct. If you see this error, the Mollie API key might be wrong.</p>";
 }
 
 if(isset($status)) {
@@ -59,6 +60,23 @@ if(isset($status)) {
 			$db->update($table,$columns,$values,$result[0]['id']);
 		}
 	}
+	
+	if($status == 'paid') {
+			// Update the inventory
+			$table_inventory     = '`shop.cart`';
+			$column_inventory    = '`cart.id`';
+			$value_inventory     =  $shop->clean($_REQUEST['cartid'],'encode');
+			$operator_inventory  = '*';
+			$result_inventory = $db->select($table_inventory ,$operator_inventory ,$column_inventory ,$value_inventory );
+			if(isset($result_inventory)) {
+				if(count($result_inventory) >=1) {
+					for($i=0;$i<count($result_inventory);$i++) {
+						$db->query("UPDATE `shop` SET `product.stock` = `product.stock` - ".$db->intcast($result_inventory[$i]['cart.qty']). " WHERE id = ".$db->intcast($result_inventory[$i]['cart.product.id']));
+					}
+				}
+			}
+	}
+	
 }
 
 ?>
