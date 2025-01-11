@@ -3,7 +3,7 @@
 
 
 body {
-	background-color: var(--white);
+	background-color: var(--backdrop);
 	margin: 0px;
 	padding: 0px;
 }
@@ -87,7 +87,7 @@ article {
 .shop-center {
 	margin-left: auto;
 	margin-right: auto;
-	background-color: var(--lightgray);
+	background-color: var(--backdrop);
 	width: 90vw;
 	height: -webkit-fill-available;
 }
@@ -374,7 +374,7 @@ article {
 .shop-cart-highlight {
 	margin-left: auto;
 	margin-right: auto;
-	background-color: var(--white);
+	background-color: var(--backdrop);
 	width: 90vw;
 	height: -webkit-fill-available;
 }

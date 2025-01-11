@@ -2,7 +2,7 @@
 
 	/* colors */
 
-	--backdrop: #fff;
+	--backdrop: #ededed;
 	--flower-red: #e23241;
 	--flower-fuchsia: #bf045b;
 	--flower-pink: #d95555;
@@ -91,6 +91,7 @@ input {
 	width: var(--viewwidth-medium);
 	font-size: var(--font-medium);
 	outline: none;
+	background-color:var(--white);
 }
 
 input[type=checkbox],
