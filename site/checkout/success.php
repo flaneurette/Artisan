@@ -4,6 +4,7 @@ session_start();
 
 // We use a webhook to see whether order has been paid.
 // This script only updates the order to 'mollie processing', send e-mails and redirects to the Artisan shop.
+
 require("../../dashboard/configuration.php");
 include("../../dashboard/resources/PHP/Class.DB.php");
 include("../../dashboard/resources/PHP/Cryptography.php");
