@@ -22,13 +22,10 @@ namespace security\forms;
 ##                                                                       ##
 ###########################################################################
 
+#[\AllowDynamicProperties]
 class SecureMail
 {
-	### REQUIRED CONFIGURATION
-	const DOMAIN			= 'yourserver.tld'; // Domain this script is hosted on.
-	const SERVERADDR		= 'server <server@yourserver.tld>'; // Server e-mail address.
-	const DEFAULTTO			= 'info@yourserver.tld'; // default "to" e-mail address when address has not been provided.
-	
+
 	### OPTIONAL CONFIGURATION (DEFAULT)
 	const XMAILER			= 'Secure Mail'; // Name class mailer.
 	const LANGUAGE			= 'en'; 	// en, fr, de, x-klingon. (rfc1766) 
@@ -42,7 +39,7 @@ class SecureMail
 	const WORD_WRAP_VALUE		= 70;		// Wrap at line length.
 	const MAXBODYSIZE 		= 5000; 	// Number of chars of body text.
 	const MAXFIELDSIZE 		= 150;   	// Number of allowed chars for single fields.
-	const FORMTIME			= 10;  		// Minimum time in seconds for a user to fill out a form, detects bots.
+	const FORMTIME			= 1;  		// Minimum time in seconds for a user to fill out a form, detects bots.
 	const TEMPLATE_START		= '{{';     	// Placeholder start for HTML template variables. 
 	const TEMPLATE_END		= '}}';    	// Placeholder end for HTML template variables.
 	
@@ -62,7 +59,7 @@ class SecureMail
 
 	### PRIVATE VARIABLES.
 	private $sieve 			= 0;    // Empty sieve 
-	private $slots 			= 10;	// Maximum number of mail slots per user, per browse session incuding refresh and errors. Increase for testing purposes.                      
+	private $slots 			= 100;	// Maximum number of mail slots per user, per browse session incuding refresh and errors. Increase for testing purposes.                      
 		
 	### ARRAYS
 	// Detect proxy ports.
@@ -235,7 +232,7 @@ class SecureMail
         {
 		try {
 			
-			isset($params['to'])         ? $this->fields['to']  = $params['to'] : self::DEFAULTTO; 
+			isset($params['to'])         ? $this->fields['to']  = $params['to'] : 'info@'.$_SERVER['HTTP_HOST']; 
 			isset($params['name'])       ? $this->fields['name']   = $params['name'] : ''; 
 			isset($params['email'])      ? $this->fields['email']    = $params['email']  : '';
 			isset($params['url'])        ? $this->fields['url']    = $params['url']  : ''; 
@@ -335,18 +332,18 @@ class SecureMail
 	{	
 	
 		$mime_headers = [];
-		$from    = self::SERVERADDR; 		
+		$from    = 'Shop <no-reply@'.$_SERVER['HTTP_HOST'].'>'; 		
 		$to      = $this->clean($this->fields['to'],'field');
-		$name    = $this->clean($this->fields['name'],'field');
+		// $name    = $this->clean($this->fields['name'],'field');
 		$email    = $this->clean($this->fields['email'],'field');
 		$subject = $this->clean($this->fields['subject'],'field');
 		$message = $this->clean($this->body['body'],'body');
 		$ip      = $this->clean($_SERVER['REMOTE_ADDR'],'field');
 		
 		$headers = [
-			'From'                      	=> self::SERVERADDR,
-			'Sender'                    	=> self::SERVERADDR,
-			'Return-Path'               	=> self::SERVERADDR,
+			'From'                      	=> 'Shop <no-reply@'.$_SERVER['HTTP_HOST'].'>',
+			'Sender'                    	=> 'Shop <no-reply@'.$_SERVER['HTTP_HOST'].'>',
+			'Return-Path'               	=> 'Shop <no-reply@'.$_SERVER['HTTP_HOST'].'>',
 			'MIME-Version'              	=> self::MIMEVERSION,
 			'Content-Type'              	=> 'text/plain; charset='.self::CHARSET.'; format='.self::MAILFORMAT.'; delsp='.self::DELSP,
 			'Content-Language'		=> self::LANGUAGE,
@@ -373,9 +370,6 @@ class SecureMail
 		$mail_headers = join("\n", $mime_headers);
 		
 		$message .= "\n\n";
-		$message .= "From: " . $email;
-		$message .= "\n";
-		$message .= "IP: " . $ip;
 		
 		if(self::WORD_WRAP == true) {
 			$message = wordwrap($message, self::WORD_WRAP_VALUE, "\r\n");
@@ -577,7 +571,9 @@ class SecureMail
 		
 		$pseudobytes = substr($bytes,0,16);
 		
-		return sprintf("<%s.%s@%s>", base_convert(microtime(), 10, 36), base_convert(bin2hex($pseudobytes), 16, 36), $this->clean(self::DOMAIN,'domain'));
+		$cnum = preg_replace( '/[^0-9]/', '', microtime(false));
+		
+		return sprintf("<%s.%s@%s>", base_convert($cnum, 10, 36), base_convert(bin2hex($pseudobytes), 16, 36), $this->clean($_SERVER['HTTP_HOST'],'domain'));
 	}
 	
 	/**
