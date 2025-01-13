@@ -1,12 +1,12 @@
 <?php
 
 // This must be defined.
-define('WEBSITE','https://localhost/Artisan/'); 
-define('SITE','https://localhost/Artisan/dashboard/'); 
+define('WEBSITE','https://localhost/artisan/'); 
+define('SITE','https://localhost/artisan/dashboard/'); 
 define('UPLOAD_DIR', '../../resources/content/');
 define('CHARSET', 'utf8');
 define('HOST', 'localhost');
-define('DATABASE', 'Artisan');
+define('DATABASE', 'artisan');
 define('USERNAME', 'root');
 define('PASSWORD', '');
 define('MAX_LOGIN_ATTEMPTS', 10);
