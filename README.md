@@ -10,6 +10,7 @@ Artisan is a simple yet complete modern shopping cart software, specifically eng
 2. Import the Artisan SQL file into MySQL, goto the /dashboard/ and login with: username: admin, password: admin.
 
    The password can be changed in the admin panel under settings.
+3. Change the mollie API key under settings to your Mollie API key.
 
 # Payment
 
