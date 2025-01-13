@@ -19,6 +19,8 @@ Artisan uses the Mollie payment gateway to process transactions.
 In dashboard/shop-settings, a Mollie API key must be given for this to work. The shop owner must have a Mollie.com account for Artisan to function properly, this includes testing. 
 By default, Mollie determines what type of payment method is chosen based upon country code. Payment methods can be changed at Mollie.com
 
+Accepting iDEAL, Apple Pay, Bancontact, SOFORT Banking, Creditcard, SEPA Bank transfer, SEPA Direct debit, PayPal, Belfius Direct Net, KBC/CBC, paysafecard, ING Home'Pay, Giropay, EPS, Przelewy24, Postepay, In3, Klarna (Pay now, Pay later, Slice it, Pay in 3), Giftcard and Voucher online payments without fixed monthly costs or any punishing registration procedures.
+
 
 # Requirements
 Ideally PHP >= 7.2, MySQL, mod_rewrite, although Artisan was able to run on lower versions of PHP. However, PHP 8 is supported and recommended.
