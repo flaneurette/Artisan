@@ -163,7 +163,7 @@ article {
 }
 
 .shop-carousel-bar {
-	padding: var(--spacing-large);
+	/* padding: var(--spacing-large); */
 }
 
 .shop-carousel-bar form {
@@ -185,7 +185,7 @@ article {
 }
 
 .shop-content-bar {
-	padding: var(--spacing-large);
+	/* padding: var(--spacing-large); */
 }
 
 .shop-content-bar form {
@@ -210,11 +210,13 @@ article {
     padding: 8px;
     width: 15%;
     background-color: #fff;
+	border-radius: 5px;
 }
 
 .shop-item-product-image-div img {
 	width:100%;
 	height: auto;
+	border-radius: 5px;
 }
 
 .shop-item-list-product-price {
@@ -229,6 +231,7 @@ article {
 .shop-item-product-list input {
 	margin:0px;
 	width:35px;
+	border-radius: 5px;
 }
 
 .shop-item-group-cart-qty  {
@@ -475,12 +478,13 @@ article {
 
 .shop-announcement {
 	margin:0px;
+	text-align: center;
 }
 
 .shop-announcement-bar {
-	margin: 10px;
     margin-top: 0px;
     padding: 10px;
+    background-color: aqua;
 }
 
 
