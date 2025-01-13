@@ -12,7 +12,7 @@ Artisan is a simple yet complete modern shopping cart software, specifically eng
    The password can be changed in the admin panel under settings.
 3. Change the mollie API key under settings to your Mollie API key.
 
-# Payment
+# Payment API
 
 Artisan uses the Mollie payment gateway to process transactions. 
 
