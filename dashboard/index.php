@@ -49,8 +49,18 @@
 		$token = $_SESSION['uuid'];
 	}
 	
+	$result_orders 	= $db->query("SELECT * from `shop.orders` where `order.fulfilled` != 1"); 
 	$result_shop 	= $db->query("SELECT * from shop ORDER BY id DESC LIMIT 10"); 
 	$result 		= $db->query("SELECT * FROM components order by id DESC LIMIT 10");
+	
+	if(isset($result_orders)) {
+		if(count($result_orders) >=1) {
+			$neworder = "intro-circle-green";
+			} else {
+			$neworder = "intro-circle";
+		}
+	}
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,7 +79,7 @@
 	<article class="main">
 	<div class="intro-list">
 		<a href="<?php echo WEBSITE;?>dashboard/shop-settings/" target="_self"><div class="intro-circle">Announcement</div></a>
-		<a href="<?php echo WEBSITE;?>dashboard/shop-orders/" target="_self"><div class="intro-circle">Orders</div></a>
+		<a href="<?php echo WEBSITE;?>dashboard/shop-orders/" target="_self"><div class="<?php echo $neworder;?>">Orders</div></a>
 		<!-- <a href="<?php echo WEBSITE;?>dashboard/shop-customers/" target="_self"><div class="intro-circle">Customers</div></a>
 		<a href="<?php echo WEBSITE;?>dashboard/shop-invoices/" target="_self"><div class="intro-circle">Invoices</div></a> -->
 		<a href="<?php echo WEBSITE;?>dashboard/shop/" target="_self"><div class="intro-circle">Inventory</div></a>
