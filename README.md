@@ -15,7 +15,7 @@ Artisan is a simple yet complete modern shopping cart software, specifically eng
 
 Artisan uses the Mollie payment gateway to process transactions. 
 
-In dashboard/shop-settings, a Mollie API key must be given for this to work. The shop owner must have a Mollie.com account for Artisan to function properly. 
+In dashboard/shop-settings, a Mollie API key must be given for this to work. The shop owner must have a Mollie.com account for Artisan to function properly, this includes testing. 
 By default, Mollie determines what type of payment method is chosen based upon country code. Payment methods can be changed at Mollie.com
 
 
