@@ -7,6 +7,7 @@ session_start();
 require("../../dashboard/configuration.php");
 include("../../dashboard/resources/PHP/Class.DB.php");
 include("../../dashboard/resources/PHP/Cryptography.php");
+require("../../dashboard/resources/PHP/Class.SecureMail.php");
 include("../../resources/PHP/Artisan.php");
 
 require_once("../mollie/vendor/autoload.php");
@@ -45,6 +46,25 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken'])) {
 					$columns  = ['order.status'];
 					$values   = ['mollie processing'];
 					$db->update($table,$columns,$values,$result[0]['id']);
+
+					// mail the client.
+					$email = $result[0]['order.email'];
+					$name = $result[0]['order.firstname'];
+					$tpl = new \security\forms\SecureMail([]);
+					$template_location = '../../inc/templates/order.html';
+					$template_pairs = [
+						"name" => $result[0]['order.firstname'],
+						"shop" => $_SERVER['HTTP_HOST']
+					];
+					$html = $tpl->parseTemplate($template_location,$template_pairs);
+					$parameters = array( 
+						'to' => $email,
+						'email' => $email,			
+						'subject' => 'Order',
+						'body' => $html
+					);
+					$checkForm = new \security\forms\SecureMail($parameters);
+					$checkForm->sendmail();
 				}
 			}
 			

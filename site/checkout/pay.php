@@ -110,7 +110,6 @@ if(isset($_SESSION['paytoken'])) {
 				],
 				"description" => "$orderid",
 				"redirectUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/success.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
-				 "webhookUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/webhook.php",
 				"metadata" => [
 					"order_id" => "$orderid",
 				],
