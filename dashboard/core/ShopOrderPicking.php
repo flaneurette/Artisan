@@ -78,7 +78,7 @@
 	?>
 		<tr>
 		<td></td>
-		<td>Subtotal: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . $db->clean($order[0]['order.total'],'encode');?></td>
+		<td>Subtotal: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . ($db->clean($order[0]['order.total'],'encode') - $order[0]['order.shipping.price']);?></td>
 		<td>Shipping: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . $db->clean($order[0]['order.shipping.price'],'encode');?></td>
 		<td>Total: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . $db->clean($order[0]['order.total'],'encode');?></td>
 		</tr>
