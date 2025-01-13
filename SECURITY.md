@@ -12,7 +12,7 @@ It is not possible to enter a wrong password for more than 10 attempts. After th
 All pages are protected against CSRF (cross site request forgery) and only the admin has access to the pages and files
 
 ### XSS
-Where possible, all pages are protected against XSS, Header forgery and Iframe inclusion. Be mindful, though, as HTML is allowed in components. Yet, all HTML and possbbile scripts are encoded and stored as such in the database.
+Where possible, all pages are protected against XSS, Header forgery and Iframe inclusion. Be mindful, though, as HTML is allowed in components. Yet, all HTML is encoded and stored as such in the database.
 
 ### SQL injection
 All data is checked upon database insertion, and properly binded as per the industry standard. 
