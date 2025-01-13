@@ -76,20 +76,20 @@ if(isset($status)) {
 					for($i=0;$i<count($result_inventory);$i++) {
 						if($result_inventory[$i]['cart.processed'] != '1') {
 							
-							// update cart to proccessed
+							// Update cart to proccessed
 							$table    = '`shop.cart`';
 							$columns  = ['cart.processed'];
 							$values   = [1];
 							$db->update($table,$columns,$values,$result_inventory[$i]['id']);
 							
-							// get total stock in shop items.
+							// Get total stock in shop items.
 							$table    = '`shop`';
 							$column   = '`id`';
 							$value    =  $shop->clean($result_inventory[$i]['cart.product.id'],'encode');
 							$operator = '*';
 							$result   = $db->select($table,$operator,$column,$value);
 							if(isset($result)) {
-								// update total stock in shop items.
+								// Update total stock in shop items.
 								$table_stock    = '`shop`';
 								$columns_stock  = ['product.stock'];
 								$values_stock   = [($result[0]['product.stock'] - $db->intcast($result_inventory[$i]['cart.qty']))];

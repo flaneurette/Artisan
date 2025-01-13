@@ -3,7 +3,7 @@
 session_start();
 
 // We use a webhook to see whether order has been paid.
-// This script only updates the order to 'mollie processing' and redirects to the Artisan shop.
+// This script only updates the order to 'mollie processing', send e-mails and redirects to the Artisan shop.
 require("../../dashboard/configuration.php");
 include("../../dashboard/resources/PHP/Class.DB.php");
 include("../../dashboard/resources/PHP/Cryptography.php");
@@ -27,6 +27,7 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken'])) {
 				header("Location: ../../cart");
 				exit;	
 			}
+			
 			// this should never happen
 			if(!isset($_REQUEST['orderid'])) {
 				header("Location: ../../cart");
@@ -40,14 +41,18 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken'])) {
 			$result = $db->select($table,$operator,$column,$value);
 
 			if(isset($result)) { 
+			
 				if($result[0]['order.token'] == $_REQUEST['paytoken']) {
+					
 					// Update database with a status of processing order.
+					
 					$table    = '`shop.orders`';
 					$columns  = ['order.status'];
 					$values   = ['mollie processing'];
 					$db->update($table,$columns,$values,$result[0]['id']);
 
-						// mail the client.
+						// Mail the client.
+						
 						if(isset($result[0]['order.email'])) { 
 							$email = $result[0]['order.email'];
 							$name = $result[0]['order.firstname'];
@@ -67,8 +72,29 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken'])) {
 							$checkForm = new \security\forms\SecureMail($parameters);
 							$checkForm->sendmail();
 						}
-						// TODO: mail shop owner
-					
+						
+						// Mail shop owner to notify new order.
+						
+						$settings = $db->query("SELECT * from `shop.settings`"); 
+						$email = $settings[0]['settings.email'];
+						
+						if(isset($email)) { 
+							$tpl = new \security\forms\SecureMail([]);
+							$template_location = '../../inc/templates/shoporder.html';
+							$template_pairs = [
+								"link" => $db->clean(WEBSITE,'encode') . "dashboard/",
+								"shop" => $_SERVER['HTTP_HOST']
+							];
+							$html = $tpl->parseTemplate($template_location,$template_pairs);
+							$parameters = array( 
+								'to' => $email,
+								'email' => $email,			
+								'subject' => 'Order',
+								'body' => $html
+							);
+							$checkForm = new \security\forms\SecureMail($parameters);
+							$checkForm->sendmail();
+						}
 				}
 			}
 			
