@@ -55,7 +55,9 @@ if(isset($status)) {
 	
 	if(isset($result)) { 
 		if(count($result) >=1) { 
+		
 			// Update database with a status from Mollie.
+			
 			$table    = '`shop.orders`';
 			$columns  = ['order.status'];
 			$values   = [$status];
@@ -64,7 +66,9 @@ if(isset($status)) {
 	}
 	
 	if($status == 'paid') {
+		
 		// Update the inventory
+		
 		if(isset($_REQUEST['cartid'])) { 
 			$table_inventory     = '`shop.cart`';
 			$column_inventory    = '`cart.id`';
@@ -77,19 +81,23 @@ if(isset($status)) {
 						if($result_inventory[$i]['cart.processed'] != '1') {
 							
 							// Update cart to proccessed
+							
 							$table    = '`shop.cart`';
 							$columns  = ['cart.processed'];
 							$values   = [1];
 							$db->update($table,$columns,$values,$result_inventory[$i]['id']);
 							
 							// Get total stock in shop items.
+							
 							$table    = '`shop`';
 							$column   = '`id`';
 							$value    =  $shop->clean($result_inventory[$i]['cart.product.id'],'encode');
 							$operator = '*';
 							$result   = $db->select($table,$operator,$column,$value);
 							if(isset($result)) {
+								
 								// Update total stock in shop items.
+								
 								$table_stock    = '`shop`';
 								$columns_stock  = ['product.stock'];
 								$values_stock   = [($result[0]['product.stock'] - $db->intcast($result_inventory[$i]['cart.qty']))];
