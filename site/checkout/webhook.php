@@ -45,6 +45,8 @@ try {
 
 if(isset($status)) {
 	
+	echo $status;
+	
 	$table    = '`shop.orders`';
 	$column   = '`order.mollie.id`';
 	$value    =  $shop->clean($_REQUEST['id'],'encode');
@@ -68,11 +70,32 @@ if(isset($status)) {
 			$column_inventory    = '`cart.id`';
 			$value_inventory     =  $shop->clean($_REQUEST['cartid'],'encode');
 			$operator_inventory  = '*';
-			$result_inventory = $db->select($table_inventory ,$operator_inventory ,$column_inventory ,$value_inventory );
+			$result_inventory = $db->select($table_inventory ,$operator_inventory ,$column_inventory ,$value_inventory);
 			if(isset($result_inventory)) {
-					if(count($result_inventory) >=1) {
+				if(count($result_inventory) >=1) {
 					for($i=0;$i<count($result_inventory);$i++) {
-						$db->query("UPDATE `shop` SET `product.stock` = `product.stock` - ".$db->intcast($result_inventory[$i]['cart.qty']). " WHERE id = ".$db->intcast($result_inventory[$i]['cart.product.id']));
+						if($result_inventory[$i]['cart.processed'] != '1') {
+							
+							// update cart to proccessed
+							$table    = '`shop.cart`';
+							$columns  = ['cart.processed'];
+							$values   = [1];
+							$db->update($table,$columns,$values,$result_inventory[$i]['id']);
+							
+							// get total stock in shop items.
+							$table    = '`shop`';
+							$column   = '`id`';
+							$value    =  $shop->clean($result_inventory[$i]['cart.product.id'],'encode');
+							$operator = '*';
+							$result   = $db->select($table,$operator,$column,$value);
+							if(isset($result)) {
+								// update total stock in shop items.
+								$table_stock    = '`shop`';
+								$columns_stock  = ['product.stock'];
+								$values_stock   = [($result[0]['product.stock'] - $db->intcast($result_inventory[$i]['cart.qty']))];
+								$db->update($table_stock,$columns_stock,$values_stock,$db->intcast($result_inventory[$i]['id']));
+							}
+						}
 					}
 				}
 			}
