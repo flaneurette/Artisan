@@ -92,11 +92,11 @@
 	?>
 		<tr style="<?php echo $color;?>">
 		<td width="150"><img src="<?php echo $image;?>" width="100"/></td>
-		<td valign="top"><a href="<?php echo SITE;?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['component_title'];?></a></td>
-		<td valign="top"><a href="<?php echo SITE;?>API.php?filetype=unique&id=<?php echo $db->intcast($result[$i]['id']);?>" target="_blank"><span class="material-symbols-outlined">database</span></a></td>
+		<td valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['component_title'];?></a></td>
+		<td valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>API.php?filetype=unique&id=<?php echo $db->intcast($result[$i]['id']);?>" target="_blank"><span class="material-symbols-outlined">database</span></a></td>
 		<td valign="top"></td>
-		<td width="50" valign="top"><a href="<?php echo SITE;?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
-		<td width="50" valign="top"><a href="<?php echo SITE . 'components/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this component?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td width="50" valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
+		<td width="50" valign="top"><a href="<?php echo $db->clean(SITE,'encode') . 'components/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this component?');"><span class="material-symbols-outlined">delete</span></a></td>
 		</tr>
 	<?php
 	}

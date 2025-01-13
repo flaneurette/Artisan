@@ -65,10 +65,10 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY id DESC");
 			}	
 	?>
 		<tr style="<?php echo $color;?>">
-		<td><a href="<?php echo SITE;?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['category.name'];?></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['category.name'];?></a></td>
 		<td><?php echo $db->intcast($result[$i]['category.order']);?></td>
-		<td><a href="<?php echo SITE;?>shop/categories/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
-		<td width="80"><a href="<?php echo SITE . 'shop/categories/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this category?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/categories/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
+		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/categories/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this category?');"><span class="material-symbols-outlined">delete</span></a></td>
 		</tr>
 	<?php
 	}

@@ -78,13 +78,13 @@
 	</nav>
 	<article class="main">
 	<div class="intro-list">
-		<a href="<?php echo WEBSITE;?>dashboard/shop-settings/" target="_self"><div class="intro-circle">Announcement</div></a>
-		<a href="<?php echo WEBSITE;?>dashboard/shop-orders/" target="_self"><div class="<?php echo $neworder;?>">Orders</div></a>
-		<!-- <a href="<?php echo WEBSITE;?>dashboard/shop-customers/" target="_self"><div class="intro-circle">Customers</div></a>
-		<a href="<?php echo WEBSITE;?>dashboard/shop-invoices/" target="_self"><div class="intro-circle">Invoices</div></a> -->
-		<a href="<?php echo WEBSITE;?>dashboard/shop/" target="_self"><div class="intro-circle">Inventory</div></a>
-		<a href="<?php echo WEBSITE;?>dashboard/shop/add/" target="_self"><div class="intro-circle">Add item</div></a> 
-		<a href="<?php echo WEBSITE;?>dashboard/components/" target="_self"><div class="intro-circle">Components</div></a>
+		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop-settings/" target="_self"><div class="intro-circle">Announcement</div></a>
+		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop-orders/" target="_self"><div class="<?php echo $neworder;?>">Orders</div></a>
+		<!-- <a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop-customers/" target="_self"><div class="intro-circle">Customers</div></a>
+		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop-invoices/" target="_self"><div class="intro-circle">Invoices</div></a> -->
+		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop/" target="_self"><div class="intro-circle">Inventory</div></a>
+		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop/add/" target="_self"><div class="intro-circle">Add item</div></a> 
+		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/components/" target="_self"><div class="intro-circle">Components</div></a>
 	</div>
 
 	<?php
@@ -113,10 +113,10 @@
 	?>
 		<tr style="<?php echo $color;?>">
 		<td width="150"><img src="<?php echo $image;?>" class="shop-list-image" width="100"/></td>
-		<td><a href="<?php echo SITE;?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><?php echo $db->clean($result_shop[$i]['product.title'],'encode');?></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><?php echo $db->clean($result_shop[$i]['product.title'],'encode');?></a></td>
 		<td><?php echo $db->intcast($result_shop[$i]['product.stock']);?> left in stock</td>
-		<td><a href="<?php echo SITE;?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
-		<td width="80"><a href="<?php echo SITE . 'shop/'.$token;?>/delete/<?php echo $db->intcast($result_shop[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this shop item?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
+		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/'.$token;?>/delete/<?php echo $db->intcast($result_shop[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this shop item?');"><span class="material-symbols-outlined">delete</span></a></td>
 		</tr>
 	
 	<?php
@@ -145,11 +145,11 @@
 	?>
 		<tr style="<?php echo $color;?>">
 		<td width="150"><img src="<?php echo $image;?>" width="100"/></td>
-		<td valign="top"><a href="<?php echo SITE;?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['component_title'];?></a></td>
-		<td valign="top"><a href="<?php echo SITE;?>API.php?filetype=unique&id=<?php echo $db->intcast($result[$i]['id']);?>" target="_blank"><span class="material-symbols-outlined">database</span></a></td>
+		<td valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['component_title'];?></a></td>
+		<td valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>API.php?filetype=unique&id=<?php echo $db->intcast($result[$i]['id']);?>" target="_blank"><span class="material-symbols-outlined">database</span></a></td>
 		<td valign="top"></td>
-		<td width="50" valign="top"><a href="<?php echo SITE;?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
-		<td width="50" valign="top"><a href="<?php echo SITE . 'components/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this component?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td width="50" valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
+		<td width="50" valign="top"><a href="<?php echo $db->clean(SITE,'encode') . 'components/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this component?');"><span class="material-symbols-outlined">delete</span></a></td>
 		</tr>
 	<?php
 	}
