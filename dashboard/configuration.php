@@ -1,9 +1,9 @@
 <?php
 
 // This must be defined.
-define('WEBSITE','https://localhost/artisan/'); 
-define('SITE','https://localhost/artisan/dashboard/'); 
-define('UPLOAD_DIR', '../../resources/content/');
+define('WEBSITE','https://localhost/artisan/artisan/'); 
+define('SITE','https://localhost/artisan/artisan/dashboard/'); 
+define('UPLOAD_DIR', '../../../resources/content/');
 define('CHARSET', 'utf8');
 define('HOST', 'localhost');
 define('DATABASE', 'artisan');
