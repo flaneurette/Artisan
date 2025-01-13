@@ -47,24 +47,28 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken'])) {
 					$values   = ['mollie processing'];
 					$db->update($table,$columns,$values,$result[0]['id']);
 
-					// mail the client.
-					$email = $result[0]['order.email'];
-					$name = $result[0]['order.firstname'];
-					$tpl = new \security\forms\SecureMail([]);
-					$template_location = '../../inc/templates/order.html';
-					$template_pairs = [
-						"name" => $result[0]['order.firstname'],
-						"shop" => $_SERVER['HTTP_HOST']
-					];
-					$html = $tpl->parseTemplate($template_location,$template_pairs);
-					$parameters = array( 
-						'to' => $email,
-						'email' => $email,			
-						'subject' => 'Order',
-						'body' => $html
-					);
-					$checkForm = new \security\forms\SecureMail($parameters);
-					$checkForm->sendmail();
+						// mail the client.
+						if(isset($result[0]['order.email'])) { 
+							$email = $result[0]['order.email'];
+							$name = $result[0]['order.firstname'];
+							$tpl = new \security\forms\SecureMail([]);
+							$template_location = '../../inc/templates/order.html';
+							$template_pairs = [
+								"name" => $result[0]['order.firstname'],
+								"shop" => $_SERVER['HTTP_HOST']
+							];
+							$html = $tpl->parseTemplate($template_location,$template_pairs);
+							$parameters = array( 
+								'to' => $email,
+								'email' => $email,			
+								'subject' => 'Order',
+								'body' => $html
+							);
+							$checkForm = new \security\forms\SecureMail($parameters);
+							$checkForm->sendmail();
+						}
+						// TODO: mail shop owner
+					
 				}
 			}
 			
