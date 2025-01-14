@@ -23,6 +23,6 @@ Accepting iDEAL, Apple Pay, Bancontact, SOFORT Banking, Creditcard, SEPA Bank tr
 
 
 # Requirements
-Ideally PHP >= 7.2, MySQL, mod_rewrite, although Artisan was able to run on lower versions of PHP. However, PHP 8 is supported and recommended.
-
-MySQL STRICT_TRANS_TABLES need to be disabled, if not Artisan will not work properly.
+- Ideally PHP >= 7.2, MySQL, mod_rewrite, although Artisan was able to run on lower versions of PHP. However, PHP 8 is supported and recommended.
+- Up-to-date OpenSSL (or other SSL/TLS toolkit)
+- MySQL STRICT_TRANS_TABLES need to be disabled, if not Artisan will not work properly.
