@@ -154,7 +154,7 @@
 	
 		<div>
 			<label>Price</label>
-			<input type="number" name="product.price" value="" class="shop-list-item" min="1" required>
+			<input type="number" name="product.price" step="any" value="" class="shop-list-item" min="1" required>
 			</div>
 			<div>
 			<label>Stock</label>

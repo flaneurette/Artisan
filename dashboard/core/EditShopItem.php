@@ -180,7 +180,7 @@
 	
 		<div>
 			<label>Price</label>
-			<input type="number" name="product.price" value="<?php echo $db->clean($result[0]['product.price'],'encode');?>" class="shop-list-item">
+			<input type="number" name="product.price" step="any" value="<?php echo $db->clean($result[0]['product.price'],'encode');?>" class="shop-list-item">
 			</div>
 			<div>
 			<label>Stock</label>
