@@ -327,6 +327,7 @@ article {
 
 .shop-item {
 	min-height:580px;
+	margin-left: -25px;
 }
 
 .shop-item-image img {
@@ -335,6 +336,7 @@ article {
 	padding: var(--spacing-xlarge);
 	width: 30%;
 	height: auto;
+	border-radius: 35px;
 }
 
 .shop-item-title {
@@ -492,7 +494,7 @@ article {
 .shop-announcement-bar {
     margin-top: 0px;
     padding: 10px;
-    background-color: aqua;
+    background-color: #8dfacf;
 }
 
 

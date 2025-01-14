@@ -208,8 +208,8 @@ hr {
 #dialog-message {
 	padding: var(--spacing-large);
 	margin: var(--spacing-large);
-	background-color: var(--blue);
-	color: var(--white);
+	background-color: #8dbefa;
+	color: #0149a3;
 	margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -226,8 +226,8 @@ hr {
 #dialog-alert {
 	padding: var(--spacing-large);
 	margin: var(--spacing-large);
-	background-color: var(--red);
-	color: var(--white);
+	background-color: #fa8d8d;
+	color: #910000;
 	margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -594,6 +594,19 @@ hr {
 		color: #009E60;
 		margin: 20px;
 	}
+	.intro-circle-red {
+		border-radius: 360px;
+		height: 100px;
+		width: 100px;
+		display: inline-block;
+		padding: var(--spacing-xlarge);
+		background-color: #fa8d8d;
+		border: 1px solid #9e0000;
+		line-height: 100px;
+		text-align: center;
+		color: #9e0000;
+		margin: 20px;
+	}	
 	
 	.paid {
 		background-color: #8dfacf;
@@ -608,6 +621,18 @@ hr {
 		text-transform: capitalize;
 	}
 	
+	.lowstock {
+		background-color: #fa8d8d;
+		color: #910000;
+		border: 1px solid #910000;
+		text-align: center;
+		border-radius: 3px;
+		width: 100px;
+		display: block;
+		/* line-height: 25px; */
+		padding: 5px;
+		text-transform: capitalize;
+	}
 	
 	.print {
 		margin-left:auto;

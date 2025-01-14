@@ -43,7 +43,7 @@
 	}
 	?>
 	<input type="hidden" name="csrf" value="<?php echo $token;?>" />
-	<label>Shop Announcement: </label><input type="text" name="settings_announcement" value="<?php echo $db->clean($settings[0]['settings.announcement'],'encode');?>" required>
+	<label>Shop Announcement: </label><input type="text" name="settings_announcement" value="<?php echo $db->clean($settings[0]['settings.announcement'],'encode');?>">
 	<label>Shop E-mail: </label><input type="text" name="settings_email" value="<?php echo $db->clean($settings[0]['settings.email'],'encode');?>" required>
 	<!-- <label>Paypal E-mail: </label> <input type="text" name="settings_paypal" value="<?php echo $db->clean($settings[0]['settings.paypal'],'encode');?>" required> -->
 	<label>Mollie API key: </label> <input type="text" name="settings_mollie_api" value="<?php echo $db->clean($settings[0]['settings.mollie.api'],'encode');?>" required>	

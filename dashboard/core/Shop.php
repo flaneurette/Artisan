@@ -49,11 +49,17 @@
 				} else {
 				$color = "";
 			}	
+			
+			if($result[$i]['product.stock'] <=0) {
+				$stock = 'lowstock';
+				} else {
+				$stock = '';
+			}
 	?>
 		<tr style="<?php echo $color;?>">
 		<td width="150"><img src="<?php echo $image;?>" class="shop-list-image" width="100"/></td>
-		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo  $db->clean($result[$i]['product.title'],'encode');?></a></td>
-		<td><?php echo $db->intcast($result[$i]['product.stock']);?> left in stock</td>
+		<td><small><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo  $db->clean($result[$i]['product.title'],'encode');?></a></small></td>
+		<td><small class="<?php echo $stock;?>"><?php echo $db->intcast($result[$i]['product.stock']);?> left in stock</small></td>
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
 		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this shop item?');"><span class="material-symbols-outlined">delete</span></a></td>
 		</tr>

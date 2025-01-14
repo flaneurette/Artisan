@@ -50,9 +50,18 @@
 	}
 	
 	$result_orders 	= $db->query("SELECT * from `shop.orders` where `order.fulfilled` != 1"); 
-	$result_shop 	= $db->query("SELECT * from shop ORDER BY id DESC LIMIT 10"); 
+	$result_shop 	= $db->query("SELECT * from shop ORDER BY id DESC LIMIT 10");
+	$result_stock 	= $db->query("SELECT * from shop WHERE `product.stock` = 0"); 	
 	$result 		= $db->query("SELECT * FROM components order by id DESC LIMIT 10");
 	
+	if(isset($result_stock)) {
+		if(count($result_stock) >=1) {
+			$stock = "intro-circle-red";
+			} else {
+			$stock = "intro-circle";
+		}
+	}
+
 	if(isset($result_orders)) {
 		if(count($result_orders) >=1) {
 			$neworder = "intro-circle-green";
@@ -60,7 +69,6 @@
 			$neworder = "intro-circle";
 		}
 	}
-	
 ?>
 <!DOCTYPE html>
 <html>
@@ -82,7 +90,7 @@
 		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop-orders/" target="_self"><div class="<?php echo $neworder;?>">Orders</div></a>
 		<!-- <a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop-customers/" target="_self"><div class="intro-circle">Customers</div></a>
 		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop-invoices/" target="_self"><div class="intro-circle">Invoices</div></a> -->
-		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop/" target="_self"><div class="intro-circle">Inventory</div></a>
+		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop/" target="_self"><div class="<?php echo $stock;?>">Inventory</div></a>
 		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop/add/" target="_self"><div class="intro-circle">Add item</div></a> 
 		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/components/" target="_self"><div class="intro-circle">Components</div></a>
 	</div>

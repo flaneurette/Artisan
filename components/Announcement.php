@@ -1,6 +1,6 @@
 <?php
 if(isset($settings)) {
-	if(isset($settings[0]['settings.announcement'])) {
+	if(strlen($settings[0]['settings.announcement']) >= 1) {
 ?>
 
 	<article class="shop-announcement">
