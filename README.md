@@ -1,5 +1,5 @@
 # Artisan
-Artisan is a responsive and complete modern shopping cart software, specifically engineered for Artisans who want to sell their products online. The dashboard is intuitive and easy to use, and also comes with a default Artisan storefront. Artisan is written in PHP and uses a MySQL database architecture.
+Artisan is a responsive and complete modern shopping cart software, specifically engineered for Artisans who want to sell their products online. The dashboard is intuitive and easy to use, and Artisan also comes with a default responsive storefront. Artisan is written in PHP and uses a MySQL database architecture.
 
 <img src="https://github.com/flaneurette/Artisan/blob/main/assets/images/demo-artisan.png" />
 
