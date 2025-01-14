@@ -53,7 +53,7 @@
 
 * {
 	font-family: var(--font-family);
-	color:  var(--grey);
+	color:  #666;
 }
 
 html, body {
