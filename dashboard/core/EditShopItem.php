@@ -73,7 +73,7 @@
 				$product_featured 		  	= '';
 				$product_featured_carousel	= '';
 				$product_title 			  	= $db->clean($_POST["product_title"],'encode');
-				$product_description 	  	= $db->clean($_POST["product_description"],'encode'); 
+				$product_description 	  	= $db->clean($_POST["product_description"],'html'); 
 				$product_price 			  	= $db->clean($_POST["product_price"],'encode');
 				$product_stock 			  	= $db->clean($_POST["product_stock"],'encode');
 				$product_category 		  	= $db->clean($_POST["product_category"],'encode'); 

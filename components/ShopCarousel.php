@@ -28,7 +28,7 @@ if(isset($carousel)) {
 							</a> 
 						</div>
 						<div class="shop-item-list-product-desc"><?php echo $shop->clean($carousel[$i]['product.description'],'encode');?></div>
-						<div class="shop-item-list-product-price"><?php echo $shop->clean($settings[0]['settings.currency'],'encode').number_format($carousel[$i]['product.price'],2);?></div>
+						<div class="shop-item-list-product-price"><?php echo $shop->clean($settings[0]['settings.currency'],'encode').number_format($shop->clean($carousel[$i]['product.price'],'encode'),2);?></div>
 						<div><input type="number" name="qty" size="1" value="1" min="1" max="<?php echo $shop->intcast($carousel[$i]['product.stock']);?>" class="shop-item-group-cart-qty">
 						<input type="submit" class="shop-item-list-cart-button" name="add_cart" value="Buy">
 					</div>

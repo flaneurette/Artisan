@@ -312,6 +312,13 @@ class sql {
 				$replace = ['','','','','',''];
 				$data = str_replace($search,$replace,$string);
 			break;
+			case 'html':
+				$data = htmlspecialchars($string,ENT_QUOTES,'UTF-8');
+				$data = preg_replace(
+					array('#href=&quot;(https?://.*?)&quot;#', '#&lt;(/?(?:p|div|span|i|strong|b|a|br|em|u|ul|li|ol)(\shref=".*?")?/?)&gt;#'), 
+					array( 'href="\1"', '<\1>' ), $data
+				);
+			break;
 			default:
 			return $data;
 			}
