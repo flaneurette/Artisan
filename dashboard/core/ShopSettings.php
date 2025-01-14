@@ -11,6 +11,7 @@
 				$columns  = ['settings.announcement','settings.email','settings.currency','settings.country.code','settings.free','settings.shipping','settings.mollie.api'];
 				$values   = [$db->clean($_POST['settings_announcement'],'encode'),$db->clean($_POST['settings_email'],'encode'),$db->clean($_POST['settings_currency'],'encode'),$db->clean($_POST['settings_currency_code'],'encode'),$db->clean($_POST['settings_free'],'encode'),$db->clean($_POST['settings_shipping'],'encode'),$db->clean($_POST['settings_mollie_api'],'encode')];
 				$db->update($table,$columns,$values,$id);
+				$success = "Settings successfully changed.";
 			}
 		}
 	}
@@ -33,6 +34,14 @@
 	/ index / shop settings <input type="submit" onclick="plainui.post();" class="btn" value="save" />
 	</nav>
 	<article class="main">
+	<?php
+	if(isset($errors)) {
+		echo "<div id=\"dialog-alert\">".$errors."</div>";
+	}
+	if(isset($success)) {
+		echo "<div id=\"dialog-success\">".$success."</div>";
+	}
+	?>
 	<input type="hidden" name="csrf" value="<?php echo $token;?>" />
 	<label>Shop Announcement: </label><input type="text" name="settings_announcement" value="<?php echo $db->clean($settings[0]['settings.announcement'],'encode');?>" required>
 	<label>Shop E-mail: </label><input type="text" name="settings_email" value="<?php echo $db->clean($settings[0]['settings.email'],'encode');?>" required>

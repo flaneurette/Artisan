@@ -17,7 +17,12 @@
 		}
 	}
 	
-	
+	$query = $db->query("select * from pages order by ordering DESC");
+	if(isset($query)) { 
+		$latest_order = ($query[0]['ordering'] + 1);
+		} else {
+		$latest_order = 1;
+	}
 	
 ?>
 <!DOCTYPE html>
@@ -48,7 +53,7 @@
 	<label>Slug</label>
 	<input type="text" name="page" value="" placeholder="Type here: /design/ or /index/" />
 	<label>Menu order</label>
-	<input type="number" name="menu_order" value="" placeholder="1" width="10" size="10" />
+	<input type="number" name="menu_order" value="<?php echo $db->intcast($latest_order);?>" width="10" size="10" />
 	<label>Meta title</label>
 	<input type="text" name="meta_title" value="" placeholder="" />
 	<label>Meta description</label>
