@@ -37,7 +37,6 @@
 <?php
 		include("../components/Head.php"); 
 		include("../components/Navigation.php"); 
-		include("../components/Search.php"); 
 		include("../components/Page.php");
 		include("../components/Footer.php"); 
 		include("../components/Scripts.php"); 

@@ -93,7 +93,6 @@
 <?php
 	include("../../components/Head.php"); 
 	include("../../components/Navigation.php"); 
-	include("../../components/Search.php");
 ?>
 <article class="shop-cart-main">
 	<div class="shop-cart-highlight">
