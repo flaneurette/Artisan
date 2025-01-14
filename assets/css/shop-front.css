@@ -402,16 +402,17 @@ article {
 }
 .shop-cart-center h2 {
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: var(--fontsize-medium);
-	color: var(--lightgrey);
-	height: 400px;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fontsize-medium);
+    color: #999;
+    font-weight: 200;
+    height: 400px;
 }
 
 #shop-cart-symbols {
 	font-size: var(--fontsize-xlarge);
-	color: var(--lightgrey);
+	color: #999;
 }
 
 .shop-tr {
