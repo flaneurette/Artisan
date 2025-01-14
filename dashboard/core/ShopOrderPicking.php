@@ -47,6 +47,7 @@
 		echo "<p>" . $shop->clean($order[0]['order.address'],'encode'). "</p>"; 
 		echo "<p>" . $shop->clean($order[0]['order.zip'],'encode'). " " .$shop->clean($order[0]['order.city'],'encode'). "</p>";
 		echo "<p>" . $shop->clean($order[0]['order.state'],'encode'). " " .ucfirst($shop->clean($order[0]['order.country'],'encode')). "</p>";
+		echo "<p>" . $shop->clean($order[0]['order.email'],'encode'). "</p>"; 
 		echo "<hr />";
 		echo "<p>" . "Order: " .$shop->clean($order_id[0],'encode'). "</p>";
 		echo "<hr />";
