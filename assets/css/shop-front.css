@@ -542,6 +542,7 @@ article {
 .shop-floor a:link {
 	color:var(--white);
 	text-transform: capitalize;
+	font-size:13px;
 }
 
 .shop-floor a:active, .shop-floor a:visited {
@@ -555,7 +556,7 @@ article {
 .copyright {
 	color: var(--white);
 	text-align: center;
-	font-size: var(--font-small);
+	font-size: 13px;
 	margin-top: 30px;
 }
 
