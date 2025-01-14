@@ -50,7 +50,7 @@
 include("../../components/Head.php"); 
 include("../../components/Navigation.php"); 
 include("../../components/Search.php");
- 
+
 if(count($categories) <=0) {
 
 ?>
@@ -97,6 +97,16 @@ if(count($categories) <=0) {
 				</div>
 				</form>
 				<?php
+					} else {
+						?>
+							<div class="shop-cart-center">
+								<div class="material-symbols-outlined" id="shop-cart-symbols">
+								production_quantity_limits
+								</div>
+							<h2>Items in stock is too low.</h2>
+							</div>
+						<?php
+						
 					}
 				}
 				?>
