@@ -1,0 +1,7 @@
+{
+    "name": "flaneurette/artisan",
+    "description": "Artisan is a responsive and complete modern shopping cart software.",
+    "require": {
+        "php": ">=7.1"
+    }
+}
