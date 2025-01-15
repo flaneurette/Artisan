@@ -5,6 +5,11 @@ Artisan is a responsive and complete modern shopping cart software, specifically
 
 # Installation
 
+### Composer: 
+
+	composer require flaneurette/artisan:dev-main
+### Manual
+
 0. Download or clone Artisan.
 1. Edit dashboard/configuration.php and define the database and paths.
 2. Import the Artisan SQL file into MySQL
