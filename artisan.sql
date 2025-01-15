@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jan 10, 2025 at 11:50 PM
--- Server version: 10.6.18-MariaDB-cll-lve
--- PHP Version: 8.1.26
+-- Host: 127.0.0.1
+-- Generation Time: Jan 15, 2025 at 03:11 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -17,9 +17,8 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-
 --
--- Database: `artisan` 
+-- Database: `artisan`
 --
 
 -- --------------------------------------------------------
@@ -104,15 +103,15 @@ CREATE TABLE `shop` (
   `product.featured.location` varchar(255) DEFAULT NULL,
   `product.featured.carousel` varchar(255) DEFAULT NULL,
   `product.featured.image` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `shop`
 --
 
 INSERT INTO `shop` (`id`, `product.status`, `product.price`, `product.stock`, `product.tax`, `product.title`, `product.description`, `product.category`, `product.category.id`, `product.category.sub`, `product.category.sub.id`, `product.image`, `product.image.2`, `product.image.3`, `product.catno`, `product.format`, `product.type`, `product.weight`, `product.condition`, `product.ean`, `product.sku`, `product.vendor`, `product.tags`, `product.featured`, `product.featured.location`, `product.featured.carousel`, `product.featured.image`) VALUES
-(1, NULL, '0.01', 42, NULL, '144 Carat Diamond', 'A beautiful 144 carat diamond, freshly cut by our team... only $1200.', 'Diamonds', NULL, NULL, NULL, '243c6dc588ac-placeholder.png', NULL, NULL, '143523', 'In box', 'Cut Diamond', '455', 'Used', '12343523452', NULL, NULL, NULL, '1', NULL, '1', '621139e2cc2c-New Project.png'),
-(2, NULL, '0.1', 12, NULL, 'Zircon', 'A beautiful Zircon diamond', 'Jewelry', NULL, NULL, NULL, '5bc2ab21e31c-placeholder.png', NULL, NULL, '', '', '', '', '', '', NULL, NULL, NULL, '', NULL, '', NULL);
+(1, NULL, '1200', 40, NULL, '144 Carat Diamond', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dapibus ut arcu in tempor. Aliquam cursus dictum dolor bibendum pulvinar. Donec convallis turpis mi, a scelerisque dui auctor ut. Sed volutpat cursus eros consectetur convallis. Morbi iaculis non dolor eget rutrum. Duis nisi nisi, pretium quis blandit quis, volutpat ultricies dolor. Nam euismod porttitor sem, interdum aliquet velit gravida id. Duis egestas malesuada ullamcorper. Vestibulum luctus, erat at malesuada dignissim, ligula urna ornare libero, vitae elementum ipsum quam sit amet risus.<div><br></div><div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dapibus ut arcu in tempor. Aliquam cursus dictum dolor bibendum pulvinar. Donec convallis turpis mi, a scelerisque dui auctor ut. Sed volutpat cursus eros consectetur convallis. Morbi iaculis non dolor eget rutrum. Duis nisi nisi, pretium quis blandit quis, volutpat ultricies dolor. Nam euismod porttitor sem, interdum aliquet velit gravida id. Duis egestas malesuada ullamcorper. Vestibulum luctus, erat at malesuada dignissim, ligula urna ornare libero, vitae elementum ipsum quam sit amet risus.</div>', 'Diamonds', NULL, NULL, NULL, '243c6dc588ac-placeholder.png', NULL, NULL, '143523', 'In box', 'Cut Diamond', '455', 'Used', '12343523452', NULL, NULL, NULL, '1', NULL, '1', '621139e2cc2c-New Project.png'),
+(2, NULL, '0.10', 6, NULL, 'Zircon', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dapibus ut arcu in tempor. Aliquam cursus dictum dolor bibendum pulvinar. Donec convallis turpis mi, a scelerisque dui auctor ut. Sed volutpat cursus eros consectetur convallis. Morbi iaculis non dolor eget rutrum. Duis nisi nisi, pretium quis blandit quis, volutpat ultricies dolor. Nam euismod porttitor sem, interdum aliquet velit gravida id. Duis egestas malesuada ullamcorper. Vestibulum luctus, erat at malesuada dignissim, ligula urna ornare libero, vitae elementum ipsum quam sit amet risus.<div><br></div><div>Mauris libero arcu, euismod sit amet justo in, consequat dictum dui. Phasellus sed vulputate turpis, faucibus aliquam urna. Proin at ligula velit. Fusce massa elit, interdum ut iaculis eu, dictum sed odio. Nulla facilisi. Curabitur non bibendum leo, a lobortis risus. Curabitur gravida nunc eu dictum semper. Vestibulum vitae fermentum nibh. Nullam nec urna vitae tortor pulvinar fringilla eu vitae est. Cras eleifend sodales egestas. Nullam sagittis et tortor ut malesuada. Vivamus iaculis, ex ut vehicula facilisis, nisi est scelerisque risus, id convallis neque massa id ante.</div>', 'Jewelry', NULL, NULL, NULL, '5bc2ab21e31c-placeholder.png', NULL, NULL, '', '', '', '', '', '', NULL, NULL, NULL, '', NULL, '', NULL);
 
 -- --------------------------------------------------------
 
@@ -129,7 +128,8 @@ CREATE TABLE `shop.cart` (
   `cart.qty` int(11) NOT NULL,
   `cart.ip` varchar(255) NOT NULL,
   `cart.stage` varchar(255) NOT NULL,
-  `cart.token` varchar(255) NOT NULL
+  `cart.token` varchar(255) NOT NULL,
+  `cart.processed` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -154,7 +154,7 @@ CREATE TABLE `shop.categories` (
 
 INSERT INTO `shop.categories` (`id`, `category.name`, `category.sub`, `category.order`, `meta_description`, `meta_tags`, `meta_title`) VALUES
 (1, 'Diamonds', '', 1, '', '', ''),
-(3, 'Rings', '', 3, 'test', 'test,test', 'test'),
+(3, 'Rings', '', 4, 'test', 'test,test', 'test'),
 (4, 'Jewelry', '', 2, 'Jewelry', 'Jewelry', 'Jewelry');
 
 -- --------------------------------------------------------
@@ -182,8 +182,8 @@ CREATE TABLE `shop.orders` (
   `order.shipping.price` varchar(255) NOT NULL,
   `order.total` varchar(255) NOT NULL,
   `order.date` varchar(255) NOT NULL,
-  `order.shipped` int(11) NOT NULL DEFAULT 0,
-  `order.fulfilled` int(11) NOT NULL DEFAULT 0,
+  `order.shipped` int(11) NOT NULL,
+  `order.fulfilled` int(11) NOT NULL,
   `order.token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -203,15 +203,16 @@ CREATE TABLE `shop.settings` (
   `settings.free` varchar(40) NOT NULL,
   `settings.shipping` int(11) NOT NULL,
   `settings.announcement` varchar(255) NOT NULL,
-  `settings.mollie.api` varchar(255) NOT NULL
+  `settings.mollie.api` varchar(255) NOT NULL,
+  `settings.theme` varchar(255) NOT NULL DEFAULT 'black'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `shop.settings`
 --
 
-INSERT INTO `shop.settings` (`id`, `settings.email`, `settings.paypal`, `settings.currency`, `settings.country.code`, `settings.tax`, `settings.free`, `settings.shipping`, `settings.announcement`, `settings.mollie.api`) VALUES
-(1, 'info@example.org', 'info@example.org', '$', 'EUR', '12', '50.00', 15, 'Free shipping above $50, same day delivery!', 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM');
+INSERT INTO `shop.settings` (`id`, `settings.email`, `settings.paypal`, `settings.currency`, `settings.country.code`, `settings.tax`, `settings.free`, `settings.shipping`, `settings.announcement`, `settings.mollie.api`, `settings.theme`) VALUES
+(1, 'info@example.org', 'info@example.org', '$', 'USD', '12', '50.00', 15, 'Free shipping above $50, same day delivery!', 'place your mollie API key here', 'white');
 
 -- --------------------------------------------------------
 
@@ -312,7 +313,7 @@ ALTER TABLE `shop`
 -- AUTO_INCREMENT for table `shop.cart`
 --
 ALTER TABLE `shop.cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `shop.categories`
@@ -324,7 +325,7 @@ ALTER TABLE `shop.categories`
 -- AUTO_INCREMENT for table `shop.orders`
 --
 ALTER TABLE `shop.orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `shop.settings`
