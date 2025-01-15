@@ -1,6 +1,6 @@
 :root {
 
-	/* colors */
+	/* Site-wide colors that can be changed here */
 	--mainbody: #222;
 	--backdrop: #222;
 	--textcolor: #888;
@@ -14,6 +14,7 @@
 	--links: #888;
 	--linkshover: #654;
 	
+	/* Internal colors */
 	--red: #b42d40;
 	--lightred: #ff9c9c;
 	--green: #14cc00;
@@ -25,7 +26,7 @@
 	--lightwhite: #fffdf5;
 	--transparent: rgba(0, 0, 0, 0);
 
-	/* fonts */
+	/* Fonts. Cantarel requires Google fonts. */
 	--font-family: "Cantarell", sans-serif;
 	--font-family-input: "Cantarell", sans-serif;
 	--fontsize-small: 14px;
@@ -35,7 +36,7 @@
 	--fontweight-normal: normal;
 	--fontweight-bold: bold;
 
-	/* spacing */
+	/* Site-wide Spacing */
 	--spacing-small: 5px;
 	--spacing-medium: 10px;
 	--spacing-large: 20px;
@@ -50,6 +51,8 @@
 	--viewwidth-large: 50vw;
 	--viewwidth-xlarge: 100vw;
 }
+
+/* Ideally, there is no need to edit these styles below */
 
 * {
 	font-family: var(--font-family);

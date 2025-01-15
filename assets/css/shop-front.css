@@ -1,6 +1,6 @@
 
 /* Site styling */
-
+/* To adjust side-wide colors, please edit tokes.css */
 
 body {
 	background-color: var(--mainbody);
@@ -9,7 +9,7 @@ body {
 }
 
 article, header, nav, footer, div {
-	border: 0px dashed red;
+	border: 0px dashed black;
 }
 
 article {
