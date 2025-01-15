@@ -571,6 +571,7 @@ article {
     margin-left: 26px;
     padding: 0px;
     height: 75px;
+	filter: invert(100%);
 }
 
 .shop-floor a:link {
