@@ -15,9 +15,11 @@
 					?>
 					<img id="payment-logo" src="<?php echo $shop->clean(WEBSITE,'encode');?>assets/images/payment.png"/>
 					</ul>
-				</div>
-				<div>
+			</div>
+			<div>
 					<ul>
+					<li></li>
+					<li></li>
 					<?php 
 					if(isset($menu)) {
 						for($i=0;$i<count($menu);$i++){
@@ -27,13 +29,6 @@
 						}
 					}
 					?>
-					</ul>
-				</div>
-				<div>
-					<ul>
-					<li>
-					
-					</li>
 					</ul>
 			</div>
 		</div>
