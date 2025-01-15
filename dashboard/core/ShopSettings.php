@@ -48,6 +48,7 @@
 	<select name="settings_theme" class="select">
 		<option value="white" <?php if($db->clean($settings[0]['settings.theme'],'encode') =='white') { echo "selected"; }?>>White theme design</option>
 		<option value="black" <?php if($db->clean($settings[0]['settings.theme'],'encode') =='black') { echo "selected"; }?>>Black theme design</option>
+		<option value="custom" <?php if($db->clean($settings[0]['settings.theme'],'encode') =='custom') { echo "selected"; }?>>Custom theme design</option>
 	</select>
 	<hr>
 	<label>Shop E-mail: </label><input type="text" name="settings_email" value="<?php echo $db->clean($settings[0]['settings.email'],'encode');?>" required>

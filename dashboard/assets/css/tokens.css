@@ -336,6 +336,8 @@ hr {
 	ul.navigate li a {
 		text-decoration: none;
 		color: #666;
+		font-size: 0.8em;
+		text-transform: uppercase;
 	}
 
 	ul.navigate li a:hover {
