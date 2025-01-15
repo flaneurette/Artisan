@@ -62,7 +62,7 @@ article {
 .navigation a:link,
 .navigation a:visited {
 	padding: 0em;
-	color: var(--textcolor);
+	color: var(--links);
 	text-align: left;
 	text-decoration: none;
 	font-weight: 100;
@@ -72,7 +72,9 @@ article {
 	letter-spacing: 0em;
 }
 
-.navigation a:link:hover {}
+.navigation a:hover {
+	color: var(--linkshover);
+}
 
 
 .shop-nav-h1 h1 {
@@ -277,12 +279,16 @@ article {
 
 .shop-item-list-product-link {
 	display:block;
-	color: var(--textcolor);
+	color: var(--links);
 } 
 
 .shop-item-list-product-link a:link, .shop-item-list-product-link a:visited {
-	color: var(--textcolor);
+	color: var(--links);
 } 
+
+.shop-item-list-product-link a:hover {
+	color: var(--linkshover);
+}
 
 .shop-item-list-view-link {
 	display:block;
@@ -565,17 +571,17 @@ article {
 }
 
 .shop-floor a:link {
-	color:var(--textcolor);
+	color: var(--links);
 	text-transform: capitalize;
 	font-size:13px;
 }
 
 .shop-floor a:active, .shop-floor a:visited {
-	color:var(--textcolor);
+	color:var(--links);
 }
 
 .shop-floor a:hover {
-	color:var(--textcolor);
+	color: var(--linkshover);
 }
 
 .copyright {
