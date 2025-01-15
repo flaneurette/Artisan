@@ -3,7 +3,7 @@
 
 
 body {
-	background-color: var(--backdrop);
+	background-color: var(--mainbody);
 	margin: 0px;
 	padding: 0px;
 }
@@ -17,7 +17,7 @@ article {
 }
 
 .header {
-	background-color: rgb(0, 0, 0);
+	background-color: var(--mainbody);
 	height: 70px;
 	width: 100%;
 	display: block;
@@ -39,14 +39,14 @@ article {
 
 .nav {
 	display: block;
-	background-color: var(--lightgray);
+	background-color: var(--mainbody);
 	padding: 5px;
 	height: 100px;
 }
 
 .navigation {
-	background-color: var(--lightgray);
-	color: var(--black);
+	background-color: var(--mainbody);
+	color: var(--textcolor);
 	list-style: none;
 	display: block;
 	text-align: center;
@@ -62,7 +62,7 @@ article {
 .navigation a:link,
 .navigation a:visited {
 	padding: 0em;
-	color: var(--black);
+	color: var(--textcolor);
 	text-align: left;
 	text-decoration: none;
 	font-weight: 100;
@@ -88,13 +88,13 @@ article {
 .shop-center {
 	margin-left: auto;
 	margin-right: auto;
-	background-color: var(--backdrop);
+	background-color: var(--mainbody);
 	width: 90vw;
 	height: -webkit-fill-available;
 }
 
 .footer {
-	background-color: rgb(0, 0, 0);
+	background-color: var(--mainbody);
 	height: 437px;
 	display: block;
 }
@@ -108,7 +108,7 @@ article {
 }
 
 .shop-search {
-	background-color: rgba(0, 0, 0, 0);
+	background-color: var(--mainbody);
 	display: block;
 	clear: both;
 	text-align: center;
@@ -138,6 +138,7 @@ article {
 
 #shop-cart-symbol {
 	font-size: 36px;
+	color: var(--white);
 }
 
 /* Shop Highlight */
@@ -177,14 +178,14 @@ article {
 
 
 .content-1 {
-	background-color: rgba(0, 0, 0, 0);
+	background-color: var(--mainbody);
 	display: block;
 	margin-left: -6px;
     margin-top: 10px;
 }
 
 .content-2 {
-	background-color: rgba(0, 0, 0, 0);
+	background-color: var(--mainbody);
 	display: block;
 	margin-left: -6px;
     margin-top: 10px;
@@ -204,20 +205,21 @@ article {
 
 .shop-item-product-group {
 	display:inline-block;
-	border: 1px solid #ced4da;
+	border: 1px solid var(--mainbody);
 	margin:5px;
 	padding:8px;
-	background-color:#fff;
+	background-color: var(--mainbody);
 }
 
 .shop-item-product-list {
 	display: inline-block;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--lightgray);
     margin: 5px;
     padding: 8px;
     width: 15%;
-    background-color: #fff;
+    background-color: var(--lightgray);
 	border-radius: 5px;
+	color: var(--textcolor);
 }
 
 .shop-item-product-image-div img {
@@ -228,6 +230,7 @@ article {
 
 .shop-item-list-product-price {
 	display:block;
+	color: var(--textcolor);
 }
 
 .shop-item-list-product-link {
@@ -251,6 +254,7 @@ article {
 	height: 45px;
     overflow: hidden;
 	font-size: var(--fontsize-small);
+	color: var(--textcolor);
 }
 
 .shop-item-list-product-cat {
@@ -273,10 +277,16 @@ article {
 
 .shop-item-list-product-link {
 	display:block;
+	color: var(--textcolor);
+} 
+
+.shop-item-list-product-link a:link, .shop-item-list-product-link a:visited {
+	color: var(--textcolor);
 } 
 
 .shop-item-list-view-link {
 	display:block;
+	color: var(--textcolor);
 }
 
 .shop-item-list-cart-button {
@@ -295,12 +305,14 @@ article {
 
 .shop-page {
 	min-height:560px;
+	padding: var(--spacing-large);
 }
 
 .shop-page-image img {
 	object-fit:cover;
 	float:left;
 	padding: var(--spacing-xlarge);
+	padding-bottom: 10px;
 	width: 30%;
 	height: auto;
 }
@@ -308,11 +320,13 @@ article {
 .shop-page-title {
 	font-size: var(--fontsize-xlarge);
 	padding-top: var(--spacing-large);
-	padding-left: var(--spacing-xlarge);	
+	padding-left: var(--spacing-xlarge);
+	color: var(--textcolor);	
 }
 
 .shop-page-description {
-	padding: var(--spacing-xlarge);	
+	padding: var(--spacing-xlarge);
+	color: var(--textcolor);	
 }
 
 
@@ -346,15 +360,18 @@ article {
 
 .shop-item-title h1 {
 	font-size: clamp(2rem, 2vw, 5rem);
+	color: var(--textcolor);
 }
 
 .shop-item-description {
 	padding: var(--spacing-xlarge);
 	padding-top: 0px;	
+	color: var(--textcolor);
 }
 
 .shop-item-price {
 	padding: var(--spacing-xlarge);
+	color: var(--textcolor);
 }
 
 .shop-item-form {
@@ -402,6 +419,7 @@ article {
 
 .shop-cart {
 	min-height:600px;
+	color: var(--textcolor);
 }
 
 .shop-cart-center {
@@ -414,19 +432,25 @@ article {
     align-items: center;
     justify-content: center;
     font-size: var(--fontsize-medium);
-    color: #999;
+    color: var(--white);
     font-weight: 200;
     height: 400px;
 }
 
 #shop-cart-symbols {
 	font-size: var(--fontsize-xlarge);
-	color: #999;
+	color: var(--white);
 }
 
 .shop-tr {
-	background-color:var(--lightgrey);
+	background-color: var(--mainbody);
+	color: var(--textcolor);
 }
+.shop-tr table tr  {
+	background-color: var(--mainbody);
+	color: var(--textcolor);
+}
+
 
 .shop-cart table td {
 	text-align:center;
@@ -494,7 +518,8 @@ article {
 .shop-announcement-bar {
     margin-top: 0px;
     padding: 10px;
-    background-color: #8dfacf;
+    background-color: var(--announcement);
+	color: var(--black);
 }
 
 
@@ -505,7 +530,7 @@ article {
 	height: 370px;
 	display: flex;
 	justify-content: left;
-	color: var(--white);
+	color: var(--textcolor);
 }
 
 .shop-floor-center {
@@ -540,21 +565,21 @@ article {
 }
 
 .shop-floor a:link {
-	color:var(--white);
+	color:var(--textcolor);
 	text-transform: capitalize;
 	font-size:13px;
 }
 
 .shop-floor a:active, .shop-floor a:visited {
-	color:var(--white);
+	color:var(--textcolor);
 }
 
 .shop-floor a:hover {
-	color:var(--white);
+	color:var(--textcolor);
 }
 
 .copyright {
-	color: var(--white);
+	color: var(--textcolor);
 	text-align: center;
 	font-size: 13px;
 	margin-top: 30px;
@@ -598,110 +623,4 @@ article {
 .shop-checkout-block table td {
 	padding: 5px;
 	text-align:left;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* mobile toggle menu */
-
-.mobile-bar {
-	display: none;
-	background-color: var(--white);
-	height: 50px;
-}
-
-.menu {
-	padding: 10px;
-	margin-right: 10px;
-	margin-top: 20px;
-	margin-left: 40px;
-	width: 20%;
-	text-align: center;
-}
-
-#menu-display {
-	display: block;
-	background-color: var(--white);
-	width: 50vw;
-	height: 100vh;
-	margin-top: 0px;
-	margin-right: 0px;
-	display: none;
-	z-index: 11;
-	right: 0;
-	position: absolute;
-	box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.12);
-}
-
-#menu-display li {
-	padding: 20px;
-	float: left;
-	font-size: larger;
-	display: block;
-
-	text-align: left;
-}
-
-#menu-display li a {
-	color: var(--black);
-	text-decoration: none;
-}
-
-.mobile-menu {
-	float: right;
-	display: none;
-	position: absolute;
-	top: 39px;
-	right: 10px;
-	z-index: 10;
-}
-
-.mobile-menu ul,
-.menu {
-	list-style: none;
 }

@@ -1,13 +1,18 @@
 :root {
 
 	/* colors */
-
-	--backdrop: #ededed;
-	--flower-red: #e23241;
-	--flower-fuchsia: #bf045b;
-	--flower-pink: #d95555;
-	--flower-creme: #d98d62;
-	--petal-yellow: #fce27d;
+	--mainbody: #222;
+	--backdrop: #222;
+	--textcolor: #888;
+	--grey: #666;
+	--lightgrey: #333;
+	--lightgray: #444;
+	--black: #000;
+	--lightblack: #666;
+	--white: #666;
+	--announcement: #8dfacf;
+	--links: #fff;
+	
 	--red: #b42d40;
 	--lightred: #ff9c9c;
 	--green: #14cc00;
@@ -16,13 +21,7 @@
 	--lightblue: #9ccfff;
 	--magenta: #9933cc;
 	--lightmagenta: #f3c5fd;
-	--black: #000000;
-	--lightblack: #666666;
-	--white: #ffffff;
 	--lightwhite: #fffdf5;
-	--grey: #999999;
-	--lightgrey: #e2e2e2;
-	--lightgray: #f7f7f7;
 	--transparent: rgba(0, 0, 0, 0);
 
 	/* fonts */
@@ -91,7 +90,8 @@ input {
 	width: var(--viewwidth-medium);
 	font-size: var(--font-medium);
 	outline: none;
-	background-color:var(--white);
+	background-color:var(--mainbody);
+	color:var(--white);
 }
 
 input[type=checkbox],
@@ -114,11 +114,13 @@ input[type="file"]::file-selector-button {
 	transition: 1s;
 }
 
+select,
 input[type=button],
 input[type=submit],
 input[type=reset] {
 	border: 1px solid var(--lightgrey) !important;
-	color: var(--black);
+	color: var(--white);
+	background-color: var(--mainbody);
 	text-transform: uppercase;
 	cursor: pointer;
 	display: inline-block;
@@ -126,7 +128,7 @@ input[type=reset] {
 
 input[type=button]:hover,
 input[type=submit]:hover {
-	color: var(--black);
+	
 }
 
 input:focus {
@@ -272,7 +274,7 @@ hr {
 
 
 body {
-	background-color: #ffffff;
+	background-color: var(--mainbody);
 	margin: 0;
 	padding: 0;
 
@@ -315,22 +317,22 @@ ul.navigate li {
 
 ul.navigate li a {
 	text-decoration: none;
-	color: #000;
+	color: var(--links);
 }
 
 ul.navigate li a:hover {
 	text-decoration: none;
-	color: #000;
+	color: var(--links);
 }
 
 a:link,
 a:visited {
 	text-decoration: none;
-	color: #000;
+	color: var(--links);
 }
 
 a:hover {
-	color: #000;
+	color: var(--links);
 }
 
 .texteditor {
@@ -440,7 +442,7 @@ table td {
 }
 
 .table-list {
-	background-color: #f7f7f7;
+	background-color: var(--mainbody);
 	border-radius: 15px;
 	border: 1px solid var(--lightgrey);
 }

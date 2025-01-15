@@ -130,9 +130,9 @@
 							
 							for($i=0;$i<count($_SESSION['cart']);$i++) { 
 								if($i % 2 !== 0) { 
-									$color = "background-color: var(--lightgrey);";
+									$color = "background-color: var(--lightgray);";
 									} else {
-									$color = "";
+									$color = "background-color: var(--lightgrey);";
 								}
 								
 								$item_table    	= 'shop';
@@ -174,7 +174,7 @@
 							}
 							?>
 							</tr>
-							<tr>
+							<tr class="shop-tr">
 								<td></td>
 								<td></td>
 								<td>Subtotal: <br /><?php echo $shop->clean($settings[0]['settings.currency'],'encode').number_format($subtotal,2);?> </td>
