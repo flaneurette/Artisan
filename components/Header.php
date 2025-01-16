@@ -1,10 +1,11 @@
 <?php
 if(isset($settings)) {
-	$theme_css = "themes/". $settings[0]['settings.theme'] ."/shop-front.css?rev=1.0";
-	$tokens_css = "themes/". $settings[0]['settings.theme'] ."/tokens.css?rev=1.0";
+	$theme_css = "themes/". $shop->clean($settings[0]['settings.theme'],'encode') ."/shop-front.css?rev=1.0";
+	$tokens_css = "themes/". $shop->clean($settings[0]['settings.theme'],'encode') ."/tokens.css?rev=1.0";
 	} else {
-	$theme_css = "themes/black/shop-front.css?rev=1.0";
-	$tokens_css = "themes/black/tokens.css?rev=1.0";
+	$settings = $db->query("SELECT * from `shop.settings`");
+	$theme_css = "themes/". $shop->clean($settings[0]['settings.theme'],'encode') ."/shop-front.css?rev=1.0";
+	$tokens_css = "themes/". $shop->clean($settings[0]['settings.theme'],'encode') ."/tokens.css?rev=1.0";
 }
 ?>
 

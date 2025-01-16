@@ -23,7 +23,7 @@ article {
 	display: block;
 	z-index: 1;
 	position: fixed;
-	top: 10;
+	top: 0px;
 }
 
 #logo {
@@ -634,4 +634,99 @@ article {
 .shop-checkout-block table td {
 	padding: 5px;
 	text-align:left;
+}
+
+
+/* Mobile styles */
+
+#mobile-menu {
+	display: none;
+}
+
+#mobile-nav {
+	display: none;
+    float: right;
+    margin-right: 0px;
+    background-color: var(--black);
+    width: 95%;
+    margin-top: -15px;
+    padding: var(--spacing-large);
+    margin-left: var(--spacing-xlarge);
+}
+
+#mobile-navigation {
+	list-style:none;
+	font-size: 1em;
+	text-transform:capitalize;
+}
+
+#mobile-menu span {
+	color: var(--white);
+	float: right;
+    margin-right: 27px;
+    margin-top: -60px;
+    font-size: 33px;
+}
+
+#mobile-menu span a {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 33px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+@media only screen and (max-width: 800px) {
+	
+	#mobile-menu {
+		display: block;
+	}
+	
+	.shop-item, .shop-content-bar {
+		margin-top: 66px;
+	}
+	
+	.shop-page {
+		 margin-top: 100px;
+	}
+	
+	.shop-highlight {
+		margin-top: 30px;
+	}
+	
+	.shop-search-box {
+		display: none;
+	}
+	
+	.nav {
+		display: none;
+	}
+	
+	.shop-item-product-list {
+		width:33%;
+	}
+	
+	.shop-item-list-product-link {
+		font-size: 12px;
+	}
+	
+	.shop-floor div {
+		padding:0px;
+	}
+	
+	#logo {
+		margin-top: -12px;
+	}
+	
+	table td {
+		padding: 7px
+	}
 }
