@@ -29,7 +29,7 @@ article {
 #logo {
 	height: 94px;
     margin: auto;
-    margin-top: -4px;
+    margin-top: -5px;
     display: block;
 }
 
@@ -51,12 +51,13 @@ article {
 	display: block;
 	text-align: center;
 	margin-top: 73px;
+	margin-left: -40px;
 }
 
 .navigation>li {
-	margin-top: 0.2em;
-	margin-right: 5%;
-	display: inline;
+    display: inline-block;
+    width: 10%;
+    text-align: center;
 }
 
 .navigation a:link,

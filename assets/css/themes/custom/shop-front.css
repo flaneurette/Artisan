@@ -29,7 +29,7 @@ article {
 #logo {
 	height: 94px;
     margin: auto;
-    margin-top: -4px;
+    margin-top: -5px;
     display: block;
 	filter: invert(100%);
 }
@@ -50,14 +50,15 @@ article {
 	color: var(--textcolor);
 	list-style: none;
 	display: block;
+	margin-left: -40px;
 	text-align: center;
 	margin-top: 73px;
 }
 
 .navigation>li {
-	margin-top: 0.2em;
-	margin-right: 5%;
-	display: inline;
+    display: inline-block;
+    width: 10%;
+    text-align: center;
 }
 
 .navigation a:link,
@@ -197,7 +198,7 @@ article {
 
 .shop-content-bar {
 	margin-left: -5px;
-    margin-top: 10px;
+    margin-top: var(--spacing-xlarge);
 }
 
 .shop-content-bar form {
