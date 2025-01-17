@@ -699,7 +699,7 @@ article {
 	}
 	
 	.shop-item, .shop-content-bar {
-		margin-top: 66px;
+		margin-top: 15px;
 	}
 	
 	.shop-page {
@@ -707,7 +707,7 @@ article {
 	}
 	
 	.shop-highlight {
-		margin-top: 30px;
+		margin-top: 0px;
 	}
 	
 	.shop-search-box {
@@ -743,6 +743,9 @@ article {
 	.shop-item-image img {
 		float: none;
 		padding: var(--spacing-xlarge);
-		width: 80%;
+		width: 90%;
+	}
+	.shop-announcement-bar {
+		margin-top: 70px;
 	}
 }
