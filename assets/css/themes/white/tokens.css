@@ -66,8 +66,8 @@ html,
 body {
 	padding: 0px;
 	margin: 0px;
-background: rgb(255,255,255);
-background: linear-gradient(0deg, rgba(255,255,255,1) 83%, rgba(244,244,244,1) 91%, rgba(247,247,247,1) 100%);
+	background: rgb(255,255,255);
+	background: linear-gradient(0deg, rgba(255,255,255,1) 87%, rgba(244,244,244,1) 93%, rgba(247,247,247,1) 100%);
 }
 
 fieldset {

@@ -421,7 +421,6 @@ article {
 .shop-cart-highlight {
 	margin-left: auto;
 	margin-right: auto;
-	background-color: var(--backdrop);
 	width: 90vw;
 	height: -webkit-fill-available;
 }
@@ -492,7 +491,7 @@ article {
 
 
 .shop-checkout-block2 {
-	background-color: var(--lightgray);
+	background-color: var(--lightgrey);
     margin-left: auto;
     margin-right: auto;
     padding: var(--spacing-xlarge);
