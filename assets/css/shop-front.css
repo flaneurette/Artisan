@@ -52,7 +52,7 @@ article {
 	display: block;
 	background-color: var(--mainbody);
 	padding: 5px;
-	height: 80px;
+	height: 93px;
 }
 
 .navigation {
@@ -61,7 +61,7 @@ article {
 	list-style: none;
 	display: block;
 	text-align: center;
-	margin-top: 57px;
+	margin-top: 61px;
 	margin-left: -19px;
 }
 
@@ -102,7 +102,6 @@ article {
 .shop-center {
 	margin-left: auto;
 	margin-right: auto;
-	background-color: var(--mainbody);
 	width: 90vw;
 	height: -webkit-fill-available;
 }
@@ -122,7 +121,7 @@ article {
 }
 
 .shop-search {
-	background-color: var(--mainbody);
+
 	display: block;
 	clear: both;
 	text-align: center;
@@ -193,7 +192,6 @@ article {
 
 
 .content-1 {
-	background-color: var(--mainbody);
 	display: block;
 	margin-left: -6px;
     margin-top: 10px;
