@@ -1,6 +1,7 @@
 :root {
 
-	/* Logo */
+	/* Logo. Upload a logo to: artisan/assets/images/ and the server will rewrite the URL to reflect the image. */
+	
 	--logo: url('cssimage/logo-white.png');
 	
 	/* Site-wide colors that can be changed here */
@@ -458,7 +459,7 @@ table td {
 	display: inline-block;
 }
 
-#logo {
+#logo, #logo-footer {
 	background: var(--logo);
 	background-repeat: no-repeat;
 	height: 76px;

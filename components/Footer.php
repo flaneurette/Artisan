@@ -2,7 +2,7 @@
 	<div class="shop-floor">
 		<div class="shop-floor-center">
 			<div>
-			<img src="<?php echo $shop->clean(WEBSITE,'encode');?>assets/images/logo.png" id="footer-logo" />
+			<a href="<?php echo $shop->clean(WEBSITE,'encode');?>"><div id="logo-footer"></div></a>
 					<ul>
 					<?php 
 					if(isset($pages)) {

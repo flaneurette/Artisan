@@ -35,6 +35,16 @@ article {
     width: 181px;
 }
 
+#logo-footer {
+	height: 76px;
+    margin: auto;
+    display: block;
+    height: 76px;
+    width: 181px;
+    margin-left: var(--spacing-large);
+    margin-bottom: -54px;
+}
+
 /* Navigation */
 
 
