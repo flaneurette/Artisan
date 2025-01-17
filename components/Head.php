@@ -1,5 +1,5 @@
 <header class="header">
-	<a href="<?php echo $shop->clean(WEBSITE,'encode');?>"><img src="<?php echo $shop->clean(WEBSITE,'encode');?>assets/images/logo.png" id="logo" /></a>
+	<a href="<?php echo $shop->clean(WEBSITE,'encode');?>"><div id="logo"></div></a>
 	<div id="mobile-menu">
 		<span class="material-symbols-outlined">
 			<a href="#" onclick="javascript:document.getElementById('mobile-nav').style='display:block';">menu</a>

@@ -1,5 +1,8 @@
 :root {
 
+	/* Logo */
+	--logo: url('cssimage/logo-white.png');
+	
 	/* Site-wide colors that can be changed here */
 	--mainbody: #fff;
 	--backdrop: #fff;
@@ -453,4 +456,10 @@ table td {
 
 #material-icon-reset {
 	display: inline-block;
+}
+
+#logo {
+	background: var(--logo);
+	background-repeat: no-repeat;
+	height: 76px;
 }

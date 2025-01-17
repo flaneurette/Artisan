@@ -27,12 +27,13 @@ article {
 }
 
 #logo {
-	height: 94px;
+	height: 76px;
     margin: auto;
-    margin-top: -5px;
+    margin-top: -16px;
     display: block;
+	height: 76px;
+    width: 181px;
 }
-
 
 /* Navigation */
 
@@ -41,7 +42,7 @@ article {
 	display: block;
 	background-color: var(--mainbody);
 	padding: 5px;
-	height: 100px;
+	height: 80px;
 }
 
 .navigation {
@@ -50,8 +51,8 @@ article {
 	list-style: none;
 	display: block;
 	text-align: center;
-	margin-top: 73px;
-	margin-left: -40px;
+	margin-top: 57px;
+	margin-left: -19px;
 }
 
 .navigation>li {
@@ -220,7 +221,7 @@ article {
     border: 1px solid var(--lightgray);
     margin: 5px;
     padding: 8px;
-    width: 15%;
+    width: 20%;
     background-color: var(--lightgray);
 	border-radius: 5px;
 	color: var(--textcolor);
@@ -435,20 +436,19 @@ article {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	color: var(--textcolor);
 }
 .shop-cart-center h2 {
 	display: flex;
     align-items: center;
     justify-content: center;
     font-size: var(--fontsize-medium);
-    color: var(--white);
     font-weight: 200;
     height: 400px;
 }
 
 #shop-cart-symbols {
 	font-size: var(--fontsize-xlarge);
-	color: var(--white);
 }
 
 .shop-tr {
