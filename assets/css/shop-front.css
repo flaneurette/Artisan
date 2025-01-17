@@ -739,4 +739,10 @@ article {
 	table td {
 		padding: 7px
 	}
+	
+	.shop-item-image img {
+		float: none;
+		padding: var(--spacing-xlarge);
+		width: 80%;
+	}
 }
