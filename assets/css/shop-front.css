@@ -563,11 +563,15 @@ article {
 }
 
 .shop-floor ul {
-	list-style: none;
-	margin: 0px;	
+	list-style: none;	
 	padding: var(--spacing-xlarge);
 	padding-top: 0px;
 }
+
+.shop-floor-links {
+	margin-top: 95px;		
+}
+
 
 .shop-floor ul li {
 	padding: var(--spacing-medium);

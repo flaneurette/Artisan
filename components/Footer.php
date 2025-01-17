@@ -16,19 +16,27 @@
 					<img id="payment-logo" src="<?php echo $shop->clean(WEBSITE,'encode');?>assets/images/payment.png"/>
 					</ul>
 			</div>
-			<div>
-					<ul>
+			<?php
+			if(isset($menu)) {
+				$k=0;
+				for($j=count($menu);$j>=0;$j--){		
+					if($j % 2== 0) { 
+				?>	<div><ul class="shop-floor-links">
 					<?php 
-					if(isset($menu)) {
-						for($i=0;$i<count($menu);$i++){
+						for($i=$k;$i<count($menu)-$j;$i++) {
 							echo "<li><a href=\"".$shop->clean(WEBSITE,'encode')."category/".$db->clean($menu[$i]['category.name'],'encode')."/\">";
 							echo  $shop->clean($shop->clean($menu[$i]['category.name'],'encode'),'url');
 							echo "</a></li>";
+							$k++;
 						}
-					}
 					?>
 					</ul>
-			</div>
+					</div>
+					<?php
+					}
+				}
+			}
+			?>
 		</div>
 	</div>
 	<div class="copyright">
