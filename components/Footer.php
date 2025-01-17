@@ -18,8 +18,6 @@
 			</div>
 			<div>
 					<ul>
-					<li></li>
-					<li></li>
 					<?php 
 					if(isset($menu)) {
 						for($i=0;$i<count($menu);$i++){

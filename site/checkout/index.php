@@ -22,26 +22,6 @@
 		$_SESSION['token'] = $token;
 	}
 	
-	if(isset($_GET['delete'])) {
-		if(isset($_SESSION['token']) && isset($_GET['token'])) { 
-			if($_SESSION['token'] === $_GET['token']) {
-				$_SESSION['cart'] = $shop->deletefromcart($_GET['delete']);
-				header("Location: ../../../../cart/");
-				exit;
-			}
-		}
-	}
-
-	if(isset($_GET['update'])) {
-		if(isset($_SESSION['token']) && isset($_GET['token'])) {
-			if($_SESSION['token'] === $_GET['token']) {			
-				$_SESSION['cart'] = $shop->updatecart($shop->intcast($_GET['id']),$shop->intcast($_GET['update']));
-				header("Location: ../cart/");
-				exit;
-			}
-		}
-	}
-	
 	$shop->sessioncheck();
 	
 	if(isset($_SESSION['token']) && isset($_POST['token'])) { 

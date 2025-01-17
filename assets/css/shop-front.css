@@ -648,6 +648,7 @@ article {
 
 #mobile-menu {
 	display: none;
+	margin-top: 22px;
 }
 
 #mobile-nav {
@@ -732,7 +733,9 @@ article {
 	#logo {
 		margin-top: -12px;
 	}
-	
+	#logo-footer {
+		display: none;
+	}
 	table td {
 		padding: 7px
 	}
