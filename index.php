@@ -7,9 +7,9 @@
 	include("dashboard/resources/PHP/Cryptography.php");
 	include("resources/PHP/Artisan.php");
 	
-	$db				= new sql();
-	$shop			= new Artisan();
-	$cryptography	= new Cryptography;
+	$db = new sql();
+	$shop = new Artisan();
+	$cryptography = new Cryptography;
 	
 	$menu			= $db->query("SELECT * FROM `shop.categories` order by `category.order` ASC");
 	$pages			= $db->query("SELECT * FROM `pages` order by ordering ASC");
