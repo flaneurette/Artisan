@@ -11,12 +11,12 @@
 	$shop = new Artisan();
 	$cryptography = new Cryptography;
 	
-	$menu			= $db->query("SELECT * FROM `shop.categories` order by `category.order` ASC");
-	$pages			= $db->query("SELECT * FROM `pages` order by ordering ASC");
+	$menu			= $db->query("SELECT * FROM `shop.categories` ORDER BY `category.order` ASC");
+	$pages			= $db->query("SELECT * FROM `pages` ORDER BY ordering ASC");
 	$meta			= $db->query("SELECT * FROM `pages` WHERE id = 1");
 	$highlight		= $db->query("SELECT * FROM `shop` WHERE `product.featured` = 1 ORDER BY id DESC LIMIT 1");
 	$carousel		= $db->query("SELECT * FROM `shop` WHERE `product.featured.carousel` = 1 ORDER BY RAND() LIMIT 10");
-	$latest			= $db->query("SELECT * FROM `shop` ORDER BY RAND() LIMIT 10");
+	$latest			= $db->query("SELECT * FROM `shop` ORDER BY RAND() LIMIT 20");
 	$settings		= $db->query("SELECT * from `shop.settings`"); 
 
 	if(isset($_SESSION['token'])) {
