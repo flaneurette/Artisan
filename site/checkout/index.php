@@ -89,33 +89,50 @@
 		<input type="hidden" name="token" value="<?php echo $token;?>" />
 		<div class="shop-nav-h1"><h1>Checkout</h1></div>
 				<div class="shop-checkout-block2">
-					
-						<div class="shop-form-content">
-								<div class="shop-form-content-div">
-									<label>First name</label>
-									<input type="text" name="first_name" size="15" value="" autocomplete="given-name" required>
-									<label>Last name</label>
-									<input type="text" name="last_name" size="15" value="" autocomplete="family-name" required>
-								</div>
-								<div class="shop-form-content-div">
-									<label>Address</label>
-									<input type="text" name="address" value="" autocomplete="street-address" required>
-									<div class="shop-form-content-div">
-									<label>City</label>
-									<input type="text" name="city" value="" autocomplete="address-level2" required>
-								</div>
-						</div>
-								
-						<div class="shop-form-content">
-								<div class="shop-form-content-div">
-									<label>Zip</label>
-									<input type="text" name="zip" size="5" value="" autocomplete="postal-code" required>
-									<label>State</label>
-									<input type="text" name="state" size="3" maxlength="3" value="" autocomplete="address-level1" required>
-								</div>
-								<div class="shop-form-content-div">
-									<label for="email">E-mail</label>
-									<input type="text" name="email" size="15" value="" autocomplete="email" required>
+   <table width="100%">
+        <tbody>
+            <tr>
+            <td width="50%"><label>First name</label>
+				<input type="text" name="first_name" size="15" value="" autocomplete="given-name" required></td>
+            </tr>
+            <tr>
+                <td>
+					<label>Last name</label>
+					<input type="text" name="last_name" size="15" value="" autocomplete="family-name" required>
+				</td>
+            </tr>
+            <tr>
+                <td>
+				<label>Address</label>
+				<input type="text" name="address" value="" autocomplete="street-address" required>
+				</td>
+            </tr>
+            <tr>
+                <td>
+				<label>City</label>
+				<input type="text" name="city" value="" autocomplete="address-level2" required>
+				</td>
+            </tr>
+            <tr>
+                <td>
+				<label>Zip</label>
+				<input type="text" name="zip" size="5" value="" autocomplete="postal-code" required>
+				</td>
+            </tr>
+            <tr>
+                <td>
+				<label>State</label>
+				<input type="text" name="state" size="3" maxlength="3" value="" autocomplete="address-level1" required>
+				</td>
+            </tr>
+            <tr>
+                <td>
+					<label for="email">E-mail</label>
+					<input type="text" name="email" size="15" value="" autocomplete="email" required>
+				</td>
+            </tr>
+            <tr>
+                <td>
 									<label>Country</label>
 									<select name="country" value="" autocomplete="country-name" required>
 										<option value="">Select country</option>
@@ -316,13 +333,17 @@
 										<option value="yemen">yemen</option>
 										<option value="zambia">zambia</option>									
 									</select>
-								</div>
-						</div>
-				</div>
-				</div>
-				<div id="shop-checkout-submit">				
+				</td>
+            </tr>
+            <tr>
+                <td>
 					<input type="submit" id="submit" name="submit" value="Pay Now"/>
+				</td>
+            </tr>
+        </tbody>
+    </table>
 				</div>
+
 		</form>
 	<?php 
 	}
