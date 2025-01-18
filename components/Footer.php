@@ -20,7 +20,7 @@
 			if(isset($menu)) {
 				$k=0;
 				for($j=count($menu);$j>=0;$j--){		
-					if($j % 2== 0) { 
+					if($j % 4== 0) { 
 				?>	<div><ul class="shop-floor-links">
 					<?php 
 						for($i=$k;$i<count($menu)-$j;$i++) {
