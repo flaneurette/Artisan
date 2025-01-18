@@ -693,6 +693,14 @@ article {
     -webkit-font-smoothing: antialiased;
 }
 
+@media (min-width: 768px) and (max-width: 1024px){
+	.navigation>li {
+		display: inline-block;
+		width: 17%;
+		text-align: center;
+	}
+}
+
 @media only screen and (max-width: 800px) {
 	
 	#mobile-menu {
