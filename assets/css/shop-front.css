@@ -699,8 +699,12 @@ article {
 		display: block;
 	}
 	
-	.shop-item, .shop-content-bar {
-		margin-top: 15px;
+	.shop-content-bar {
+		margin-top: 90px;
+	}
+
+	.shop-item {
+		margin-top: 70px;
 	}
 	
 	.shop-page {
@@ -731,12 +735,18 @@ article {
 		padding:0px;
 	}
 	
+	.shop-floor-links {
+		margin-top:0px;
+	}
+	
 	#logo {
 		margin-top: -12px;
 	}
+	
 	#logo-footer {
 		display: none;
 	}
+	
 	table td {
 		padding: 7px
 	}
@@ -745,8 +755,24 @@ article {
 		float: none;
 		padding: var(--spacing-xlarge);
 		width: 90%;
+		padding-bottom: 10px;
+		border-radius:0px;
 	}
+	
 	.shop-announcement-bar {
 		margin-top: 70px;
+		font-size: 12px;
+	}
+
+	.shop-item-title {
+		padding-top:0px;
+	}
+	
+	.shop-item-title h1 {
+		margin-left: 0px;
+	}
+	
+	input {
+		width: var(--viewwidth-large);
 	}
 }
