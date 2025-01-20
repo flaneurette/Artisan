@@ -6,10 +6,6 @@ include("../../dashboard/resources/PHP/Class.DB.php");
 include("../../dashboard/resources/PHP/Cryptography.php");
 include("../../resources/PHP/Artisan.php");
 
-require_once("../mollie/vendor/autoload.php");
-require_once("../mollie/examples/functions.php");
-include("../mollie/examples/initialize.php");
-
 $cryptography 	= new Cryptography;
 $db 			= new sql();
 $shop 			= new Artisan();
@@ -28,12 +24,17 @@ if(isset($_SESSION['paytoken'])) {
 	$_SESSION['paytoken'] = $paytoken;
 }
 
+	if(!isset($_POST['token'])) {
+		header("Location: ../../cart/");
+		exit;
+	}
+
 	if(isset($_SESSION['token']) && isset($_POST['token'])) { 
 	
 		if($_SESSION['token'] === $_POST['token']) {
 			
 			if(!isset($_SESSION['cart'])) {
-				header("Location: ../../cart");
+				header("Location: ../../cart/");
 				exit;
 			}
 			
@@ -101,6 +102,8 @@ if(isset($_SESSION['paytoken'])) {
 			$order_token		= $shop->clean($_POST["token"],'encode');
 							
 			// Now follow the Mollie logic.
+			require_once("../mollie/vendor/autoload.php");
+			require_once("../mollie/examples/functions.php");
 			include("../mollie/examples/initialize.php");
 
 			$payment = $mollie->payments->create([
@@ -124,8 +127,8 @@ if(isset($_SESSION['paytoken'])) {
 				$db->insert($table,$columns,$values);
 
 				header("Location: " . $payment->getCheckoutUrl(), \true, 303);
-				
 				exit;
+				
 			} else {
 				echo "<p>Could not process your order. Please try again later. <a href=\"".$shop->clean(WEBSITE,'encode')."cart/\">Click here to return to your cart.</a></p>";
 			}
