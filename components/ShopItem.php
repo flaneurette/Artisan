@@ -54,11 +54,25 @@
 <article class="shop-page-highlight">
 	<div class="shop-center">
 		<div class="shop-item">
+			<div class="shop-item-image">
+				<?php
+					if($page_result[0]['product.image'] !=='') {
+				?>
+						<img id="main-image" src="<?php echo $shop->clean(WEBSITE,'encode')."resources/content/".$shop->clean($page_result[0]['product.image'],'encode');?>" />
+				<?php
+				}
+					if($page_result[0]['product.image.2'] !='' && $page_result[0]['product.image.3'] !='') {
+				?>
+					<div class="shop-item-image-thumbs">
+						<div class="shop-item-image-thumb"><img src="<?php echo $shop->clean(WEBSITE,'encode')."resources/content/".$shop->clean($page_result[0]['product.image'],'encode');?>" onclick="plainui.thumb(this.src,'main-image');" /></div>
+						<div class="shop-item-image-thumb"><img src="<?php echo $shop->clean(WEBSITE,'encode')."resources/content/".$shop->clean($page_result[0]['product.image.2'],'encode');?>"  onclick="plainui.thumb(this.src,'main-image');" /></div>
+						<div class="shop-item-image-thumb"><img src="<?php echo $shop->clean(WEBSITE,'encode')."resources/content/".$shop->clean($page_result[0]['product.image.3'],'encode');?>"  onclick="plainui.thumb(this.src,'main-image');" /></div>
+					</div>
+				<?php
+					}
+				?>
+			</div>
 		<?php
-			if($page_result[0]['product.image'] !=='') {
-				echo "<div class=\"shop-item-image\"><img src=\"".$shop->clean(WEBSITE,'encode')."resources/content/".$shop->clean($page_result[0]['product.image'],'encode')."\" /></div>";
-				} else {
-			}
 			if(isset($page_result[0]['product.title'])) {
 				echo "<div class=\"shop-item-title\"><h1>".$shop->clean($page_result[0]['product.title'],'encode')."</h1></div>";
 			}

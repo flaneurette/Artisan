@@ -7,5 +7,5 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-	<script src="<?php echo $db->clean(SITE,'encode');?>assets/js/UI.js"></script>
+	<script src="<?php echo $db->clean(SITE,'encode');?>assets/js/ui.js"></script>
 	<title>Artisan - webshop software</title>

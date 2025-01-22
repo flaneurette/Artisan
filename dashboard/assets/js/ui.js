@@ -19,6 +19,12 @@ var plainui = {
 		if(what) {
 			document.getElementById(what).style = 'display:block;'
 		}
+	},
+	
+	thumb: function(what,where) {
+		if(what && where) {
+			document.getElementById(where).src = what;
+		}
 	}
 	
 };
