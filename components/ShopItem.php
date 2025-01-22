@@ -60,7 +60,8 @@
 				?>
 						<img id="main-image" src="<?php echo $shop->clean(WEBSITE,'encode')."resources/content/".$shop->clean($page_result[0]['product.image'],'encode');?>" />
 				<?php
-				}
+					}
+					
 					if($page_result[0]['product.image.2'] !='' && $page_result[0]['product.image.3'] !='') {
 				?>
 					<div class="shop-item-image-thumbs">
