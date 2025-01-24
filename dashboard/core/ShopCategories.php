@@ -20,10 +20,29 @@
 				$db->insert($table,$columns,$values);
 				$success = "Category successfully added.";
 			}
+			if(isset($_POST['ordering'])) {
+				
+				if($db->intcast($_POST['max']) >= 20) {
+					exit;
+					} else {
+					$max = $db->intcast($_POST['max']);
+				}
+				
+				for($i=1;$i<=$max;$i++) {
+					$order = explode(':',$_POST['order'.$i]);
+					$table    = '`shop.categories`';
+					$columns  = ['category.order'];
+					$values   = [$db->intcast($order[1])];
+					$db->update($table,$columns,$values,$db->intcast($order[0]));			
+				}
+				
+				$success = "Category ordering successfully updated.";
+			}
+			
 		}
 	}
 	
-$result = $db->query("SELECT * from `shop.categories` ORDER BY id DESC"); 
+$result = $db->query("SELECT * from `shop.categories` ORDER BY `category.order` ASC"); 
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,9 +72,13 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY id DESC");
 	?>
 	
 	<label>Shop categories</label>
-	<table rowspan="" width="100%" class="table-list">
+	<form action="" method="post">
+	<input type="hidden" name="csrf" value="<?php echo $token;?>" />
+	<input type="hidden" name="ordering" value="1" />
+	<table rowspan="" width="100%" class="table-list" id="dragndrop">
 	<?php 
 		
+		$j=1;
 		for($i=0;$i<count($result);$i++){
 			
 			if($i % 2 !== 0) { 
@@ -64,16 +87,20 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY id DESC");
 				$color = "";
 			}	
 	?>
-		<tr style="<?php echo $color;?>">
+		<tr style="<?php echo $color;?>" id="table<?php echo $db->intcast($result[$i]['id']);?>" class="order" draggable="true" ondragstart="c.drag(this);" ondrop="c.drop(this);" ondragover="c.allow(event);">
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['category.name'];?></a></td>
-		<td><?php echo $db->intcast($result[$i]['category.order']);?></td>
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/categories/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
 		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/categories/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this category?');"><span class="material-symbols-outlined">delete</span></a></td>
 		</tr>
+		<input type="hidden" name="order<?php echo $j;?>" id="input<?php echo $j;?>" value="" />
 	<?php
+	$j++;
 	}
 	?>
 	</table>
+	<input type="hidden" name="max" value="<?php echo count($result);?>" />
+	<input type="submit" name="" value="Update order" />
+	</form>
 	<?php
 	}
 	?>
@@ -85,13 +112,13 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY id DESC");
 		<tr>
 			<td>
 			<label>Category name:</label><input type="text" name="category.name" value="" class="shop-list-item">
-				<label>Meta title</label>
-	<input type="text" name="meta_title" value="" placeholder="" />
-	<label>Meta description</label>
-	<input type="text" name="meta_description" value="" placeholder="" />
-	<label>Meta tags</label>
-	<input type="text" name="meta_tags" value="" placeholder="A comma separated list" />
-	<input type="submit" name="" value="Add category" />
+			<label>Meta title</label>
+			<input type="text" name="meta_title" value="" placeholder="" />
+			<label>Meta description</label>
+			<input type="text" name="meta_description" value="" placeholder="" />
+			<label>Meta tags</label>
+			<input type="text" name="meta_tags" value="" placeholder="A comma separated list" />
+			<input type="submit" name="" value="Add category" />
 			</td>
 		</tr>
 	</table>
@@ -99,5 +126,11 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY id DESC");
 	
 	</article>
 </div>
+<script>
+	c = new dragndrop();
+	c.input = 'input';
+	c.tableClass = 'order';
+	c.tableId = 'table';
+</script>
 </body>
 </html>

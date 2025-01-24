@@ -662,3 +662,7 @@ hr {
 		margin-right: auto;
 		padding: 1px;
 	}
+	
+	#dragndrop  {
+		cursor: grabbing;
+	}
