@@ -29,39 +29,47 @@ var plainui = {
 	
 };
 
-class dragndrop  {
+class dragndrop {
 
-	static htmlId = '';
-	static html = '';
+    static htmlId = '';
+    static html = '';
+
+    init = function() {
+        let elems = document.getElementsByClassName(this.tableClass);
+        var j = 1;
+        for (var i = 0; i <= elems.length; i++) {
+            if (elems[i]) {
+                let att = document.getElementById(this.tableId + j);
+                if (att) {
+                    elems[i].setAttribute("draggable", true);
+                    elems[i].addEventListener('drag', (event) => {
+                        this.drag(event);
+                    });
+                }
+            }
+            j++;
+        }
+    }
 	
-	drag = function(event,data) {
-		this.htmlId = event.id;
-		this.html = event.innerHTML;
-	}
-
-	allow = function(event) {
-	  event.preventDefault();
-	}
-
-	drop = function(event) {
-		let dragged = document.getElementById(this.htmlId);
-		let dragto = document.getElementById(event.id);
-		let copy = dragged.cloneNode();
-		copy.innerHTML = this.html;
-		dragto.appendChild(copy);
-		dragto.parentNode.insertBefore(copy, event);
-		dragged.parentNode.removeChild(dragged);
-		this.end();
-	}
-	
-	end = function(e) {
-		let elems = document.getElementsByClassName(this.tableClass);
-		let j=1;
-		for(var i=0;i<elems.length;i++) {
-			let ordering = elems[i].getAttribute('id').split(this.tableId).toString();
-			ordering = ordering.replace(',','').toString();
-			document.getElementById(this.input + j).value = ordering +':' + j;
-			j++;
+    drag = function(event) {
+	let xy = document.elementFromPoint(event.clientX, event.clientY).parentNode;
+	if (event.target.parentNode == xy.parentNode) {
+		if(xy == event.target.nextSibling) {
+			xy = xy.nextSibling;
 		}
+		event.target.parentNode.insertBefore(event.target, xy);
 	}
+	this.end();
+    }
+	
+    end = function(e) {
+        let elems = document.getElementsByClassName(this.tableClass);
+        let j = 1;
+        for (var i = 0; i < elems.length; i++) {
+            let ordering = elems[i].getAttribute('id').split(this.tableId).toString();
+            ordering = ordering.replace(',', '').toString();
+            document.getElementById(this.inputId + j).value = ordering + ':' + i;
+            j++;
+        }
+    }
 }

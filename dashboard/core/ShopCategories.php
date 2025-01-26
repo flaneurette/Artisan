@@ -128,9 +128,10 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY `category.order` 
 </div>
 <script>
 	c = new dragndrop();
-	c.input = 'input';
 	c.tableClass = 'order';
 	c.tableId = 'table';
+	c.inputId = 'input';
+	c.init();
 </script>
 </body>
 </html>
