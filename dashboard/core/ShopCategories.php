@@ -87,7 +87,7 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY `category.order` 
 				$color = "";
 			}	
 	?>
-		<tr style="<?php echo $color;?>" id="table<?php echo $db->intcast($result[$i]['id']);?>" class="order" draggable="true" ondragstart="c.drag(this);" ondrop="c.drop(this);" ondragover="c.allow(event);">
+		<tr style="<?php echo $color;?>" id="table<?php echo $db->intcast($result[$i]['id']);?>" class="order">
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['category.name'];?></a></td>
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/categories/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
 		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/categories/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this category?');"><span class="material-symbols-outlined">delete</span></a></td>
