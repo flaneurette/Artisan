@@ -1,4 +1,5 @@
 <?php
+
 	require("../configuration.php");
 	include("Header.php");
 	

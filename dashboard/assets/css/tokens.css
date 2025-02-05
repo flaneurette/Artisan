@@ -316,8 +316,8 @@ hr {
 	}
 
 	.header h1 {
-		padding-left: 0px;
-		margin-left: 10px;
+		margin-top: var(--spacing-xlarge);
+		font-size: larger;
 	}
 
 	ul.navigate {
@@ -329,8 +329,8 @@ hr {
 
 	ul.navigate li {
 		border-bottom: 1px solid var(--lightgray);
-		padding-left:  var(--spacing-xlarge);
 		padding: 10px;
+		padding-left:  var(--spacing-xlarge);
 	}
 	
 	ul.navigate li a {

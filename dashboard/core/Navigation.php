@@ -1,5 +1,6 @@
 	<h1><a href="<?php echo $db->clean(SITE,'encode');?>index.php">Artisan</a></h1>
 	<ul class="navigate">
+		<li><a href="<?php echo $db->clean(SITE,'encode');?>./">Dashboard</a></li>
 		<li><a href="<?php echo $db->clean(SITE,'encode');?>shop/">Shop</a></li>
 		<li><a href="<?php echo $db->clean(SITE,'encode');?>shop/add/">Add shop item</a></li>
 		<li><a href="<?php echo $db->clean(SITE,'encode');?>shop/categories/">Categories</a></li>

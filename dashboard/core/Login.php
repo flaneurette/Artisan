@@ -10,7 +10,6 @@
 	include("../resources/PHP/Class.DB.php");
 	include("Cryptography.php");
 
-	
 	$cryptography = new Cryptography;
 	$db = new sql();
 	
@@ -41,7 +40,6 @@
 	
 	if(isset($_POST['csrf'])) {
 		if($_POST['csrf'] === $_SESSION['uuid']) {
-			
 			if(isset($_REQUEST['username']) && !empty($_REQUEST['password'])) {
 				
 				$username = $db->clean($_POST["username"],'encode');
@@ -55,7 +53,7 @@
 				$value    =  $username;
 				$operator = '*';
 				$result = $db->select($table,$operator,$column,$value); 
-				$result_attempt = $db->query('select * from users');
+				$result_attempt = $db->query('select * from `users` WHERE role = 1');
 				
 				if(count($result) >= 1 && !password_verify($password, $result[0]['password'])) {
 					if($result_attempt[0]['attempts'] >= MAX_LOGIN_ATTEMPTS) {
