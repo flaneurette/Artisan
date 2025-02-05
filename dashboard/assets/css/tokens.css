@@ -317,7 +317,7 @@ hr {
 
 	.header h1 {
 		margin-top: var(--spacing-xlarge);
-		font-size: larger;
+		font-size: x-large;
 	}
 
 	ul.navigate {
