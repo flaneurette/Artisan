@@ -581,6 +581,7 @@ hr {
 		line-height: 100px;
 		text-align: center;
 		margin: 20px;
+		box-shadow: var(--shadow-large);
 	}
 
 	.intro-circle-green {
@@ -595,6 +596,7 @@ hr {
 		text-align: center;
 		color: #009E60;
 		margin: 20px;
+		box-shadow: var(--shadow-large);
 	}
 	.intro-circle-red {
 		border-radius: 360px;
@@ -608,6 +610,7 @@ hr {
 		text-align: center;
 		color: #9e0000;
 		margin: 20px;
+		box-shadow: var(--shadow-large);
 	}	
 	
 	.paid {
