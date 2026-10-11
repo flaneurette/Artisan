@@ -12,7 +12,7 @@ Artisan is a responsive and complete modern shopping cart software, specifically
 0. Download or clone Artisan.
 1. Edit dashboard/configuration.php and define the database and paths.
 2. Import the Artisan SQL file into MySQL
-   (Upgrading an existing installation? Run upgrade.sql on your database instead.)
+   (Upgrading an existing installation? Follow the steps in UPGRADE.md instead.)
 4. Goto the /dashboard/ and login with: username: admin, password: admin.
    The password can be changed in the admin panel under admin settings.
 5. Change the mollie API key under settings to your Mollie API key.
