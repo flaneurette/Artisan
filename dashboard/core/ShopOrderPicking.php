@@ -7,20 +7,20 @@
 		
 		if($_GET['csrf'] === $_SESSION['uuid']) {
 			
-			$table    	= '`shop.orders`';
+			$table    	= '`shop_orders`';
 			$column   	= 'id';
 			$value    	=  $shop->intcast($_GET['id']);
 			$operator 	= '*';
 			$order 		= $db->select($table,$operator,$column,$value);
-			$settings 	= $db->query("SELECT * from `shop.settings`");	
+			$settings 	= $db->query("SELECT * from `shop_settings`");	
 			
 			if(isset($order)) {
-				$cart_table    	= '`shop.cart`';
-				$cart_column   	= '`cart.id`';
-				$cart_value    	=  $shop->clean($order[0]['order.cart.id'],'encode');
+				$cart_table    	= '`shop_cart`';
+				$cart_column   	= '`cart_id`';
+				$cart_value    	=  $order[0]['order_cart_id'];
 				$cart_operator 	= '*';
 				$cart 			= $db->select($cart_table,$cart_operator,$cart_column,$cart_value);
-				$order_id = explode('-',$order[0]['order.id']);
+				$order_id = explode('-',$order[0]['order_id']);
 			} else {
 				echo "Order unknown.";
 				exit;
@@ -52,11 +52,11 @@
 
 	<article class="print">
 		<?php
-		echo "<p>" . $shop->clean($order[0]['order.firstname'],'encode'). " " . $shop->clean($order[0]['order.lastname'],'encode'). "</p>";
-		echo "<p>" . $shop->clean($order[0]['order.address'],'encode'). "</p>"; 
-		echo "<p>" . $shop->clean($order[0]['order.zip'],'encode'). " " .$shop->clean($order[0]['order.city'],'encode'). "</p>";
-		echo "<p>" . $shop->clean($order[0]['order.state'],'encode'). " " .ucfirst($shop->clean($order[0]['order.country'],'encode')). "</p>";
-		echo "<p>" . $shop->clean($order[0]['order.email'],'encode'). "</p>"; 
+		echo "<p>" . $shop->clean($order[0]['order_firstname'],'encode'). " " . $shop->clean($order[0]['order_lastname'],'encode'). "</p>";
+		echo "<p>" . $shop->clean($order[0]['order_address'],'encode'). "</p>"; 
+		echo "<p>" . $shop->clean($order[0]['order_zip'],'encode'). " " .$shop->clean($order[0]['order_city'],'encode'). "</p>";
+		echo "<p>" . $shop->clean($order[0]['order_state'],'encode'). " " .ucfirst($shop->clean($order[0]['order_country'],'encode')). "</p>";
+		echo "<p>" . $shop->clean($order[0]['order_email'],'encode'). "</p>"; 
 		echo "<hr />";
 		echo "<p>" . "Order: " .$shop->clean($order_id[0],'encode'). "</p>";
 		echo "<hr />";
@@ -73,31 +73,31 @@
 			
 			$product_table    	= '`shop`';
 			$product_column   	= '`id`';
-			$product_value    	=  $shop->clean($cart[$i]['cart.product.id'],'encode');
+			$product_value    	=  $shop->intcast($cart[$i]['cart_product_id']);
 			$product_operator 	= '*';
 			$product 			= $db->select($product_table,$product_operator,$product_column,$product_value);
 			
 			// Orders placed before prices were stored with the cart fall back to the current price.
-			if(isset($cart[$i]['cart.price']) && $cart[$i]['cart.price'] !== null) {
-				$price = $cart[$i]['cart.price'];
+			if(isset($cart[$i]['cart_price']) && $cart[$i]['cart_price'] !== null) {
+				$price = $cart[$i]['cart_price'];
 				} else {
-				$price = isset($product[0]) ? $product[0]['product.price'] : 0;
+				$price = isset($product[0]) ? $product[0]['product_price'] : 0;
 			}
 	?>
 		<tr>
-		<td><?php echo $db->clean($cart[$i]['cart.product'],'encode');?></td>
-		<td><?php echo $db->clean($cart[$i]['cart.qty'],'encode');?></td>
-		<td><?php echo $db->clean($settings[0]['settings.currency'],'encode') . number_format((float) $price,2);?></td>
-		<td><?php echo $db->clean($settings[0]['settings.currency'],'encode') . number_format(((float) $price * (int) $cart[$i]['cart.qty']),2);?></td>
+		<td><?php echo $db->clean($cart[$i]['cart_product'],'encode');?></td>
+		<td><?php echo $db->clean($cart[$i]['cart_qty'],'encode');?></td>
+		<td><?php echo $db->clean($settings[0]['settings_currency'],'encode') . number_format((float) $price,2);?></td>
+		<td><?php echo $db->clean($settings[0]['settings_currency'],'encode') . number_format(((float) $price * (int) $cart[$i]['cart_qty']),2);?></td>
 		</tr>
 	<?php
 	}
 	?>
 		<tr>
 		<td></td>
-		<td>Subtotal: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . ($db->clean($order[0]['order.total'],'encode') - $order[0]['order.shipping.price']);?></td>
-		<td>Shipping: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . $db->clean($order[0]['order.shipping.price'],'encode');?></td>
-		<td>Total: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . $db->clean($order[0]['order.total'],'encode');?></td>
+		<td>Subtotal: <?php echo $db->clean($settings[0]['settings_currency'],'encode') . number_format(((float) $order[0]['order_total'] - (float) $order[0]['order_shipping_price']),2);?></td>
+		<td>Shipping: <?php echo $db->clean($settings[0]['settings_currency'],'encode') . $db->clean($order[0]['order_shipping_price'],'encode');?></td>
+		<td>Total: <?php echo $db->clean($settings[0]['settings_currency'],'encode') . $db->clean($order[0]['order_total'],'encode');?></td>
 		</tr>
 	</table>
 	</article>

@@ -8,7 +8,7 @@
 		if($_POST['csrf'] === $_SESSION['uuid']) {
 			if(!empty($_POST['username']) && !empty($_POST['password'])) {
 				
-				$username = $db->clean($_POST["username"],'encode');
+				$username = $_POST["username"];
 				// The password is only compared to its hash, so it is used as typed.
 				$password = $_POST["password"];
 				

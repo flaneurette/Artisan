@@ -5,9 +5,9 @@
 	$result_user = $db->select('users','*','id',$db->intcast($_SESSION['uid']));
 	$default_password = isset($result_user[0]) && password_verify('admin', $result_user[0]['password']);
 	
-	$result_orders 	= $db->query("SELECT * from `shop.orders` where `order.fulfilled` != 1"); 
+	$result_orders 	= $db->query("SELECT * from `shop_orders` where `order_fulfilled` != 1"); 
 	$result_shop 	= $db->query("SELECT * from shop ORDER BY id DESC LIMIT 10");
-	$result_stock 	= $db->query("SELECT * from shop WHERE `product.stock` = 0"); 	
+	$result_stock 	= $db->query("SELECT * from shop WHERE `product_stock` = 0"); 	
 	$result 		= $db->query("SELECT * FROM components order by id DESC LIMIT 10");
 	
 	if(isset($result_stock)) {
@@ -67,8 +67,8 @@
 		
 		for($i=0;$i<count($result_shop);$i++){
 			
-			$image = str_replace('../../','../',UPLOAD_DIR) . $result_shop[$i]["product.image"];
-			if($result_shop[$i]["product.image"] =='') {
+			$image = str_replace('../../','../',UPLOAD_DIR) . $result_shop[$i]["product_image"];
+			if($result_shop[$i]["product_image"] =='') {
 				$image = str_replace('../../','../',UPLOAD_DIR) ."thumb.png";
 				} elseif(!file_exists($image)) {
 				$image = str_replace('../../','../',UPLOAD_DIR) ."thumb.png";
@@ -82,8 +82,8 @@
 	?>
 		<tr style="<?php echo $color;?>">
 		<td width="150"><img src="<?php echo $image;?>" class="shop-list-image" width="100"/></td>
-		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><?php echo $db->clean($result_shop[$i]['product.title'],'encode');?></a></td>
-		<td><?php echo $db->intcast($result_shop[$i]['product.stock']);?> left in stock</td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><?php echo $db->clean($result_shop[$i]['product_title'],'encode');?></a></td>
+		<td><?php echo $db->intcast($result_shop[$i]['product_stock']);?> left in stock</td>
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
 		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/'.$token;?>/delete/<?php echo $db->intcast($result_shop[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this shop item?');"><span class="material-symbols-outlined">delete</span></a></td>
 		</tr>

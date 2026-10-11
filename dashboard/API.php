@@ -26,6 +26,12 @@
 		$result = $db->query("SELECT * from `components` ORDER BY id ASC");
 	}
 
+	if(isset($_REQUEST['filetype']) && ($_REQUEST['filetype'] == 'array' || $_REQUEST['filetype'] == 'csv')) {
+		header('Content-Type: text/plain; charset=utf-8');
+	} else {
+		header('Content-Type: application/json; charset=utf-8');
+	}
+
 	if(isset($_REQUEST['filetype'])) {
 		if($_REQUEST['filetype'] == 'array') {
 			for($i=0;$i<count($result);$i++) {

@@ -18,7 +18,7 @@ try {
 		exit;
     }
 
-    $payment = $mollie->payments->get($shop->clean($_POST["id"],'encode'));
+    $payment = $mollie->payments->get($_POST["id"]);
     $status  = $shop->paymentstatus($payment);
 	
 } catch (\Mollie\Api\Exceptions\ApiException $e) {
@@ -30,9 +30,9 @@ if(isset($status)) {
 	
 	echo $status;
 	
-	$table    = '`shop.orders`';
-	$column   = '`order.mollie.id`';
-	$value    =  $shop->clean($_POST['id'],'encode');
+	$table    = '`shop_orders`';
+	$column   = '`order_mollie_id`';
+	$value    =  $_POST['id'];
 	$operator = '*';
 	$order    = $db->select($table,$operator,$column,$value);
 	
@@ -40,8 +40,8 @@ if(isset($status)) {
 		
 		// Update database with a status from Mollie.
 		
-		$table    = '`shop.orders`';
-		$columns  = ['order.status','order.paid'];
+		$table    = '`shop_orders`';
+		$columns  = ['order_status','order_paid'];
 		$values   = [$status,($status == 'paid') ? 1 : 0];
 		$db->update($table,$columns,$values,$order[0]['id']);
 	
@@ -49,19 +49,19 @@ if(isset($status)) {
 			
 			// Update the inventory, using the cart that belongs to this order.
 			
-			$table_inventory     = '`shop.cart`';
-			$column_inventory    = '`cart.id`';
-			$value_inventory     =  $order[0]['order.cart.id'];
+			$table_inventory     = '`shop_cart`';
+			$column_inventory    = '`cart_id`';
+			$value_inventory     =  $order[0]['order_cart_id'];
 			$operator_inventory  = '*';
 			$result_inventory = $db->select($table_inventory ,$operator_inventory ,$column_inventory ,$value_inventory);
 			
 			for($i=0;$i<count($result_inventory);$i++) {
-				if($result_inventory[$i]['cart.processed'] != '1') {
+				if($result_inventory[$i]['cart_processed'] != '1') {
 					
 					// Update cart to proccessed
 					
-					$table    = '`shop.cart`';
-					$columns  = ['cart.processed'];
+					$table    = '`shop_cart`';
+					$columns  = ['cart_processed'];
 					$values   = [1];
 					$db->update($table,$columns,$values,$result_inventory[$i]['id']);
 					
@@ -69,7 +69,7 @@ if(isset($status)) {
 					
 					$table    = '`shop`';
 					$column   = '`id`';
-					$value    =  $db->intcast($result_inventory[$i]['cart.product.id']);
+					$value    =  $db->intcast($result_inventory[$i]['cart_product_id']);
 					$operator = '*';
 					$product  = $db->select($table,$operator,$column,$value);
 					
@@ -78,8 +78,8 @@ if(isset($status)) {
 						// Update total stock in shop items.
 						
 						$table_stock    = '`shop`';
-						$columns_stock  = ['product.stock'];
-						$values_stock   = [max(0, ($product[0]['product.stock'] - $db->intcast($result_inventory[$i]['cart.qty'])))];
+						$columns_stock  = ['product_stock'];
+						$values_stock   = [max(0, ($product[0]['product_stock'] - $db->intcast($result_inventory[$i]['cart_qty'])))];
 						$db->update($table_stock,$columns_stock,$values_stock,$db->intcast($product[0]['id']));
 					}
 				}

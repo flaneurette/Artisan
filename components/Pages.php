@@ -6,7 +6,7 @@
 	
 	$table    = 'pages';
 	$column   = 'page_name';
-	$value    =  "/".$shop->clean($_GET['page'],'navigate')."/";
+	$value    =  "/".(isset($_GET['page']) ? (string) $_GET['page'] : '')."/";
 	$operator = '*';
 	$meta = $db->select($table,$operator,$column,$value);
 	

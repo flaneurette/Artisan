@@ -7,8 +7,8 @@ session_start();
 
 require_once(__DIR__."/Bootstrap.php");
 
-$settings 		= $db->query("SELECT * from `shop.settings`"); 
-$menu 			= $db->query("SELECT * FROM `shop.categories` order by `category.order` ASC");
+$settings 		= $db->query("SELECT * from `shop_settings`"); 
+$menu 			= $db->query("SELECT * FROM `shop_categories` order by `category_order` ASC");
 $pages 			= $db->query("SELECT * FROM `pages` order by ordering ASC");
 
 if(isset($_SESSION['token'])) {

@@ -4,7 +4,7 @@
 define('WEBSITE','https://localhost/artisan/'); 
 define('SITE','https://localhost/artisan/dashboard/'); 
 define('UPLOAD_DIR', '../../resources/content/');
-define('CHARSET', 'utf8');
+define('CHARSET', 'utf8mb4');
 define('HOST', 'localhost');
 define('DATABASE', 'artisan');
 define('USERNAME', 'root');

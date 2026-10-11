@@ -28,22 +28,22 @@ class Artisan {
 	
 	public function addtocart($obj) 
 	{ 
-		$qty = (int) $obj['product.qty'];
+		$qty = (int) $obj['product_qty'];
 		
 		if($qty < 1 || $qty > self::MAXQTY) {
 			$qty = 1;
 		}
 		
-		$obj['product.qty'] = $qty;
+		$obj['product_qty'] = $qty;
 	
 		if(!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
 			$_SESSION['cart'] = [];
 		}
 		
 		foreach($_SESSION['cart'] as $key => $item) {
-			if(isset($item['product.id']) && $item['product.id'] == $obj['product.id']) {
-				if(($item['product.qty'] + $qty) <= self::MAXQTY) {
-					$_SESSION['cart'][$key]['product.qty'] = ($item['product.qty'] + $qty);
+			if(isset($item['product_id']) && $item['product_id'] == $obj['product_id']) {
+				if(($item['product_qty'] + $qty) <= self::MAXQTY) {
+					$_SESSION['cart'][$key]['product_qty'] = ($item['product_qty'] + $qty);
 				}
 				return true;
 			}
@@ -69,14 +69,14 @@ class Artisan {
 			
 			foreach($_SESSION['cart'] as $item) {
 				
-				if(!isset($item['product.id'])) {
+				if(!isset($item['product_id'])) {
 					$changed = true;
 					continue;
 				}
 				
-				$result = $db->select('shop','*','id',$this->intcast($item['product.id']));
-				$max 	= isset($result[0]) ? min((int) $result[0]['product.stock'], self::MAXQTY) : 0;
-				$qty 	= (int) $item['product.qty'];
+				$result = $db->select('shop','*','id',$this->intcast($item['product_id']));
+				$max 	= isset($result[0]) ? min((int) $result[0]['product_stock'], self::MAXQTY) : 0;
+				$qty 	= (int) $item['product_qty'];
 				
 				if($max < 1) {
 					$changed = true;
@@ -91,7 +91,7 @@ class Artisan {
 					$changed = true;
 				}
 				
-				$item['product.qty'] = $qty;
+				$item['product_qty'] = $qty;
 				array_push($cart,$item);
 			}
 		}
@@ -140,7 +140,7 @@ class Artisan {
 					if($needle) {  
 						if(in_array($needle,$array[$i])) {
 							
-							if($array[$i]['product.id'] == $needle) {
+							if($array[$i]['product_id'] == $needle) {
 								unset($array[$i]); 
 							}
 						}
@@ -164,8 +164,8 @@ class Artisan {
 		
 		foreach($array as $key => $value) {
 			
-			if($array[$i]['product.id'] == $id) {
-				$array[$i]['product.qty'] = max(1, min((int) $qty, self::MAXQTY));
+			if($array[$i]['product_id'] == $id) {
+				$array[$i]['product_qty'] = max(1, min((int) $qty, self::MAXQTY));
 			}
 			
 			$i++;
@@ -182,10 +182,10 @@ class Artisan {
 	*/
 	public function seoUrl($string) 
 	{
-		$find 		= [' ','_','=','+','&','.'];
-		$replace 	= ['-','-','-','-','-','-'];
-		$string 	= str_replace($find,$replace,strtolower($string));
-		return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+		// only what the rewrite rules accept in a URL: a-z, 0-9 and dashes.
+		$string = preg_replace('/[^a-z0-9]+/','-',strtolower((string) $string));
+		$string = trim($string,'-');
+		return ($string === '') ? 'item' : $string;
 	}	
 	
 	/**
@@ -267,8 +267,7 @@ class Artisan {
 				$data =  preg_replace("/[[:alnum:][:space:]]/u", '', $string);
 			break;
 			case 'encode':
-				// stored values are already encoded, so do not encode twice.
-				$data =  htmlspecialchars((string) $string,ENT_QUOTES,'UTF-8',false);
+				$data =  htmlspecialchars((string) $string,ENT_QUOTES,'UTF-8');
 			break;
 			case 'html':
 				$data = htmlspecialchars($string,ENT_QUOTES,'UTF-8');

@@ -4,16 +4,16 @@ require_once __DIR__ . "/../vendor/autoload.php";
 require_once __DIR__ . "/functions.php";
 
 $db 	  = new sql();
-$table    = '`shop.settings`';
+$table    = '`shop_settings`';
 $column   = '`id`';
 $value    =  1;
 $operator = '*';
 $result = $db->select($table,$operator,$column,$value);
 			
-if(isset($result[0]['settings.mollie.api'])) {		
+if(isset($result[0]['settings_mollie_api'])) {		
 	try {
 		$mollie = new \Mollie\Api\MollieApiClient();
-		$mollie->setApiKey($result[0]['settings.mollie.api']);
+		$mollie->setApiKey($result[0]['settings_mollie_api']);
 	} catch (\Mollie\Api\Exceptions\ApiException $e) {
 		// an invalid key: the pages that include this file check whether $mollie is set.
 		error_log("Artisan: the Mollie API key in shop settings is not valid: " . $e->getMessage());

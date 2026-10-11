@@ -6,10 +6,10 @@
 			
 			if(isset($_REQUEST['page']) && !empty($_REQUEST['page'])) {
 				// insert page
-				$component_title_vars = $db->clean($_REQUEST['page'],'encode');
+				$component_title_vars = $_REQUEST['page'];
 				$table    = 'pages';
 				$columns  = ['page_name','sub','ordering','meta_title','meta_description','meta_tags'];
-				$values   = [$component_title_vars,0,$db->intcast($_POST['menu_order']),$db->clean($_POST['meta_title'],'encode'),$db->clean($_POST['meta_description'],'encode'),$db->clean($_POST['meta_tags'],'encode')];
+				$values   = [$component_title_vars,0,$db->intcast($_POST['menu_order']),$_POST['meta_title'],$_POST['meta_description'],$_POST['meta_tags']];
 				$db->insert($table,$columns,$values);
 				$success = "Page successfully added.";
 			}

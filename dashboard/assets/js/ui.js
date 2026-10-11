@@ -15,6 +15,11 @@ var plainui = {
 		document.getElementById(to).value = text;
 	},
 
+	// for plain text fields, such as titles
+	text: function(from,to) {
+		document.getElementById(to).value = document.getElementById(from).textContent;
+	},
+
 	show: function(what) {
 		if(what) {
 			document.getElementById(what).style = 'display:block;'

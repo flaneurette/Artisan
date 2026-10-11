@@ -14,20 +14,20 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken']) && isset($_REQUE
 	
 	if($_SESSION['paytoken'] === $_REQUEST['paytoken']) {
 		
-		$table    = '`shop.orders`';
-		$column   = '`order.id`';
-		$value    =  $shop->clean($_REQUEST['orderid'],'encode');
+		$table    = '`shop_orders`';
+		$column   = '`order_id`';
+		$value    =  $_REQUEST['orderid'];
 		$operator = '*';
 		$result = $db->select($table,$operator,$column,$value);
 
-		if(isset($result[0]) && $result[0]['order.token'] == $_REQUEST['paytoken']) {
+		if(isset($result[0]) && $result[0]['order_token'] == $_REQUEST['paytoken']) {
 			
 			// Mollie also returns the customer here after a cancelled or failed 
 			// payment, so ask Mollie what really happened.
 			
 			try {
 				if(isset($mollie)) {
-					$payment = $mollie->payments->get($result[0]['order.mollie.id']);
+					$payment = $mollie->payments->get($result[0]['order_mollie_id']);
 					$status  = $shop->paymentstatus($payment);
 				} else {
 					$status = 'unknown';
@@ -42,8 +42,8 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken']) && isset($_REQUE
 				// Update database with the status from Mollie. The webhook does the 
 				// same, and updates the inventory.
 				
-				$table    = '`shop.orders`';
-				$columns  = ['order.status','order.paid'];
+				$table    = '`shop_orders`';
+				$columns  = ['order_status','order_paid'];
 				$values   = [$status,($status == 'paid') ? 1 : 0];
 				$db->update($table,$columns,$values,$result[0]['id']);
 			}
@@ -56,14 +56,14 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken']) && isset($_REQUE
 
 			// Mail the client.
 			
-			if(isset($result[0]['order.email'])) { 
-				$email = $result[0]['order.email'];
-				$name = $result[0]['order.firstname'];
+			if(isset($result[0]['order_email'])) { 
+				$email = $result[0]['order_email'];
+				$name = $result[0]['order_firstname'];
 				$tpl = new \security\forms\SecureMail([]);
 				$template_location = '../../inc/templates/order.html';
 				$template_pairs = [
-					"name" => $result[0]['order.firstname'],
-					"shop" => $_SERVER['HTTP_HOST']
+					"name" => $shop->clean($result[0]['order_firstname'],'encode'),
+					"shop" => $shop->clean($_SERVER['HTTP_HOST'],'encode')
 				];
 				$html = $tpl->parseTemplate($template_location,$template_pairs);
 				$parameters = array( 
@@ -78,14 +78,14 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken']) && isset($_REQUE
 			
 			// Mail shop owner to notify new order.
 			
-			$email = $settings[0]['settings.email'];
+			$email = $settings[0]['settings_email'];
 			
 			if(isset($email)) { 
 				$tpl = new \security\forms\SecureMail([]);
 				$template_location = '../../inc/templates/shoporder.html';
 				$template_pairs = [
 					"link" => $db->clean(WEBSITE,'encode') . "dashboard/",
-					"shop" => $_SERVER['HTTP_HOST']
+					"shop" => $shop->clean($_SERVER['HTTP_HOST'],'encode')
 				];
 				$html = $tpl->parseTemplate($template_location,$template_pairs);
 				$parameters = array( 
