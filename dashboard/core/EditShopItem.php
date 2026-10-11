@@ -1,5 +1,4 @@
 <?php
-	require("../configuration.php");
 	include("Header.php");
 	
 	if(isset($_REQUEST['pid'])) { 
@@ -17,55 +16,31 @@
 			
 			if(isset($_POST['id']) && !empty($_POST['id'])) {
 				
-				if(isset($_FILES['product_image']) && !empty($_FILES['product_image'])) {
-					$name = $cryptography->uniqueID() . '-'. basename($_FILES['product_image']["name"]);
-					if(!empty($name)) {
-						if(stripos($name,'.png',-4) || stripos($name,'.jpg',-4) || stripos($name,'.gif',-4)) {						
-							if ($_FILES['product_image']['error'] == UPLOAD_ERR_OK) {
-								$tmp_name = $_FILES['product_image']["tmp_name"];
-								move_uploaded_file($tmp_name, UPLOAD_DIR. "/$name");
-								$product_image = $name;
-							}
-						}
+				if(isset($_FILES['product_image'])) {
+					$name = Upload::image($_FILES['product_image']['name'],$_FILES['product_image']['tmp_name'],$_FILES['product_image']['error'],$cryptography->uniqueID().'-');
+					if($name !== false) {
+						$product_image = $name;
 					}
 				}
 
-				if(isset($_FILES['product_image_2']) && !empty($_FILES['product_image_2'])) {
-					$name = $cryptography->uniqueID() . '-'. basename($_FILES['product_image_2']["name"]);
-					if(!empty($name)) {
-						if(stripos($name,'.png',-4) || stripos($name,'.jpg',-4) || stripos($name,'.gif',-4)) {						
-							if ($_FILES['product_image_2']['error'] == UPLOAD_ERR_OK) {
-								$tmp_name = $_FILES['product_image_2']["tmp_name"];
-								move_uploaded_file($tmp_name, UPLOAD_DIR. "/$name");
-								$product_image_2 = $name;
-							}
-						}
+				if(isset($_FILES['product_image_2'])) {
+					$name = Upload::image($_FILES['product_image_2']['name'],$_FILES['product_image_2']['tmp_name'],$_FILES['product_image_2']['error'],$cryptography->uniqueID().'-');
+					if($name !== false) {
+						$product_image_2 = $name;
 					}
 				}
 
-				if(isset($_FILES['product_image_3']) && !empty($_FILES['product_image_3'])) {
-					$name = $cryptography->uniqueID() . '-'. basename($_FILES['product_image_3']["name"]);
-					if(!empty($name)) {
-						if(stripos($name,'.png',-4) || stripos($name,'.jpg',-4) || stripos($name,'.gif',-4)) {						
-							if ($_FILES['product_image_3']['error'] == UPLOAD_ERR_OK) {
-								$tmp_name = $_FILES['product_image_3']["tmp_name"];
-								move_uploaded_file($tmp_name, UPLOAD_DIR. "/$name");
-								$product_image_3 = $name;
-							}
-						}
+				if(isset($_FILES['product_image_3'])) {
+					$name = Upload::image($_FILES['product_image_3']['name'],$_FILES['product_image_3']['tmp_name'],$_FILES['product_image_3']['error'],$cryptography->uniqueID().'-');
+					if($name !== false) {
+						$product_image_3 = $name;
 					}
 				}
 
-				if(isset($_FILES['featured_image']) && !empty($_FILES['featured_image'])) {
-					$name = $cryptography->uniqueID() . '-'. basename($_FILES['featured_image']["name"]);
-					if(!empty($name)) {
-						if(stripos($name,'.png',-4) || stripos($name,'.jpg',-4) || stripos($name,'.gif',-4)) {						
-							if ($_FILES['featured_image']['error'] == UPLOAD_ERR_OK) {
-								$tmp_name = $_FILES['featured_image']["tmp_name"];
-								move_uploaded_file($tmp_name, UPLOAD_DIR. "/$name");
-								$featured_image = $name;
-							}
-						}
+				if(isset($_FILES['featured_image'])) {
+					$name = Upload::image($_FILES['featured_image']['name'],$_FILES['featured_image']['tmp_name'],$_FILES['featured_image']['error'],$cryptography->uniqueID().'-');
+					if($name !== false) {
+						$featured_image = $name;
 					}
 				}
 				

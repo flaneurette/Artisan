@@ -1,55 +1,17 @@
-<?php 
+<?php
 
-	session_start();
+	require(__DIR__."/../../resources/PHP/Storefront.php");
+
+ 
+
 	
-	require("../../dashboard/configuration.php");
-	include("../../dashboard/resources/PHP/Class.DB.php");
-	include("../../dashboard/resources/PHP/Cryptography.php");
-	include("../../resources/PHP/Artisan.php");
 	
-	$cryptography 	= new Cryptography;
-	$db 			= new sql();
-	$shop 			= new Artisan();
 	
-	$pages 			= $db->query("SELECT * FROM `pages` order by ordering ASC");
-	$menu 			= $db->query("SELECT * FROM `shop.categories` order by `category.order` ASC");
-	$settings 		= $db->query("SELECT * from `shop.settings`"); 
 	
-	if(isset($_SESSION['token'])) {
-		$token = $_SESSION['token'];
-		} else {
-		$token = $cryptography->getToken();
-		$_SESSION['token'] = $token;
-	}
 	
-	$shop->sessioncheck();
 	
-	if(isset($_SESSION['token']) && isset($_POST['token'])) { 
-	
-		if($_SESSION['token'] === $_POST['token']) {
-			
-			if(isset($_POST['product'])) {
-				
-				$table    		= 'shop';
-				$column   		= 'id';
-				$value    		=  $shop->intcast($_POST['id']);
-				$operator 		= '*';
-				$cart_result 	= $db->select($table,$operator,$column,$value);
-				
-				if(isset($cart_result)) { 
-	
-					$arr = [
-						'product.id' => $shop->intcast($_POST['id']),
-						'product.qty' => $shop->intcast($_POST['qty']),
-						'product.title' => $shop->clean($cart_result[0]['product.title'],'encode')
-					];
-					
-					$shop->addtocart($arr);
-				}
-				$_SESSION['cart'] = $shop->unique_array($_SESSION['cart'], 'product.id');
-			}
-		}
-	}
+	// remove items that are gone or sold out, and limit quantities to the stock.
+	$shop->validatecart($db);
 	
 	$meta = array();
 	$meta[0]['meta_title'] 		 = 'Checkout';

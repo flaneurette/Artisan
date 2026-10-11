@@ -1,0 +1,3 @@
+# The payment library is only included by PHP. Nothing in this directory,
+# including the examples, should be reachable from the web.
+Require all denied

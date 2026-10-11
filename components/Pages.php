@@ -1,13 +1,8 @@
 <?php
 
-	require("../dashboard/configuration.php");
-	include("../dashboard/resources/PHP/Class.DB.php");
-	include("../resources/PHP/Artisan.php");
+	require(__DIR__."/../resources/PHP/Storefront.php");
+
 	
-	$db 	= new sql();
-	$shop 	= new Artisan();
-	$menu 	= $db->query("SELECT * FROM `shop.categories` order by `category.order` ASC");
-	$pages 	= $db->query("SELECT * FROM `pages` order by ordering ASC");
 	
 	$table    = 'pages';
 	$column   = 'page_name';

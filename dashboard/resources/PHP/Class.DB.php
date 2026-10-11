@@ -115,7 +115,7 @@ class sql {
 		$params = array($type);
 		
 		for($t=0;$t<count($values);$t++) {
-			$params[] = $this->clean($values[$t],'cols');
+			$params[] = $values[$t];
 		}
 		
 		$tmp = array();
@@ -162,8 +162,9 @@ class sql {
 		$type   = $this->bindvalues($values);
 		$params = array($type);
 		
+		// values are bound, so they are stored as given.
 		for($t=0;$t<$countvalues;$t++) {
-			$params[] = $this->clean($values[$t],'cols');
+			$params[] = $values[$t];
 		}
 		
 		$tmp = array();
@@ -294,7 +295,8 @@ class sql {
 				$data =  preg_replace("/[[:alnum:][:space:]]/u", '', $string);
 			break;
 			case 'encode':
-				$data =  htmlspecialchars($string,ENT_QUOTES,'UTF-8');
+				// stored values are already encoded, so do not encode twice.
+				$data =  htmlspecialchars((string) $string,ENT_QUOTES,'UTF-8',false);
 			break;
 			case 'query':
 				$search  = ['`','"','\'',';'];

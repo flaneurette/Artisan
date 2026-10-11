@@ -1,18 +1,10 @@
 <?php
-	session_start();
+
+	require(__DIR__."/../../resources/PHP/Storefront.php");
+
 	
-	require("../../dashboard/configuration.php");
-	include("../../dashboard/resources/PHP/Class.DB.php");
-	include("../../dashboard/resources/PHP/Cryptography.php");
-	include("../../resources/PHP/Artisan.php");
 	
-	$db 	= new sql();
-	$shop 	= new Artisan();
-	$cryptography 	= new Cryptography;
 	
-	$menu 	= $db->query("SELECT * FROM `shop.categories` order by `category.order` ASC");
-	$pages 	= $db->query("SELECT * FROM `pages` order by ordering ASC");
-	$settings 	= $db->query("SELECT * from `shop.settings`"); 
 	
 	$table    	= '`shop.categories`';
 	$column   	= '`category.name`';
@@ -31,12 +23,6 @@
 		exit;
 	}
 
-	if(isset($_SESSION['token'])) {
-		$token = $_SESSION['token'];
-		} else {
-		$token = $cryptography->getToken();
-		$_SESSION['token'] = $token;
-	}
 ?>
 <!DOCTYPE html>
 <html>

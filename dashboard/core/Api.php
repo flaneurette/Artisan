@@ -1,5 +1,4 @@
 <?php
-	require("../configuration.php");
 	include("Header.php");
 	$result = $db->query("SELECT * from pages ORDER BY id ASC"); 
 ?>

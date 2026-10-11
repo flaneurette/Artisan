@@ -1,6 +1,5 @@
 <?php
 	
-	require("../configuration.php");
 	include("Header.php");
 	
 	if(isset($_POST['csrf'])) {
@@ -10,16 +9,10 @@
 				
 				if(isset($_FILES['main_image']) && !empty($_FILES['main_image'])) {
 					foreach ($_FILES["main_image"]["error"] as $key => $error) {
-						$name = basename($_FILES["main_image"]["name"][$key]);
-						if(!empty($name)) {
-							if(stripos($name,'.png',-4) || stripos($name,'.jpg',-4) || stripos($name,'.gif',-4)) {	
-								if ($error == UPLOAD_ERR_OK) {
-									$tmp_name = $_FILES["main_image"]["tmp_name"][$key];
-									$image = $name;
-									move_uploaded_file($tmp_name, UPLOAD_DIR. "$name");
-									$success = "Component successfully added.";
-								} else { } 
-							}
+						$name = Upload::image($_FILES["main_image"]["name"][$key],$_FILES["main_image"]["tmp_name"][$key],$error);
+						if($name !== false) {
+							$image = $name;
+							$success = "Component successfully added.";
 						}
 					}
 				}

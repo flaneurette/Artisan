@@ -1,33 +1,19 @@
 <?php
 
-	session_start();
+	require(__DIR__."/../../resources/PHP/Storefront.php");
+
 	
-	require("../../dashboard/configuration.php");
-	include("../../dashboard/resources/PHP/Class.DB.php");
-	include("../../dashboard/resources/PHP/Cryptography.php");
-	include("../../resources/PHP/Artisan.php");
 	
-	$db 		= new sql();
-	$shop 		= new Artisan();
 	
-	$menu 		= $db->query("SELECT * FROM `shop.categories` order by `category.order` ASC");
-	$pages 		= $db->query("SELECT * FROM `pages` order by ordering ASC");
 	$meta 		= $db->query("SELECT * FROM `pages` WHERE id = 1");
-	$settings 	= $db->query("SELECT * from `shop.settings`"); 
 	
 	$table    	= '`shop`';
 	$column   	= '`product.description`';
 	$operator 	= '*';
-	$value 		= $shop->clean($_REQUEST['search'],'encode');
+	$value 		= $shop->clean(isset($_REQUEST['search']) ? $_REQUEST['search'] : '','encode');
 
 	$search_results = $db->search($table,$operator,$column,$value);
 	
-	if(isset($_SESSION['token'])) {
-		$token = $_SESSION['token'];
-		} else {
-		$token = $cryptography->getToken();
-		$_SESSION['token'] = $token;
-	}
 ?>
 <!DOCTYPE html>
 <html>

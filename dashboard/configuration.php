@@ -10,6 +10,11 @@ define('DATABASE', 'artisan');
 define('USERNAME', 'root');
 define('PASSWORD', '');
 define('MAX_LOGIN_ATTEMPTS', 10);
+define('LOGIN_LOCKOUT_SECONDS', 900); // time a login stays locked after too many wrong passwords.
+
+// Secret key for the encryption functions. Set this to a long random value that is unique 
+// to your shop, for example the output of: php -r "echo bin2hex(random_bytes(32));"
+define('SECRET', '');
 
 /*
 

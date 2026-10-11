@@ -1,5 +1,4 @@
 <?php
-	require("../configuration.php");
 	include("Header.php");
 	
 	if(isset($_REQUEST['id'])) { 

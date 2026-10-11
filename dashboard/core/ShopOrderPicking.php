@@ -1,11 +1,7 @@
 <?php
 
-	require("../configuration.php");
 	include("Header.php");
 	
-	include("../../resources/PHP/Artisan.php");
-
-	$shop 	= new Artisan();
 	
 	if(isset($_GET['csrf'])) {
 		
@@ -80,12 +76,19 @@
 			$product_value    	=  $shop->clean($cart[$i]['cart.product.id'],'encode');
 			$product_operator 	= '*';
 			$product 			= $db->select($product_table,$product_operator,$product_column,$product_value);
+			
+			// Orders placed before prices were stored with the cart fall back to the current price.
+			if(isset($cart[$i]['cart.price']) && $cart[$i]['cart.price'] !== null) {
+				$price = $cart[$i]['cart.price'];
+				} else {
+				$price = isset($product[0]) ? $product[0]['product.price'] : 0;
+			}
 	?>
 		<tr>
 		<td><?php echo $db->clean($cart[$i]['cart.product'],'encode');?></td>
 		<td><?php echo $db->clean($cart[$i]['cart.qty'],'encode');?></td>
-		<td><?php echo $db->clean($settings[0]['settings.currency'],'encode') . number_format($db->clean($product[0]['product.price'],'encode'),2);?></td>
-		<td><?php echo $db->clean($settings[0]['settings.currency'],'encode') . number_format(($db->clean($product[0]['product.price'],'encode') * $db->clean($cart[$i]['cart.qty'],'encode')),2);?></td>
+		<td><?php echo $db->clean($settings[0]['settings.currency'],'encode') . number_format((float) $price,2);?></td>
+		<td><?php echo $db->clean($settings[0]['settings.currency'],'encode') . number_format(((float) $price * (int) $cart[$i]['cart.qty']),2);?></td>
 		</tr>
 	<?php
 	}

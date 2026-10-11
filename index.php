@@ -1,30 +1,15 @@
 <?php
 
-	session_start();
+	require(__DIR__."/resources/PHP/Storefront.php");
+
 	
-	require("dashboard/configuration.php");
-	include("dashboard/resources/PHP/Class.DB.php");
-	include("dashboard/resources/PHP/Cryptography.php");
-	include("resources/PHP/Artisan.php");
 	
-	$db = new sql();
-	$shop = new Artisan();
-	$cryptography = new Cryptography;
 	
-	$menu			= $db->query("SELECT * FROM `shop.categories` ORDER BY `category.order` ASC");
-	$pages			= $db->query("SELECT * FROM `pages` ORDER BY ordering ASC");
 	$meta			= $db->query("SELECT * FROM `pages` WHERE id = 1");
 	$highlight		= $db->query("SELECT * FROM `shop` WHERE `product.featured` = 1 ORDER BY id DESC LIMIT 1");
 	$carousel		= $db->query("SELECT * FROM `shop` WHERE `product.featured.carousel` = 1 ORDER BY RAND() LIMIT 10");
 	$latest			= $db->query("SELECT * FROM `shop` ORDER BY RAND() LIMIT 20");
-	$settings		= $db->query("SELECT * from `shop.settings`"); 
 
-	if(isset($_SESSION['token'])) {
-		$token = $_SESSION['token'];
-		} else {
-		$token = $cryptography->getToken();
-		$_SESSION['token'] = $token;
-	}
 ?>
 <!DOCTYPE html>
 <html>

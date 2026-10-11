@@ -6,10 +6,7 @@
 	header("Referrer-Policy: same-origin");
 	
 	session_start(); 
-	require("configuration.php");
-	include("resources/PHP/Class.DB.php");
-	
-	$db = new sql();
+	require(__DIR__."/../resources/PHP/Bootstrap.php");
 		
 	if(!empty($_REQUEST['id']) >=1) { 
 		$pageid 	=  $db->intcast($_REQUEST['id']);

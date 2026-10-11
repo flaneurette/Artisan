@@ -12,6 +12,7 @@ Artisan is a responsive and complete modern shopping cart software, specifically
 0. Download or clone Artisan.
 1. Edit dashboard/configuration.php and define the database and paths.
 2. Import the Artisan SQL file into MySQL
+   (Upgrading an existing installation? Run upgrade.sql on your database instead.)
 4. Goto the /dashboard/ and login with: username: admin, password: admin.
    The password can be changed in the admin panel under admin settings.
 5. Change the mollie API key under settings to your Mollie API key.
@@ -29,4 +30,3 @@ Accepting iDEAL, Apple Pay, Bancontact, SOFORT Banking, Creditcard, SEPA Bank tr
 - PHP >= 7.2, MySQL, mod_rewrite. 
   Although Artisan was able to run on lower versions of PHP, PHP 8 is supported and recommended.
 - Up-to-date OpenSSL (or other SSL/TLS toolkit)
-- MySQL STRICT_TRANS_TABLES need to be disabled, if not Artisan will not work properly.

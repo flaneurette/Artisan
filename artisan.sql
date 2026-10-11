@@ -32,7 +32,7 @@ CREATE TABLE `components` (
   `pid` int(11) NOT NULL,
   `component_title` tinytext NOT NULL,
   `component_text` longtext NOT NULL,
-  `component_image` varchar(255) NOT NULL
+  `component_image` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -126,10 +126,11 @@ CREATE TABLE `shop.cart` (
   `cart.product` varchar(255) NOT NULL,
   `cart.product.id` int(11) NOT NULL,
   `cart.qty` int(11) NOT NULL,
+  `cart.price` decimal(10,2) DEFAULT NULL,
   `cart.ip` varchar(255) NOT NULL,
   `cart.stage` varchar(255) NOT NULL,
   `cart.token` varchar(255) NOT NULL,
-  `cart.processed` int(11) NOT NULL
+  `cart.processed` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -141,8 +142,8 @@ CREATE TABLE `shop.cart` (
 CREATE TABLE `shop.categories` (
   `id` int(11) NOT NULL,
   `category.name` varchar(255) NOT NULL,
-  `category.sub` varchar(255) NOT NULL,
-  `category.order` int(11) NOT NULL,
+  `category.sub` varchar(255) NOT NULL DEFAULT '',
+  `category.order` int(11) NOT NULL DEFAULT 0,
   `meta_description` varchar(255) NOT NULL,
   `meta_tags` varchar(255) NOT NULL,
   `meta_title` varchar(255) NOT NULL
@@ -176,14 +177,14 @@ CREATE TABLE `shop.orders` (
   `order.state` varchar(40) NOT NULL,
   `order.country` varchar(255) NOT NULL,
   `order.email` varchar(255) NOT NULL,
-  `order.phone` varchar(255) NOT NULL,
+  `order.phone` varchar(255) NOT NULL DEFAULT '',
   `order.status` varchar(255) NOT NULL,
-  `order.paid` int(11) NOT NULL,
+  `order.paid` int(11) NOT NULL DEFAULT 0,
   `order.shipping.price` varchar(255) NOT NULL,
   `order.total` varchar(255) NOT NULL,
   `order.date` varchar(255) NOT NULL,
-  `order.shipped` int(11) NOT NULL,
-  `order.fulfilled` int(11) NOT NULL,
+  `order.shipped` int(11) NOT NULL DEFAULT 0,
+  `order.fulfilled` int(11) NOT NULL DEFAULT 0,
   `order.token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -225,15 +226,16 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` int(11) NOT NULL,
-  `attempts` int(11) NOT NULL
+  `attempts` int(11) NOT NULL DEFAULT 0,
+  `attempt_time` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `role`, `attempts`) VALUES
-(1, 'admin', '$2y$10$ooXjcp5z6QaLr25rFNabiuP.G6i.EE.Ot4phvNrPYe0kmTOO24g0.', 1, 0);
+INSERT INTO `users` (`id`, `username`, `password`, `role`, `attempts`, `attempt_time`) VALUES
+(1, 'admin', '$2y$10$ooXjcp5z6QaLr25rFNabiuP.G6i.EE.Ot4phvNrPYe0kmTOO24g0.', 1, 0, 0);
 
 --
 -- Indexes for dumped tables

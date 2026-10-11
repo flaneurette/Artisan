@@ -1,24 +1,15 @@
 <?php
-	require("../configuration.php");
 	include("Header.php");
 	
 	if(isset($_POST['csrf'])) {
 		if($_POST['csrf'] === $_SESSION['uuid']) {
 			if(isset($_FILES['resource']) && !empty($_FILES['resource'])) {
 				foreach ($_FILES["resource"]["error"] as $key => $error) {
-					$name = basename($_FILES["resource"]["name"][$key]);
-					if(!empty($name)) {
-						if(stripos($name,'.png',-4) || stripos($name,'.jpg',-4) || stripos($name,'.gif',-4)) {	
-							if ($error == UPLOAD_ERR_OK) {
-								$tmp_name = $_FILES["resource"]["tmp_name"][$key];
-								move_uploaded_file($tmp_name, UPLOAD_DIR. "/$name");
-								$success = "File(s) uploaded, and are now available in the lightbox.";
-
-							} else {
-								$errors = "File could not be uploaded, make sure Artisan can write to ../resources/content/";
-							}
+					if(!empty($_FILES["resource"]["name"][$key])) {
+						if(Upload::image($_FILES["resource"]["name"][$key],$_FILES["resource"]["tmp_name"][$key],$error) !== false) {
+							$success = "File(s) uploaded, and are now available in the lightbox.";
 						} else {
-							$errors = "File could not be uploaded, allowed filetypes: .png, .jpg, .gif";
+							$errors = "File could not be uploaded. Allowed filetypes: .png, .jpg, .gif. Also make sure Artisan can write to ../resources/content/";
 						}
 					}
 				}

@@ -1,21 +1,6 @@
 <?php
-session_start();
 
-require("../../dashboard/configuration.php");
-include("../../dashboard/resources/PHP/Class.DB.php");
-include("../../dashboard/resources/PHP/Cryptography.php");
-include("../../resources/PHP/Artisan.php");
-
-$cryptography 	= new Cryptography;
-$db 			= new sql();
-$shop 			= new Artisan();
-
-if(isset($_SESSION['token'])) {
-	$token = $_SESSION['token'];
-	} else {
-	$token = $cryptography->getToken();
-	$_SESSION['token'] = $token;
-}
+require(__DIR__."/../../resources/PHP/Storefront.php");
 
 if(isset($_SESSION['paytoken'])) {
 	$paytoken = $_SESSION['paytoken'];
@@ -38,37 +23,24 @@ if(isset($_SESSION['paytoken'])) {
 				exit;
 			}
 			
-			$settings = $db->query("SELECT * from `shop.settings`"); 
-			
-			if(isset($_SESSION['cartid'])) {
-				$cartid  = $_SESSION['cartid'];
-				$orderid = $_SESSION['orderid'];
-				} else {
-				$cartid  				= 'C' . time().'-'.$cryptography->uniqueID();
-				$orderid 				= 'O' . time().'-'.$cryptography->uniqueID();
-				$_SESSION['cartid'] 	= $cartid;
-				$_SESSION['orderid']	= $orderid;		
+			// The inventory may have changed since the cart was shown. If the cart had 
+			// to be corrected, show it again before taking a payment.
+			if($shop->validatecart($db) || count($_SESSION['cart']) < 1) {
+				header("Location: ../../cart/");
+				exit;
 			}
+			
+			
+			// Each payment attempt gets its own cart and order id, so that a cart which 
+			// was changed after an abandoned payment is never paid under the old order.
+			$cartid  = 'C' . time().'-'.$cryptography->uniqueID();
+			$orderid = 'O' . time().'-'.$cryptography->uniqueID();
 			
 			$ip		 = $_SERVER['REMOTE_ADDR'];
 			$total	 = 0;
-			
-			// check if cart already exists
-			$result_cart_table    = '`shop.cart`';
-			$result_cart_column   = '`cart.id`';
-			$result_cart_value    =  $cartid;
-			$result_cart_operator = '*';
-			$result_cart = $db->select($result_cart_table,$result_cart_operator,$result_cart_column,$result_cart_value);
+			$lines	 = [];
 			
 			for($i=0;$i<count($_SESSION['cart']);$i++) {
-				
-				if(count($result_cart) <=0) { 
-					// Insert cart contents into database
-					$table    = '`shop.cart`';
-					$columns  = ['`cart.id`','`cart.created`','`cart.product`','`cart.product.id`','`cart.qty`','`cart.ip`','`cart.stage`','`cart.token`'];
-					$values   = [$cartid,time(),$shop->clean($_SESSION['cart'][$i]['product.title'],'encode'),$shop->clean($_SESSION['cart'][$i]['product.id'],'encode'),$shop->clean($_SESSION['cart'][$i]['product.qty'],'encode'),$shop->clean($ip,'encode'),'mollie payment',$shop->clean($_POST["token"],'encode')];
-					$db->insert($table,$columns,$values);
-				}
 				
 				// Calculate the totals
 				$table    		= 'shop';
@@ -77,7 +49,13 @@ if(isset($_SESSION['paytoken'])) {
 				$operator 		= '*';
 				$cart_result 	= $db->select($table,$operator,$column,$value);
 				
-				$total = ($total + ($shop->clean($cart_result[0]['product.price'],'encode') * $shop->intcast($_SESSION['cart'][$i]['product.qty'])));
+				$price 	= (float) $cart_result[0]['product.price'];
+				$qty 	= $shop->intcast($_SESSION['cart'][$i]['product.qty']);
+				
+				$total = ($total + ($price * $qty));
+				
+				// The price is stored with the cart, so the order keeps what was actually paid.
+				$lines[] = [$cartid,time(),$shop->clean($cart_result[0]['product.title'],'encode'),$value,$qty,number_format($price, 2, '.', ''),$shop->clean($ip,'encode'),'mollie payment',$shop->clean($_POST["token"],'encode')];
 			}
 			
 			$shipping_free = $shop->clean($settings[0]['settings.free'],'encode');
@@ -102,24 +80,38 @@ if(isset($_SESSION['paytoken'])) {
 			$order_token		= $shop->clean($_POST["token"],'encode');
 							
 			// Now follow the Mollie logic.
-			require_once("../mollie/vendor/autoload.php");
-			require_once("../mollie/examples/functions.php");
-			include("../mollie/examples/initialize.php");
-
-			$payment = $mollie->payments->create([
-				"amount" => [
-					"currency" => substr($shop->clean($settings[0]['settings.country.code'],'encode'),0,3),
-					"value" => "$total",
-				],
-				"description" => "$orderid",
-				"redirectUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/success.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
-				"webhookUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/webhook.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
-				"metadata" => [
-					"order_id" => "$orderid",
-				],
-			]);
+			include(__DIR__."/../mollie/examples/initialize.php");
+			
+			$payment = null;
+			
+			if(isset($mollie)) {
+				try {
+					$payment = $mollie->payments->create([
+						"amount" => [
+							"currency" => substr($shop->clean($settings[0]['settings.country.code'],'encode'),0,3),
+							"value" => "$total",
+						],
+						"description" => "$orderid",
+						"redirectUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/success.php?orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
+						"webhookUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/webhook.php",
+						"metadata" => [
+							"order_id" => "$orderid",
+						],
+					]);
+				} catch (\Mollie\Api\Exceptions\ApiException $e) {
+					error_log("Artisan: Mollie payment could not be created: " . $e->getMessage());
+				}
+			}
 			
 			if(isset($payment->id)) { 
+			
+				// Insert cart contents into database
+				$table    = '`shop.cart`';
+				$columns  = ['`cart.id`','`cart.created`','`cart.product`','`cart.product.id`','`cart.qty`','`cart.price`','`cart.ip`','`cart.stage`','`cart.token`'];
+				for($i=0;$i<count($lines);$i++) {
+					$db->insert($table,$columns,$lines[$i]);
+				}
+				
 				// Insert the order into database
 				$table    = '`shop.orders`';
 				$columns  = ['`order.id`','`order.cart.id`','`order.mollie.id`','`order.firstname`','`order.lastname`','`order.address`','`order.city`','`order.zip`','`order.state`','`order.country`','`order.email`','`order.phone`','`order.status`','`order.paid`','`order.shipping.price`','`order.total`','`order.date`','`order.token`'];
