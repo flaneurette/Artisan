@@ -1,7 +1,7 @@
 <?php
 
-include_once("Message.php");
-include_once("Sanitize.php");
+include_once(__DIR__."/Message.php");
+include_once(__DIR__."/Sanitize.php");
 
 #[AllowDynamicProperties]
 class Cryptography {
@@ -11,8 +11,6 @@ class Cryptography {
 	CONST MINMERSENNE  = 0xff; 		// Min. value of the Mersenne twister.
 	CONST MAXMERSENNE  = 0xffffffff; 	// Max. value of the Mersenne twister.
 	
-	private $pwd 	= 'ArtisanIsAShoppingCart'; // TODO +May 2022: Should be set upon installation
-	
 	public function __construct($params = array()) 
 	{ 
 		$this->init($params);
@@ -20,9 +18,17 @@ class Cryptography {
 		$this->sanitizer = new Sanitizer;
 	}
 	
+	/**
+	* The encryption key, derived from SECRET in configuration.php.
+	* @return mixed string, or false if no secret has been configured.
+	*/
 	public function password()
 	{
-		return $this->pwd;
+		if(!defined('SECRET') || strlen(SECRET) < 32) {
+			$this->messages->message('Encryption failed: SECRET in configuration.php is not set, or shorter than 32 characters.');
+			return false;
+		}
+		return hash('sha256', SECRET, true);
 	}
 	
 	/**
@@ -118,7 +124,10 @@ class Cryptography {
 			return false;
     	}
 		
-		$key = $this->password(); // Password is set above at the Constants
+		$key = $this->password();
+		if($key === false) {
+			return false;
+		}
 		$ivlen = openssl_cipher_iv_length($cipher="AES-256-CTR");
 		$iv = openssl_random_pseudo_bytes($ivlen);
 		$ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
@@ -140,7 +149,10 @@ class Cryptography {
 			return false;
     	}
 		
-		$key = $this->password(); // Password is set above at the Constants
+		$key = $this->password();
+		if($key === false) {
+			return false;
+		}
 		$ciphertext = hex2bin($ciphertext);
 		$c = base64_decode($ciphertext);
 		$ivlen = openssl_cipher_iv_length($cipher="AES-256-CTR");

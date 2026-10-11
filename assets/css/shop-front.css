@@ -509,35 +509,47 @@ article {
 /* Checkout form */
 
 
-.shop-checkout-block2 {
+.shop-checkout-fields {
 	background-color: var(--lightgrey);
-    margin-left: auto;
-    margin-right: auto;
-    padding: var(--spacing-xlarge);
-	display:flex;
-	justify-content:center;
+	padding: var(--spacing-xlarge);
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--spacing-large);
+	max-width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+	box-sizing: border-box;
 }
 
-.shop-checkout-block2 table {
+.shop-checkout-wide {
+	grid-column: 1 / -1;
+}
+
+.shop-checkout-field label {
+	margin: 0px 0px 6px 0px;
+	display: block;
+	font-size: var(--fontsize-small);
+}
+
+.shop-checkout-field input,
+.shop-checkout-field select {
+	width: 100%;
 	margin: 0px;
-}
-
-.shop-checkout-block2 table td {
 	padding: 10px;
+	box-sizing: border-box;
+	font-size: 16px;
+	text-transform: none;
 }
 
-.shop-checkout-block2 table td label {
-    margin: 0px;
-    display: block;	
+.shop-checkout-field input:focus,
+.shop-checkout-field select:focus {
+	outline: 2px solid var(--blue);
+	outline-offset: 1px;
 }
 
-.shop-checkout-block2 table td input {
-	width:350px;
-}
-
-.shop-checkout-block2 table td select {
-	padding:10px;
-	width:370px;
+.shop-checkout-field input[type="submit"] {
+	text-transform: uppercase;
+	padding: 14px;
 }
 
 .shop-form-content-div {
@@ -742,6 +754,36 @@ article {
 }
 
 @media only screen and (max-width: 800px) {
+	
+	.shop-checkout-fields {
+		grid-template-columns: 1fr;
+		padding: var(--spacing-large);
+	}
+	
+	.shop-cart-highlight {
+		width: auto;
+		margin-left: var(--spacing-medium);
+		margin-right: var(--spacing-medium);
+		margin-top: 90px;
+	}
+	
+	.shop-cart {
+		overflow-x: auto;
+		min-height: 300px;
+	}
+	
+	.shop-cart .table-list {
+		font-size: var(--fontsize-small);
+	}
+	
+	.shop-cart input[type="number"] {
+		width: 48px;
+		padding: 6px;
+	}
+	
+	.shop-cart input[type="submit"] {
+		width: 100%;
+	}
 	
 	#mobile-menu {
 		display: block;

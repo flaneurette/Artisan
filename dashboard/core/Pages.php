@@ -1,5 +1,4 @@
 <?php
-	require("../configuration.php");
 	include("Header.php");
 
 	if(isset($_REQUEST['delete'])) {
@@ -36,7 +35,7 @@
 		}	
 	?>
 		<tr style="<?php echo $color;?>">
-		<td><a href="<?php echo $db->clean(SITE,'encode');?>pages/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['page_name'];?></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>pages/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $db->clean($result[$i]['page_name'],'encode');?></a></td>
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>pages/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
 		<td><a target="_blank" href="<?php echo $db->clean(SITE,'encode');?>API.php?catid=<?php echo $db->intcast($result[$i]['id']);?>"><span class="material-symbols-outlined">database</span></a></td>
 		<td width="500"></td>

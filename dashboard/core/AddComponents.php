@@ -1,6 +1,5 @@
 <?php
 	
-	require("../configuration.php");
 	include("Header.php");
 	
 	if(isset($_POST['csrf'])) {
@@ -10,16 +9,10 @@
 				
 				if(isset($_FILES['main_image']) && !empty($_FILES['main_image'])) {
 					foreach ($_FILES["main_image"]["error"] as $key => $error) {
-						$name = basename($_FILES["main_image"]["name"][$key]);
-						if(!empty($name)) {
-							if(stripos($name,'.png',-4) || stripos($name,'.jpg',-4) || stripos($name,'.gif',-4)) {	
-								if ($error == UPLOAD_ERR_OK) {
-									$tmp_name = $_FILES["main_image"]["tmp_name"][$key];
-									$image = $name;
-									move_uploaded_file($tmp_name, UPLOAD_DIR. "$name");
-									$success = "Component successfully added.";
-								} else { } 
-							}
+						$name = Upload::image($_FILES["main_image"]["name"][$key],$_FILES["main_image"]["tmp_name"][$key],$error);
+						if($name !== false) {
+							$image = $name;
+							$success = "Component successfully added.";
 						}
 					}
 				}
@@ -67,7 +60,7 @@
 		<?php 
 		for($i=0;$i<count($result);$i++) { 
 		?> 
-		<option value="<?php echo $result[$i]['id'];?>"><?php echo $result[$i]['page_name'];?></option>
+		<option value="<?php echo $db->intcast($result[$i]['id']);?>"><?php echo $db->clean($result[$i]['page_name'],'encode');?></option>
 		<?php 
 		} 
 		?>
@@ -84,7 +77,7 @@
 	?>
 	<input type="hidden" name="csrf" value="<?php echo $token;?>" />
 	<input type="hidden" name="edit" value="1" />
-		<h1><div name="" contentEditable="true" id="titleditor" oninput="plainui.proc('titleditor','component_title');">Title</div></h1>
+		<h1><div name="" contentEditable="true" id="titleditor" oninput="plainui.text('titleditor','component_title');">Title</div></h1>
 		<input type="hidden" name="component_title" id="component_title" value=""  />
 		<textarea id="component_text" name="component_text" class="textarea"></textarea>
 		<div name="component_text" style="overflow-y:scroll;" contentEditable="true" name="post-message" class="texteditor2" id="texteditor" oninput="plainui.proc('texteditor','component_text');" placeholder="Write...">Text...</div>

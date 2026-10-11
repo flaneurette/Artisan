@@ -1,21 +1,6 @@
 <?php
-session_start();
 
-require("../../dashboard/configuration.php");
-include("../../dashboard/resources/PHP/Class.DB.php");
-include("../../dashboard/resources/PHP/Cryptography.php");
-include("../../resources/PHP/Artisan.php");
-
-$cryptography 	= new Cryptography;
-$db 			= new sql();
-$shop 			= new Artisan();
-
-if(isset($_SESSION['token'])) {
-	$token = $_SESSION['token'];
-	} else {
-	$token = $cryptography->getToken();
-	$_SESSION['token'] = $token;
-}
+require(__DIR__."/../../resources/PHP/Storefront.php");
 
 if(isset($_SESSION['paytoken'])) {
 	$paytoken = $_SESSION['paytoken'];
@@ -38,91 +23,115 @@ if(isset($_SESSION['paytoken'])) {
 				exit;
 			}
 			
-			$settings = $db->query("SELECT * from `shop.settings`"); 
-			
-			if(isset($_SESSION['cartid'])) {
-				$cartid  = $_SESSION['cartid'];
-				$orderid = $_SESSION['orderid'];
-				} else {
-				$cartid  				= 'C' . time().'-'.$cryptography->uniqueID();
-				$orderid 				= 'O' . time().'-'.$cryptography->uniqueID();
-				$_SESSION['cartid'] 	= $cartid;
-				$_SESSION['orderid']	= $orderid;		
+			// The inventory may have changed since the cart was shown. If the cart had 
+			// to be corrected, show it again before taking a payment.
+			if($shop->validatecart($db) || count($_SESSION['cart']) < 1) {
+				header("Location: ../../cart/");
+				exit;
 			}
+			
+			
+			// The form is checked in the browser, but never trust that alone.
+			foreach(['first_name','last_name','address','city','zip','country','email'] as $field) {
+				if(!isset($_POST[$field]) || trim((string) $_POST[$field]) === '') {
+					header("Location: ../");
+					exit;
+				}
+			}
+			
+			if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+				header("Location: ../");
+				exit;
+			}
+			
+			if(!isset($_POST['state'])) {
+				$_POST['state'] = '';
+			}
+			
+			// Each payment attempt gets its own cart and order id, so that a cart which 
+			// was changed after an abandoned payment is never paid under the old order.
+			$cartid  = 'C' . time().'-'.$cryptography->uniqueID();
+			$orderid = 'O' . time().'-'.$cryptography->uniqueID();
 			
 			$ip		 = $_SERVER['REMOTE_ADDR'];
 			$total	 = 0;
-			
-			// check if cart already exists
-			$result_cart_table    = '`shop.cart`';
-			$result_cart_column   = '`cart.id`';
-			$result_cart_value    =  $cartid;
-			$result_cart_operator = '*';
-			$result_cart = $db->select($result_cart_table,$result_cart_operator,$result_cart_column,$result_cart_value);
+			$lines	 = [];
 			
 			for($i=0;$i<count($_SESSION['cart']);$i++) {
-				
-				if(count($result_cart) <=0) { 
-					// Insert cart contents into database
-					$table    = '`shop.cart`';
-					$columns  = ['`cart.id`','`cart.created`','`cart.product`','`cart.product.id`','`cart.qty`','`cart.ip`','`cart.stage`','`cart.token`'];
-					$values   = [$cartid,time(),$shop->clean($_SESSION['cart'][$i]['product.title'],'encode'),$shop->clean($_SESSION['cart'][$i]['product.id'],'encode'),$shop->clean($_SESSION['cart'][$i]['product.qty'],'encode'),$shop->clean($ip,'encode'),'mollie payment',$shop->clean($_POST["token"],'encode')];
-					$db->insert($table,$columns,$values);
-				}
 				
 				// Calculate the totals
 				$table    		= 'shop';
 				$column   		= 'id';
-				$value    		=  $shop->intcast($_SESSION['cart'][$i]['product.id']);
+				$value    		=  $shop->intcast($_SESSION['cart'][$i]['product_id']);
 				$operator 		= '*';
 				$cart_result 	= $db->select($table,$operator,$column,$value);
 				
-				$total = ($total + ($shop->clean($cart_result[0]['product.price'],'encode') * $shop->intcast($_SESSION['cart'][$i]['product.qty'])));
+				$price 	= (float) $cart_result[0]['product_price'];
+				$qty 	= $shop->intcast($_SESSION['cart'][$i]['product_qty']);
+				
+				$total = ($total + ($price * $qty));
+				
+				// The price is stored with the cart, so the order keeps what was actually paid.
+				$lines[] = [$cartid,time(),$cart_result[0]['product_title'],$value,$qty,number_format($price, 2, '.', ''),$ip,'mollie payment',$_POST["token"]];
 			}
 			
-			$shipping_free = $shop->clean($settings[0]['settings.free'],'encode');
+			$shipping_free = $shop->clean($settings[0]['settings_free'],'encode');
 				if($total > $shipping_free) {
 					$shipping = 0;
 					} else {
-					$shipping = $shop->clean($settings[0]['settings.shipping'],'encode');
-				$total = ($total + $shop->clean($settings[0]['settings.shipping'],'encode'));
+					$shipping = $shop->clean($settings[0]['settings_shipping'],'encode');
+				$total = ($total + $shop->clean($settings[0]['settings_shipping'],'encode'));
 			}
 			
 			$total = number_format($total, 2, '.', '');
 						
 			// Shop Form Data
-			$order_firstname 	= $shop->clean($_POST["first_name"],'encode');
-			$order_lastname 	= $shop->clean($_POST["last_name"],'encode');
-			$order_address 		= $shop->clean($_POST["address"],'encode');
-			$order_city 		= $shop->clean($_POST["city"],'encode');
-			$order_zip 			= $shop->clean($_POST["zip"],'encode');
-			$order_state		= $shop->clean($_POST["state"],'encode');
-			$order_country 		= $shop->clean($_POST["country"],'encode'); 
-			$order_email		= $shop->clean($_POST["email"],'encode');
-			$order_token		= $shop->clean($_POST["token"],'encode');
+			$order_firstname 	= $_POST["first_name"];
+			$order_lastname 	= $_POST["last_name"];
+			$order_address 		= $_POST["address"];
+			$order_city 		= $_POST["city"];
+			$order_zip 			= $_POST["zip"];
+			$order_state		= $_POST["state"];
+			$order_country 		= $_POST["country"]; 
+			$order_email		= $_POST["email"];
+			$order_token		= $_POST["token"];
 							
 			// Now follow the Mollie logic.
-			require_once("../mollie/vendor/autoload.php");
-			require_once("../mollie/examples/functions.php");
-			include("../mollie/examples/initialize.php");
-
-			$payment = $mollie->payments->create([
-				"amount" => [
-					"currency" => substr($shop->clean($settings[0]['settings.country.code'],'encode'),0,3),
-					"value" => "$total",
-				],
-				"description" => "$orderid",
-				"redirectUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/success.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
-				"webhookUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/webhook.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
-				"metadata" => [
-					"order_id" => "$orderid",
-				],
-			]);
+			include(__DIR__."/../mollie/examples/initialize.php");
+			
+			$payment = null;
+			
+			if(isset($mollie)) {
+				try {
+					$payment = $mollie->payments->create([
+						"amount" => [
+							"currency" => substr($shop->clean($settings[0]['settings_country_code'],'encode'),0,3),
+							"value" => "$total",
+						],
+						"description" => "$orderid",
+						"redirectUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/success.php?orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
+						"webhookUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/webhook.php",
+						"metadata" => [
+							"order_id" => "$orderid",
+						],
+					]);
+				} catch (\Mollie\Api\Exceptions\ApiException $e) {
+					error_log("Artisan: Mollie payment could not be created: " . $e->getMessage());
+				}
+			}
 			
 			if(isset($payment->id)) { 
+			
+				// Insert cart contents into database
+				$table    = '`shop_cart`';
+				$columns  = ['`cart_id`','`cart_created`','`cart_product`','`cart_product_id`','`cart_qty`','`cart_price`','`cart_ip`','`cart_stage`','`cart_token`'];
+				for($i=0;$i<count($lines);$i++) {
+					$db->insert($table,$columns,$lines[$i]);
+				}
+				
 				// Insert the order into database
-				$table    = '`shop.orders`';
-				$columns  = ['`order.id`','`order.cart.id`','`order.mollie.id`','`order.firstname`','`order.lastname`','`order.address`','`order.city`','`order.zip`','`order.state`','`order.country`','`order.email`','`order.phone`','`order.status`','`order.paid`','`order.shipping.price`','`order.total`','`order.date`','`order.token`'];
+				$table    = '`shop_orders`';
+				$columns  = ['`order_id`','`order_cart_id`','`order_mollie_id`','`order_firstname`','`order_lastname`','`order_address`','`order_city`','`order_zip`','`order_state`','`order_country`','`order_email`','`order_phone`','`order_status`','`order_paid`','`order_shipping_price`','`order_total`','`order_date`','`order_token`'];
 				$values   = [$orderid,$cartid,$payment->id,$order_firstname,$order_lastname,$order_address,$order_city,$order_zip,$order_state,$order_country,$order_email,0,'mollie transit',0,$shipping,$total,time(),$paytoken];
 				$db->insert($table,$columns,$values);
 

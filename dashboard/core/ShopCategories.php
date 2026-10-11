@@ -1,10 +1,9 @@
 <?php
-	require("../configuration.php");
 	include("Header.php");
 
 	if(isset($_REQUEST['delete'])) {
 		if($_SESSION['uuid'] === $_REQUEST['csrf']) {			
-			$result = $db->delete('`shop.categories`',$db->intcast($_REQUEST['delete']));
+			$result = $db->delete('`shop_categories`',$db->intcast($_REQUEST['delete']));
 		}
 	}
 
@@ -13,10 +12,10 @@
 		if($_POST['csrf'] === $_SESSION['uuid']) {
 			if(isset($_POST['add'])) {
 				// insert category
-				$category_title_vars = $db->clean($_REQUEST['category_name'],'encode');
-				$table    = '`shop.categories`';
-				$columns  = ['`category.name`','meta_title','meta_description','meta_tags'];
-				$values   = [$category_title_vars,$db->clean($_POST['meta_title'],'encode'),$db->clean($_POST['meta_description'],'encode'),$db->clean($_POST['meta_tags'],'encode')];
+				$category_title_vars = $_REQUEST['category_name'];
+				$table    = '`shop_categories`';
+				$columns  = ['`category_name`','meta_title','meta_description','meta_tags'];
+				$values   = [$category_title_vars,$_POST['meta_title'],$_POST['meta_description'],$_POST['meta_tags']];
 				$db->insert($table,$columns,$values);
 				$success = "Category successfully added.";
 			}
@@ -30,8 +29,8 @@
 				
 				for($i=1;$i<=$max;$i++) {
 					$order = explode(':',$_POST['order'.$i]);
-					$table    = '`shop.categories`';
-					$columns  = ['category.order'];
+					$table    = '`shop_categories`';
+					$columns  = ['category_order'];
 					$values   = [$db->intcast($order[1])];
 					$db->update($table,$columns,$values,$db->intcast($order[0]));			
 				}
@@ -42,7 +41,7 @@
 		}
 	}
 	
-$result = $db->query("SELECT * from `shop.categories` ORDER BY `category.order` ASC"); 
+$result = $db->query("SELECT * from `shop_categories` ORDER BY `category_order` ASC"); 
 ?>
 <!DOCTYPE html>
 <html>
@@ -88,7 +87,7 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY `category.order` 
 			}	
 	?>
 		<tr style="<?php echo $color;?>" id="table<?php echo $db->intcast($result[$i]['id']);?>" class="order">
-		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['category.name'];?></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $db->clean($result[$i]['category_name'],'encode');?></a></td>
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/categories/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
 		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/categories/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this category?');"><span class="material-symbols-outlined">delete</span></a></td>
 		</tr>
@@ -111,7 +110,7 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY `category.order` 
 	<table rowspan="" width="100%" class="table-list">
 		<tr>
 			<td>
-			<label>Category name:</label><input type="text" name="category.name" value="" class="shop-list-item">
+			<label>Category name:</label><input type="text" name="category_name" value="" class="shop-list-item">
 			<label>Meta title</label>
 			<input type="text" name="meta_title" value="" placeholder="" />
 			<label>Meta description</label>

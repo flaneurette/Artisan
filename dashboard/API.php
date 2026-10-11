@@ -6,10 +6,7 @@
 	header("Referrer-Policy: same-origin");
 	
 	session_start(); 
-	require("configuration.php");
-	include("resources/PHP/Class.DB.php");
-	
-	$db = new sql();
+	require(__DIR__."/../resources/PHP/Bootstrap.php");
 		
 	if(!empty($_REQUEST['id']) >=1) { 
 		$pageid 	=  $db->intcast($_REQUEST['id']);
@@ -27,6 +24,12 @@
 		$result 	= $db->select($table,$operator,$column,$value);
 		} else {
 		$result = $db->query("SELECT * from `components` ORDER BY id ASC");
+	}
+
+	if(isset($_REQUEST['filetype']) && ($_REQUEST['filetype'] == 'array' || $_REQUEST['filetype'] == 'csv')) {
+		header('Content-Type: text/plain; charset=utf-8');
+	} else {
+		header('Content-Type: application/json; charset=utf-8');
 	}
 
 	if(isset($_REQUEST['filetype'])) {

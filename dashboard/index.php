@@ -1,57 +1,13 @@
 <?php
-	header("X-Frame-Options: DENY"); 
-	header("X-XSS-Protection: 1; mode=block"); 
-	header("Strict-Transport-Security: max-age=30");
-	header("Referrer-Policy: same-origin");
- 
-	session_start(); 
-	session_regenerate_id();
-
-	require("configuration.php");
-	include("resources/PHP/Class.DB.php");
-	include("core/Cryptography.php");
+	include("core/Header.php");
 	
-	// login check
-	if(!isset($_SESSION['loggedin'])) {
-		header("Location: ".SITE."login/");
-		exit;	
-	}
-	if($_SESSION['loggedin'] != '1') {
-		header("Location: login/");
-		exit;
-	} 
+	// Warn as long as the password that Artisan is installed with has not been changed.
+	$result_user = $db->select('users','*','id',$db->intcast($_SESSION['uid']));
+	$default_password = isset($result_user[0]) && password_verify('admin', $result_user[0]['password']);
 	
-	$cryptography = new Cryptography;
-	$db = new sql();
-	
-	if(isset($_SESSION['token'])) {
-		$token = $_SESSION['token'];
-	} else {
-		$token = $cryptography->getToken();
-		$_SESSION['token'] = $token;
-	}
-	
-	$_SESSION['admin-uuid'] = $cryptography->uniqueID();
-	
-	if(!isset($_SESSION['admin-uuid']) || empty($_SESSION['admin-uuid'])) {
-		header("location: ../error/3/");
-		exit;
-	}
-	
-	// create a new admin token
-	if(!isset($_SESSION['uuid'])) {
-		$token  = $cryptography->uniqueID();
-		$token .= $cryptography->uniqueID();
-		$token .= $cryptography->uniqueID();
-		$token .= $cryptography->uniqueID();
-		$_SESSION['uuid'] = $token;		
-	} else {
-		$token = $_SESSION['uuid'];
-	}
-	
-	$result_orders 	= $db->query("SELECT * from `shop.orders` where `order.fulfilled` != 1"); 
+	$result_orders 	= $db->query("SELECT * from `shop_orders` where `order_fulfilled` != 1"); 
 	$result_shop 	= $db->query("SELECT * from shop ORDER BY id DESC LIMIT 10");
-	$result_stock 	= $db->query("SELECT * from shop WHERE `product.stock` = 0"); 	
+	$result_stock 	= $db->query("SELECT * from shop WHERE `product_stock` = 0"); 	
 	$result 		= $db->query("SELECT * FROM components order by id DESC LIMIT 10");
 	
 	if(isset($result_stock)) {
@@ -85,6 +41,11 @@
 	Welcome to the Artisan admin
 	</nav>
 	<article class="main">
+	<?php
+	if($default_password) {
+		echo "<div id=\"dialog-alert\">You are still using the default password. <a href=\"".$db->clean(SITE,'encode')."settings/\">Change it under admin settings.</a></div>";
+	}
+	?>
 	<div class="intro-list">
 		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop-settings/" target="_self"><div class="intro-circle">Announcement</div></a>
 		<a href="<?php echo $db->clean(WEBSITE,'encode');?>dashboard/shop-orders/" target="_self"><div class="<?php echo $neworder;?>">Orders</div></a>
@@ -106,8 +67,8 @@
 		
 		for($i=0;$i<count($result_shop);$i++){
 			
-			$image = str_replace('../../','../',UPLOAD_DIR) . $result_shop[$i]["product.image"];
-			if($result_shop[$i]["product.image"] =='') {
+			$image = str_replace('../../','../',UPLOAD_DIR) . $result_shop[$i]["product_image"];
+			if($result_shop[$i]["product_image"] =='') {
 				$image = str_replace('../../','../',UPLOAD_DIR) ."thumb.png";
 				} elseif(!file_exists($image)) {
 				$image = str_replace('../../','../',UPLOAD_DIR) ."thumb.png";
@@ -121,8 +82,8 @@
 	?>
 		<tr style="<?php echo $color;?>">
 		<td width="150"><img src="<?php echo $image;?>" class="shop-list-image" width="100"/></td>
-		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><?php echo $db->clean($result_shop[$i]['product.title'],'encode');?></a></td>
-		<td><?php echo $db->intcast($result_shop[$i]['product.stock']);?> left in stock</td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><?php echo $db->clean($result_shop[$i]['product_title'],'encode');?></a></td>
+		<td><?php echo $db->intcast($result_shop[$i]['product_stock']);?> left in stock</td>
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
 		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/'.$token;?>/delete/<?php echo $db->intcast($result_shop[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this shop item?');"><span class="material-symbols-outlined">delete</span></a></td>
 		</tr>

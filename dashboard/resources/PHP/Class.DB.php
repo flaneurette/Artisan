@@ -109,13 +109,13 @@ class sql {
 		
 		$values = ["%$value%","%$value%"];
 		
-		$q = "SELECT ".$this->clean($query,'query')." FROM ".$this->clean($table,'table')." WHERE `product.title` LIKE ? OR `product.description` LIKE ?";
+		$q = "SELECT ".$this->clean($query,'query')." FROM ".$this->clean($table,'table')." WHERE `product_title` LIKE ? OR `product_description` LIKE ?";
 		$stmt  = $this->database->prepare($q);
 		$type   = $this->bindvalues($values);
 		$params = array($type);
 		
 		for($t=0;$t<count($values);$t++) {
-			$params[] = $this->clean($values[$t],'cols');
+			$params[] = $values[$t];
 		}
 		
 		$tmp = array();
@@ -162,8 +162,9 @@ class sql {
 		$type   = $this->bindvalues($values);
 		$params = array($type);
 		
+		// values are bound, so they are stored as given.
 		for($t=0;$t<$countvalues;$t++) {
-			$params[] = $this->clean($values[$t],'cols');
+			$params[] = $values[$t];
 		}
 		
 		$tmp = array();
@@ -294,7 +295,7 @@ class sql {
 				$data =  preg_replace("/[[:alnum:][:space:]]/u", '', $string);
 			break;
 			case 'encode':
-				$data =  htmlspecialchars($string,ENT_QUOTES,'UTF-8');
+				$data =  htmlspecialchars((string) $string,ENT_QUOTES,'UTF-8');
 			break;
 			case 'query':
 				$search  = ['`','"','\'',';'];

@@ -1,5 +1,4 @@
 <?php
-	require("../configuration.php");
 	include("Header.php");
 	
 	if(isset($_REQUEST['pid'])) { 
@@ -24,17 +23,8 @@
 			for($i = 0; $i < $len; $i++) {
 			
 				$image = false;
-				if(isset($_FILES['resource_'.$i]) && !empty($_FILES['resource_'.$i])) {
-					$name = basename($_FILES['resource_'.$i]["name"]);
-					if(!empty($name)) {
-						if(stripos($name,'.png',-4) || stripos($name,'.jpg',-4) || stripos($name,'.gif',-4)) {						
-							if ($_FILES['resource_'.$i]['error'] == UPLOAD_ERR_OK) {
-								$tmp_name = $_FILES['resource_'.$i]["tmp_name"];
-								move_uploaded_file($tmp_name, UPLOAD_DIR. "/$name");
-								$image = $name;
-							}
-						}
-					}
+				if(isset($_FILES['resource_'.$i])) {
+					$image = Upload::image($_FILES['resource_'.$i]['name'],$_FILES['resource_'.$i]['tmp_name'],$_FILES['resource_'.$i]['error']);
 				}
 			
 				$id = $db->intcast($_POST['id'.$i]);
@@ -79,7 +69,7 @@
 	<?php include("Navigation.php");?>
 	</header>
 	<nav class="nav">
-	/ index / edit / components on <?php echo $result_header[0]['page_name'];?> <input type="submit" onclick="plainui.post();" class="btn" value="update" />
+	/ index / edit / components on <?php echo $db->clean($result_header[0]['page_name'],'encode');?> <input type="submit" onclick="plainui.post();" class="btn" value="update" />
 	</nav>
 	<article class="main">
 	<form name="post" action="" method="POST" id="form" autocomplete="off" data-lpignore="true" enctype="multipart/form-data">
@@ -94,9 +84,9 @@
 			$image = "../../../resources/content/thumb.png";
 		} 
 	?>
-		<h1><div name="" class="clearfix" contentEditable="true" id="titleditor-<?php echo $i;?>" oninput="plainui.proc('titleditor-<?php echo $i;?>','component_title_<?php echo $i;?>');"><?php echo $db->clean($result[$i]['component_title'],'encode');?></div></h1>
+		<h1><div name="" class="clearfix" contentEditable="true" id="titleditor-<?php echo $i;?>" oninput="plainui.text('titleditor-<?php echo $i;?>','component_title_<?php echo $i;?>');"><?php echo $db->clean($result[$i]['component_title'],'encode');?></div></h1>
 		<img src="<?php echo $image;?>" width="262" class="component-image"/><input type="file" id="files" name="resource_<?php echo $i;?>" class="component-upload" accept=".png,.jpg,.gif"/>
-		<input type="hidden" name="component_title_<?php echo $i;?>" id="component_title_<?php echo $i;?>" value="<?php echo $result[$i]['component_title'];?>"  />
+		<input type="hidden" name="component_title_<?php echo $i;?>" id="component_title_<?php echo $i;?>" value="<?php echo $db->clean($result[$i]['component_title'],'encode');?>"  />
 		<textarea id="component_text_<?php echo $i;?>" name="component_text_<?php echo $i;?>" class="textarea"></textarea>
 		<input type="hidden" name="id<?php echo $i;?>" value="<?php echo $db->intcast($result[$i]['id']);?>"  />
 		<div name="component_text" style="overflow-y:scroll;" contentEditable="true" name="post-message" class="texteditor" id="texteditor-<?php echo $i;?>" oninput="plainui.proc('texteditor-<?php echo $i;?>','component_text_<?php echo $i;?>');" placeholder="Write..."><?php echo $result[$i]['component_text'];?></div>

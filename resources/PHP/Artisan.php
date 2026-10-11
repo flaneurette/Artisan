@@ -3,6 +3,7 @@
 class Artisan {
 
 	const MINMAX 	= 10000; // Constants. 
+	const MAXQTY 	= 200; // Max quantity per product in the cart.
 	// Call it within the class:  self::MINMAX
 	private $var 	= 0; // Private variable
 	
@@ -25,104 +26,107 @@ class Artisan {
 		return $string;
 	}	
 	
-	function unique_array($array, $needle=false) {
-		
-		if(is_array($array)) {
-			
-			$arraynew = [];
-			$c = count($array);
-			$i=0;
-			foreach($array as $key => $value) {
-				if($needle) {
-					if(!in_array($array[$key][$needle],array_column($arraynew,$needle))) {
-						array_push($arraynew,$array[$i]);
-					}
-				} else {
-					if(!in_array($array[$i],$arraynew)) {
-					    array_push($arraynew,$array[$i]);
-					}		        
-				}
-			 $i++;
-			}
-			
-		return $arraynew;
-		} else {
-		return false;
-		}
-	}
-
-	public function sessioncheck() 
-	{ 
-		if(isset($_SESSION['cart'])) {
-			if(isset($_SESSION['cart'][0])) {
-				if($_SESSION['cart'][0] === NULL || $_SESSION['cart'] === NULL ) {
-					$_SESSION['cart'] = [];
-				}
-			}
-		}
-		return true;
-	}
-	
-	public function sessioncount()  
-	{
-		$c = 0;
-		if(isset($_SESSION['cart'])) {
-			if(isset($_SESSION['cart'][0])) {
-				$c = count($_SESSION['cart']);
-			} else {}
-		} 
-		return $c;
-	}
-	
 	public function addtocart($obj) 
 	{ 
+		$qty = (int) $obj['product_qty'];
 		
-		$c = $this->sessioncount();
-		
-		if($obj['product.qty'] > 200) {
-			$obj['product.qty'] = 1;
+		if($qty < 1 || $qty > self::MAXQTY) {
+			$qty = 1;
 		}
+		
+		$obj['product_qty'] = $qty;
 	
-		if(isset($_SESSION['cart'])) {
-			$_SESSION['cart'] = $this->unique_array($_SESSION['cart'], 'product.id');
-		} else {
+		if(!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
 			$_SESSION['cart'] = [];
-			$_SESSION['cart'] = $this->unique_array($_SESSION['cart'], 'product.id');
 		}
 		
-		if($c > 0 ) { 
-
-			for($i = 0; $i < $c; $i++) {
-				
-					if(!isset($_SESSION['cart'][$i]['product.id'])) {
-						return 'Session could not be initialized due to offset error. Please reload the page.';
-					}
-		
-					if($_SESSION['cart'][$i]['product.id'] == $obj['product.id']) {
-						
-						if($obj['product.qty'] < 1) {
-							$obj['product.qty'] = 0;
-							} elseif($obj['product.qty'] > 200) {
-							$obj['product.qty'] = 1;
-						} else {}
-						
-						if(($_SESSION['cart'][$i]['product.qty'] + $obj['product.qty']) > 200) {
-						} else {
-						
-						$_SESSION['cart'][$i]['product.qty'] = ($_SESSION['cart'][$i]['product.qty'] + $obj['product.qty']);
-						}
-						} else {
-						array_push($_SESSION['cart'],$obj);
-					}
+		foreach($_SESSION['cart'] as $key => $item) {
+			if(isset($item['product_id']) && $item['product_id'] == $obj['product_id']) {
+				if(($item['product_qty'] + $qty) <= self::MAXQTY) {
+					$_SESSION['cart'][$key]['product_qty'] = ($item['product_qty'] + $qty);
+				}
+				return true;
 			}
-			
-		} else {
-			$_SESSION['cart'] = [];
-			array_push($_SESSION['cart'],$obj);
 		}
+		
+		array_push($_SESSION['cart'],$obj);
 
 		return true;
 	} 	
+	
+	/**
+	* Checks the session cart against the shop inventory: removes items that no 
+	* longer exist or are out of stock, and limits quantities to 1 - stock.
+	* @param object $db
+	* @return boolean true if the cart had to be changed.
+	*/
+	public function validatecart($db) 
+	{ 
+		$changed = false;
+		$cart = [];
+		
+		if(isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+			
+			foreach($_SESSION['cart'] as $item) {
+				
+				if(!isset($item['product_id'])) {
+					$changed = true;
+					continue;
+				}
+				
+				$result = $db->select('shop','*','id',$this->intcast($item['product_id']));
+				$max 	= isset($result[0]) ? min((int) $result[0]['product_stock'], self::MAXQTY) : 0;
+				$qty 	= (int) $item['product_qty'];
+				
+				if($max < 1) {
+					$changed = true;
+					continue;
+				}
+				
+				if($qty < 1) {
+					$qty = 1;
+					$changed = true;
+				} elseif($qty > $max) {
+					$qty = $max;
+					$changed = true;
+				}
+				
+				$item['product_qty'] = $qty;
+				array_push($cart,$item);
+			}
+		}
+		
+		$_SESSION['cart'] = $cart;
+		
+		return $changed;
+	}
+	
+	/**
+	* Translates a Mollie payment into the order status Artisan stores.
+	* @param object $payment
+	* @return string
+	*/
+	public function paymentstatus($payment) 
+	{
+		if($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
+			return 'paid';
+		} elseif($payment->isOpen()) {
+			return 'open';
+		} elseif($payment->isPending()) {
+			return 'pending';
+		} elseif($payment->isFailed()) {
+			return 'failed';
+		} elseif($payment->isExpired()) {
+			return 'expired';
+		} elseif($payment->isCanceled()) {
+			return 'cancelled';
+		} elseif($payment->hasRefunds()) {
+			return 'refunded';
+		} elseif($payment->hasChargebacks()) {
+			return 'charged back';
+		}
+		return 'unknown';
+	}
 	
 	public function deletefromcart($needle=false) {
 		
@@ -136,7 +140,7 @@ class Artisan {
 					if($needle) {  
 						if(in_array($needle,$array[$i])) {
 							
-							if($array[$i]['product.id'] == $needle) {
+							if($array[$i]['product_id'] == $needle) {
 								unset($array[$i]); 
 							}
 						}
@@ -160,8 +164,8 @@ class Artisan {
 		
 		foreach($array as $key => $value) {
 			
-			if($array[$i]['product.id'] == $id) {
-				$array[$i]['product.qty'] = (int) $qty;
+			if($array[$i]['product_id'] == $id) {
+				$array[$i]['product_qty'] = max(1, min((int) $qty, self::MAXQTY));
 			}
 			
 			$i++;
@@ -171,22 +175,6 @@ class Artisan {
 	}
 		
 
-	public function getcart() 
-	{ 
-			if(isset($_SESSION['cart'])) { 
-
-				$array = [];
-				
-				foreach($_SESSION['cart'] as $item) { 
-					array_push($array,cleanArray($item));
-				} 
-				
-			}  else {
-				$_SESSION['cart'] = array();
-			}
-			return $array;
-	} 
-		
 	/**
 	* SEO-ing URL.
 	* @param string
@@ -194,10 +182,10 @@ class Artisan {
 	*/
 	public function seoUrl($string) 
 	{
-		$find 		= [' ','_','=','+','&','.'];
-		$replace 	= ['-','-','-','-','-','-'];
-		$string 	= str_replace($find,$replace,strtolower($string));
-		return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+		// only what the rewrite rules accept in a URL: a-z, 0-9 and dashes.
+		$string = preg_replace('/[^a-z0-9]+/','-',strtolower((string) $string));
+		$string = trim($string,'-');
+		return ($string === '') ? 'item' : $string;
 	}	
 	
 	/**
@@ -279,7 +267,7 @@ class Artisan {
 				$data =  preg_replace("/[[:alnum:][:space:]]/u", '', $string);
 			break;
 			case 'encode':
-				$data =  htmlspecialchars($string,ENT_QUOTES,'UTF-8');
+				$data =  htmlspecialchars((string) $string,ENT_QUOTES,'UTF-8');
 			break;
 			case 'html':
 				$data = htmlspecialchars($string,ENT_QUOTES,'UTF-8');

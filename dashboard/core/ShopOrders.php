@@ -1,26 +1,27 @@
 <?php
-	require("../configuration.php");
 	include("Header.php");
 	
 	if(isset($_REQUEST['token'])) {
 		if($_REQUEST['token'] === $_SESSION['uuid']) {
 			
 			if(isset($_REQUEST['delete'])) {			
-				$result = $db->delete('`shop.orders`',$db->intcast($_REQUEST['delete']));
+				$result = $db->delete('`shop_orders`',$db->intcast($_REQUEST['delete']));
+				header("Location: ".SITE."shop-orders/");
+				exit;
 			}
 
 			if(isset($_REQUEST['fulfill'])) {
-				$table    = '`shop.orders`';
-				$columns  = ['order.fulfilled','order.status'];
+				$table    = '`shop_orders`';
+				$columns  = ['order_fulfilled','order_status'];
 				$values   = [1,'paid'];
 				$db->update($table,$columns,$values,$db->intcast($_REQUEST['fulfill']));
 			}
 		}
 	}
 
-	$orders_unfulfilled = $db->query("SELECT * from `shop.orders` WHERE `order.fulfilled` != '1' order by id DESC"); 
-	$orders_fulfilled 	= $db->query("SELECT * from `shop.orders` WHERE `order.fulfilled` = '1' order by id DESC"); 
-	$settings 			= $db->query("SELECT * from `shop.settings`"); 
+	$orders_unfulfilled = $db->query("SELECT * from `shop_orders` WHERE `order_fulfilled` != '1' order by id DESC"); 
+	$orders_fulfilled 	= $db->query("SELECT * from `shop_orders` WHERE `order_fulfilled` = '1' order by id DESC"); 
+	$settings 			= $db->query("SELECT * from `shop_settings`"); 
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,19 +59,19 @@
 				$color = "";
 			}	
 			
-			if($orders_unfulfilled[$i]['order.status'] == 'paid') {
+			if($orders_unfulfilled[$i]['order_status'] == 'paid') {
 				$css_paid = "paid";
 				} else {
 				$css_paid = "";
 			}
 			
-			$order_id = explode('-',$orders_unfulfilled[$i]['order.id']);
+			$order_id = explode('-',$orders_unfulfilled[$i]['order_id']);
 	?>
 		<tr style="<?php echo $color;?>">
 		<td><small><?php echo $db->clean($order_id[0],'encode');?></small></td>
-		<td><small><?php echo date("M tS Y H:i",$db->clean($orders_unfulfilled[$i]['order.date'],'encode'));?></small></td>
-		<td><small class="<?php echo $css_paid;?>"><?php echo $db->clean($orders_unfulfilled[$i]['order.status'],'encode');?></small></td>
-		<td><small><?php echo $db->clean($settings[0]['settings.currency'],'encode').number_format($orders_unfulfilled[$i]['order.total'],2);?></small></td>
+		<td><small><?php echo date("M jS Y H:i",$db->clean($orders_unfulfilled[$i]['order_date'],'encode'));?></small></td>
+		<td><small class="<?php echo $css_paid;?>"><?php echo $db->clean($orders_unfulfilled[$i]['order_status'],'encode');?></small></td>
+		<td><small><?php echo $db->clean($settings[0]['settings_currency'],'encode').number_format($orders_unfulfilled[$i]['order_total'],2);?></small></td>
 		<td><a href="?fulfill=<?php echo $db->clean($orders_unfulfilled[$i]['id'],'encode');?>&token=<?php echo $token;?>" target="_self" onclick="return confirm('Are you sure you want to fulfill this order and mark it as shipped?');"><span class="material-symbols-outlined">published_with_changes</span></a></td>
 		<td><a href="order-pick/<?php echo $db->intcast($orders_unfulfilled[$i]['id']);?>/<?php echo $token;?>/" target="_blank"><span class="material-symbols-outlined">contract</span></a></td>
 		<td><a href="<?php echo $db->clean(SITE,'encode') . 'shop-orders/'.$token;?>/delete/<?php echo $db->intcast($orders_unfulfilled[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this order?');"><span class="material-symbols-outlined">delete</span></a></td>
@@ -102,13 +103,13 @@
 				$color = "";
 			}	
 			
-			$order_id = explode('-',$orders_fulfilled[$i]['order.id']);
+			$order_id = explode('-',$orders_fulfilled[$i]['order_id']);
 	?>
 		<tr style="<?php echo $color;?>">
 		<td><small><?php echo $db->clean($order_id[0],'encode');?></small></td>
-		<td><small><?php echo date("M tS Y H:i",$db->clean($orders_fulfilled[$i]['order.date'],'encode'));?></small></td>
-		<td><small><?php echo ucfirst($db->clean($orders_fulfilled[$i]['order.status'],'encode'));?></small></td>
-		<td><small><?php echo $db->clean($settings[0]['settings.currency'],'encode').number_format($orders_fulfilled[$i]['order.total'],2);?></small></td>
+		<td><small><?php echo date("M jS Y H:i",$db->clean($orders_fulfilled[$i]['order_date'],'encode'));?></small></td>
+		<td><small><?php echo ucfirst($db->clean($orders_fulfilled[$i]['order_status'],'encode'));?></small></td>
+		<td><small><?php echo $db->clean($settings[0]['settings_currency'],'encode').number_format($orders_fulfilled[$i]['order_total'],2);?></small></td>
 		<td><small>Fulfilled</small></td>
 		<td><a href="order-pick/<?php echo $db->intcast($orders_fulfilled[$i]['id']);?>/<?php echo $token;?>/" target="_blank"><span class="material-symbols-outlined">contract</span></a></td>
 		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop-orders/'.$token;?>/delete/<?php echo $db->intcast($orders_fulfilled[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this order?');"><span class="material-symbols-outlined">delete</span></a></td>

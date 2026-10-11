@@ -1,5 +1,4 @@
 <?php
-	require("../configuration.php");
 	include("Header.php");
 	
 	if(isset($_REQUEST['id'])) { 
@@ -15,17 +14,17 @@
 		if($_POST['csrf'] === $_SESSION['uuid']) {
 			if(isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 				// update catgories
-				$category_title_vars = $db->clean($_REQUEST['category_name'],'encode');
-				$table    = '`shop.categories`';
-				$columns  = ['category.name','category.order','meta_title','meta_description','meta_tags'];
-				$values   = [$category_title_vars,$db->clean($_POST['category_order'],'encode'),$db->clean($_POST['meta_title'],'encode'),$db->clean($_POST['meta_description'],'encode'),$db->clean($_POST['meta_tags'],'encode')];
+				$category_title_vars = $_REQUEST['category_name'];
+				$table    = '`shop_categories`';
+				$columns  = ['category_name','category_order','meta_title','meta_description','meta_tags'];
+				$values   = [$category_title_vars,$db->intcast($_POST['category_order']),$_POST['meta_title'],$_POST['meta_description'],$_POST['meta_tags']];
 				$db->update($table,$columns,$values,$pageid);
 				$success = "Page successfully updated.";
 			}
 		}
 	}
 	
-	$table    = '`shop.categories`';
+	$table    = '`shop_categories`';
 	$column   = 'id';
 	$value    =  $pageid;
 	$operator = '*';
@@ -59,9 +58,9 @@
 	<input type="hidden" name="csrf" value="<?php echo $token;?>" />
 	<input type="hidden" name="id" value="<?php echo $db->clean($result[0]['id'],'encode');?>" />
 	<label>Category name</label>
-	<input type="text" name="category_name" value="<?php echo $db->clean($result[0]['category.name'],'encode');?>" />
+	<input type="text" name="category_name" value="<?php echo $db->clean($result[0]['category_name'],'encode');?>" />
 	<label>Menu order</label>
-	<input type="number" name="category_order" value="<?php echo $db->clean($result[0]['category.order'],'encode');?>" width="10" size="10" />
+	<input type="number" name="category_order" value="<?php echo $db->clean($result[0]['category_order'],'encode');?>" width="10" size="10" />
 	<label>Meta title</label>
 	<input type="text" name="meta_title" value="<?php echo $db->clean($result[0]['meta_title'],'encode');?>" />
 	<label>Meta description</label>
