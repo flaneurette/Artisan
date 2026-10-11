@@ -47,6 +47,7 @@
 	<select name="settings_theme" class="select">
 		<option value="white" <?php if($db->clean($settings[0]['settings_theme'],'encode') =='white') { echo "selected"; }?>>White theme design</option>
 		<option value="black" <?php if($db->clean($settings[0]['settings_theme'],'encode') =='black') { echo "selected"; }?>>Black theme design</option>
+		<option value="paper" <?php if($db->clean($settings[0]['settings_theme'],'encode') =='paper') { echo "selected"; }?>>Paper theme design</option>
 		<option value="custom" <?php if($db->clean($settings[0]['settings_theme'],'encode') =='custom') { echo "selected"; }?>>Custom theme design</option>
 	</select>
 	<hr>

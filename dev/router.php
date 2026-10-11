@@ -51,7 +51,7 @@ $artisan_rules = [
 ];
 
 // Theme logo images: the themes reference cssimage/, which Apache redirects to assets/images/.
-if(preg_match('#^assets/css/themes/(white|custom|black)/cssimage/(.*)$#i', $artisan_path, $artisan_match)) {
+if(preg_match('#^assets/css/themes/(white|custom|black|paper)/cssimage/(.*)$#i', $artisan_path, $artisan_match)) {
 	header('Location: /assets/images/'.$artisan_match[2], true, 301);
 	exit;
 }
