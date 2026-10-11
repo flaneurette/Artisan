@@ -1,0 +1,2 @@
+# Development tools only. Nothing in this directory should be reachable from the web.
+Require all denied
