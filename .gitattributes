@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Development tools are left out of downloaded archives and Composer installs.
+/dev export-ignore

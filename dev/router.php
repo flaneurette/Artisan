@@ -5,6 +5,12 @@
 //
 // Usage, from the project root:  php -S localhost:8080 dev/router.php
 
+// Only PHP's built-in server may run this file. On any other server it does nothing.
+if(PHP_SAPI !== 'cli-server') {
+	http_response_code(404);
+	exit;
+}
+
 $artisan_root  = dirname(__DIR__);
 $artisan_path  = ltrim(rawurldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)), '/');
 $artisan_slug  = '([a-z\-0-9]+)';
@@ -73,6 +79,12 @@ foreach($artisan_rules as $artisan_rule) {
 		}
 		break;
 	}
+}
+
+// Nothing in this folder is a page of the shop, this file included.
+if(stripos($artisan_path, 'dev/') === 0) {
+	http_response_code(404);
+	exit;
 }
 
 if($artisan_script === false) {
