@@ -1,0 +1,82 @@
+/* Paper: a warm, paper-like theme with brown text and a terracotta accent. */
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+	
+	/* Logo. The logo image is used as a stencil and filled with this color, so any
+	   single-color logo with a transparent background works. The image is set at the bottom of this file. */
+	
+	--logo-color: #6b4a35;
+	
+	/* Site-wide colors that can be changed here */
+	--mainbody: #f7f2e8;
+	--backdrop: #f7f2e8;
+	--textcolor: #4a3b2f;
+	--grey: #e3d9c6;
+	--lightgrey: #efe7d6;
+	--lightgray: #fbf7ef;
+	--black: #2e241c;
+	--lightblack: #e3d9c6;
+	--white: #2e241c;
+	--announcement: #e8cdb5;
+	--links: #6b4a35;
+	--linkshover: #a8472d;
+	--mobile-nav-links: #f7f2e8;
+	
+	/* Internal colors */
+	--red: #b42d40;
+	--lightred: #ff9c9c;
+	--green: #14cc00;
+	--lightgreen: #cbd187;
+	--blue: #2d73b4;
+	--lightblue: #9ccfff;
+	--magenta: #9933cc;
+	--lightmagenta: #f3c5fd;
+	--lightwhite: #fffdf5;
+	--transparent: rgba(0, 0, 0, 0);
+
+	/* Fonts. Cantarell and Lora require Google fonts. */
+	--font-family: "Cantarell", sans-serif;
+	--font-family-heading: "Lora", Georgia, serif;
+	--font-family-input: "Cantarell", sans-serif;
+	--fontsize-small: 14px;
+	--fontsize-medium: 24px;
+	--fontsize-large: 32px;
+	--fontsize-xlarge: 40px;
+	--fontweight-normal: normal;
+	--fontweight-bold: bold;
+
+	/* Site-wide Spacing */
+	--spacing-small: 5px;
+	--spacing-medium: 10px;
+	--spacing-large: 20px;
+	--spacing-xlarge: 30px;
+
+	--shadow-small: 0 1px 1px 0 rgba(0, 0, 0, 0.12), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.20);
+	--shadow-medium: 0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 2px -2px rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.20);
+	--shadow-large: 0 6px 10px 0 rgba(0, 0, 0, 0.12), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.20);
+
+	--viewwidth-small: 10vw;
+	--viewwidth-medium: 20vw;
+	--viewwidth-large: 50vw;
+	--viewwidth-xlarge: 100vw;
+
+	/* Accent color, buttons and corners */
+	--accent: #a8472d;
+	--button-background: #a8472d;
+	--button-border: #a8472d;
+	--button-color: #fbf7ef;
+	--radius: 2px;
+
+	/* Page background and search field */
+	--page-background: var(--mainbody);
+	--search-background: #fbf7ef;
+}
+
+/* The logo is set here, so that its path is read relative to this file. */
+#logo, #logo-footer {
+	background-color: var(--logo-color);
+	-webkit-mask: url('cssimage/logo-solid.png') no-repeat;
+	mask: url('cssimage/logo-solid.png') no-repeat;
+}

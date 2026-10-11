@@ -142,7 +142,7 @@ article {
 }
 
 .shop-search input[type="text"] {
-	border-radius: 5px;
+	border-radius: var(--radius, 5px);
     margin: 0px;
     margin-left: 150px;
     padding: 5px;
@@ -231,14 +231,14 @@ article {
     padding: 8px;
     width: 20%;
     background-color: var(--lightgray);
-	border-radius: 5px;
+	border-radius: var(--radius, 5px);
 	color: var(--textcolor);
 }
 
 .shop-item-product-image-div img {
 	width:100%;
 	height: auto;
-	border-radius: 5px;
+	border-radius: var(--radius, 5px);
 }
 
 .shop-item-list-product-price {
@@ -254,7 +254,7 @@ article {
 .shop-item-product-list input {
 	margin:0px;
 	width:35px;
-	border-radius: 5px;
+	border-radius: var(--radius, 5px);
 }
 
 .shop-item-group-cart-qty  {
@@ -285,7 +285,7 @@ article {
     float: left;
     background-color: lightgray;
     text-align: center;
-    border-radius: 5px;
+    border-radius: var(--radius, 5px);
 }
 
 .shop-item-list-product-link {
@@ -543,7 +543,7 @@ article {
 
 .shop-checkout-field input:focus,
 .shop-checkout-field select:focus {
-	outline: 2px solid var(--blue);
+	outline: 2px solid var(--accent, var(--blue));
 	outline-offset: 1px;
 }
 
@@ -661,6 +661,14 @@ article {
 /* Individual HTML Fragments */
 
 
+/* Titles use the heading font of the theme, if it has one. */
+.shop-item-list-product-link,
+.shop-item-list-product-link a,
+.shop-page-title,
+.shop-nav-h1 h1 {
+	font-family: var(--font-family-heading, var(--font-family));
+}
+
 .search-btn {
 	margin: 0px;
 	display: inline-block !important;
@@ -668,7 +676,7 @@ article {
 	width: 100px;
 	padding: 0.3em;
 	margin-left: -99px;
-	border: 1px solid var(--lightgray) !important;
+	border: 1px solid var(--button-border, var(--lightgray)) !important;
 }
 
 #payment-logo {
@@ -713,6 +721,12 @@ article {
     margin-top: -15px;
     padding: var(--spacing-large);
     margin-left: var(--spacing-xlarge);
+}
+
+/* The menu has a dark background in the light themes, which can set a lighter link color for it. */
+#mobile-navigation a:link,
+#mobile-navigation a:visited {
+	color: var(--mobile-nav-links, var(--links));
 }
 
 #mobile-navigation {

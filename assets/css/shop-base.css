@@ -48,7 +48,7 @@ input {
 
 input[type=checkbox],
 input[type=radio] {
-	accent-color: var(--blue);
+	accent-color: var(--accent, var(--blue));
 }
 
 input[type=file],
@@ -78,6 +78,14 @@ input[type=reset] {
 	display: inline-block;
 }
 
+/* Buttons can get their own colors in a theme; without them they look like the other fields. */
+input[type=button],
+input[type=submit] {
+	border-color: var(--button-border, var(--lightgrey)) !important;
+	color: var(--button-color, var(--white));
+	background-color: var(--button-background, var(--mainbody));
+}
+
 input[type=button]:hover,
 input[type=submit]:hover {
 	
@@ -93,7 +101,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: var(--font-family);
+	font-family: var(--font-family-heading, var(--font-family));
 	margin: 0em;
 	padding: 0em;
 }

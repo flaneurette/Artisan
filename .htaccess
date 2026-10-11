@@ -17,3 +17,4 @@ RewriteRule ^shop/([0-9]+)/([a-z-0-9]+)/$ components/ShopItem.php?id=$1&item=$2 
 RewriteRule ^assets/css/themes/white/cssimage/(.*) https://%{HTTP_HOST}/artisan/assets/images/$1 [R=301,L]
 RewriteRule ^assets/css/themes/custom/cssimage/(.*) https://%{HTTP_HOST}/artisan/assets/images/$1 [R=301,L]
 RewriteRule ^assets/css/themes/black/cssimage/(.*) https://%{HTTP_HOST}/artisan/assets/images/$1 [R=301,L]
+RewriteRule ^assets/css/themes/paper/cssimage/(.*) https://%{HTTP_HOST}/artisan/assets/images/$1 [R=301,L]
