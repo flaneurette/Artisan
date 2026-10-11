@@ -674,7 +674,8 @@ hr {
 	}
 /* LAYOUT WIDTHS */
 
-	/* The menu never becomes narrower than its labels. */
+	/* The menu stays on the left and never becomes narrower than its labels. 
+	   The page takes whatever width is left, so nothing is cut off at the right. */
 	:root {
 		--sidebar: max(12%, 190px);
 	}
@@ -682,18 +683,58 @@ hr {
 		width: var(--sidebar);
 		overflow-y: auto;
 	}
-	.nav {
-		margin-left: var(--sidebar);
-		width: calc(100% - var(--sidebar) - 10%);
-	}
+	.nav,
 	.main {
+		float: none;
+		width: auto;
 		margin-left: var(--sidebar);
-		width: calc(100% - var(--sidebar) - 8%);
+		margin-right: 4%;
 	}
+	.nav {
+		overflow: hidden;
+	}
+	.main table.table-list {
+		width: calc(100% - (2 * var(--spacing-xlarge)));
+	}
+	.main > input[type=text],
+	.main > input[type=password],
+	.main > input[type=number] {
+		width: min(420px, calc(100% - (2 * var(--spacing-xlarge))));
+		box-sizing: border-box;
+	}
+	.shop-entry-box,
+	.shop-entry-box-0 {
+		flex-wrap: wrap;
+	}
+
+/* MEDIUM SCREENS: less padding, so tables keep their shape. */
+
+@media only screen and (max-width: 1100px) {
+
+	.main table.table-list {
+		margin: var(--spacing-large);
+		width: calc(100% - (2 * var(--spacing-large)));
+	}
+	.table-list td {
+		padding: var(--spacing-large) var(--spacing-medium);
+	}
+	.shop-list-image {
+		height: 70px;
+		width: 70px;
+	}
+	.intro-list {
+		margin: var(--spacing-large);
+	}
+	.intro-circle,
+	.intro-circle-green,
+	.intro-circle-red {
+		margin: 10px;
+	}
+}
 
 /* NARROW SCREENS: the menu moves above the page. */
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 600px) {
 
 	.header {
 		position: static;
@@ -721,9 +762,8 @@ hr {
 	}
 	.nav,
 	.main {
-		float: none;
 		margin-left: 0px;
-		width: auto;
+		margin-right: 0px;
 	}
 	.nav {
 		height: auto;
@@ -754,6 +794,9 @@ hr {
 	input[type=text],
 	input[type=password],
 	input[type=number],
+	.main > input[type=text],
+	.main > input[type=password],
+	.main > input[type=number],
 	.select {
 		width: calc(100% - 40px);
 		box-sizing: border-box;
@@ -762,10 +805,13 @@ hr {
 		margin: 0px;
 		width: auto;
 	}
-	table {
+	table,
+	.main table.table-list {
 		margin: var(--spacing-medium);
+		width: calc(100% - (2 * var(--spacing-medium)));
 	}
-	table td {
+	table td,
+	.table-list td {
 		padding: var(--spacing-medium);
 	}
 	.texteditor {
