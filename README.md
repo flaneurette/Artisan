@@ -31,7 +31,7 @@ Accepting iDEAL, Apple Pay, Bancontact, SOFORT Banking, Creditcard, SEPA Bank tr
 - Up-to-date OpenSSL (or other SSL/TLS toolkit)
 - MySQL STRICT_TRANS_TABLES need to be disabled, if not Artisan will not work properly:
 -
-- ```
-- mysql -u <user> -p
-- SET GLOBAL sql_mode = '';
-- ```
+```
+mysql -u <user> -p
+SET GLOBAL sql_mode = '';
+```
