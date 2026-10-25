@@ -1,0 +1,38 @@
+Options All -Indexes
+Options +FollowSymLinks
+
+RewriteEngine On
+
+# Rewrite URI's
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+RewriteRule ^login/$ core/Login.php [NC,L]
+RewriteRule ^pages/([a-z-0-9]+)/delete/([0-9]+)/$ core/Pages.php?csrf=$1&delete=$2 [NC,L]
+RewriteRule ^pages/$ core/Pages.php [NC,L]
+RewriteRule ^pages/add/$ core/AddPage.php [NC,L]
+RewriteRule ^shop/$ core/Shop.php [NC,L]
+RewriteRule ^shop/categories/$ core/ShopCategories.php [NC,L]
+RewriteRule ^shop/categories/([a-z-0-9]+)/delete/([0-9]+)/$ core/ShopCategories.php?csrf=$1&delete=$2 [NC,L]
+RewriteRule ^shop/categories/edit/([0-9]+)/$ core/EditCategories.php?id=$1 [NC,L]
+RewriteRule ^shop/add/$ core/AddShopItem.php [NC,L]
+RewriteRule ^shop/edit/([0-9]+)/$ core/EditShopItem.php?pid=$1 [NC,L]
+RewriteRule ^shop/([a-z-0-9]+)/delete/([0-9]+)/$ core/Shop.php?csrf=$1&delete=$2 [NC,L]
+RewriteRule ^components/$ core/Components.php [NC,L]
+RewriteRule ^components/add/$ core/AddComponents.php [NC,L]
+RewriteRule ^components/([a-z-0-9]+)/delete/([0-9]+)/$ index.php?csrf=$1&delete=$2 [NC,L]
+RewriteRule ^resources/$ core/AddResource.php [NC,L]
+RewriteRule ^pages/edit/([0-9]+)/$ core/EditPages.php?pid=$1 [NC,L]
+RewriteRule ^components/edit/([0-9]+)/$ core/EditComponents.php?pid=$1 [NC,L]
+RewriteRule ^resources/edit/([0-9]+)/$ core/EditResource.php [NC,L]
+RewriteRule ^lightbox/$ core/Lightbox.php [NC,L]
+RewriteRule ^shop-settings/$ core/ShopSettings.php [NC,L]
+RewriteRule ^shop-orders/$ core/ShopOrders.php [NC,L]
+RewriteRule ^shop-orders/([a-z-0-9]+)/delete/([0-9]+)/$ core/ShopOrders.php?csrf=$1&delete=$2 [NC,L]
+RewriteRule ^shop-orders/order-pick/([0-9]+)/([a-z-0-9]+)/$ core/ShopOrderPicking.php?csrf=$2&id=$1 [NC,L]
+RewriteRule ^shop-customers/$ core/ShopCustomers.php [NC,L]
+RewriteRule ^shop-invoices/$ core/ShopInvoices.php [NC,L]
+RewriteRule ^settings/$ core/Settings.php [NC,L]
+RewriteRule ^logout/([a-z-0-9]+)/$ core/Logout.php?csrf=$1 [NC,L]
+RewriteRule ^error/([0-9]+)/$ core/Error.php?reason=$1 [NC,L]
+RewriteRule ^api/$ core/Api.php [NC,L]
