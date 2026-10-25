@@ -3,7 +3,7 @@ Options +FollowSymLinks -MultiViews
 
 RewriteEngine On
 
-Rewrite URI's
+# Rewrite URI's
 RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
