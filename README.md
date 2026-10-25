@@ -26,11 +26,11 @@ By default, Mollie determines what type of payment method is chosen based upon c
 Accepting iDEAL, Apple Pay, Bancontact, SOFORT Banking, Creditcard, SEPA Bank transfer, SEPA Direct debit, PayPal, Belfius Direct Net, KBC/CBC, paysafecard, ING Home'Pay, Giropay, EPS, Przelewy24, Postepay, In3, Klarna (Pay now, Pay later, Slice it, Pay in 3), Giftcard and Voucher online payments without fixed monthly costs or any punishing registration procedures.
 
 # Requirements
-- PHP >= 7.2, MySQL, mod_rewrite. 
+- PHP >= 7.2, MySQL, Apache `mod_rewrite` needs to be enabled for the `.htaccess` files. Additionally, sometimes the `AllowOveride` in the Apache config needs to be set to `Allow`.
   Although Artisan was able to run on lower versions of PHP, PHP 8 is supported and recommended.
 - Up-to-date OpenSSL (or other SSL/TLS toolkit)
 - MySQL STRICT_TRANS_TABLES need to be disabled, if not Artisan will not work properly:
--
+
 ```
 mysql -u <user> -p
 SET GLOBAL sql_mode = '';
