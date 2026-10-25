@@ -1,0 +1,17 @@
+Options All -Indexes
+Options +FollowSymLinks -MultiViews
+
+RewriteEngine On
+
+Rewrite URI's
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+RewriteRule ^pages/([a-z0-9\-]+)/$ components/Pages.php?page=$1 [NC,L]
+RewriteRule ^categories/([a-z0-9\-]+)/$ site/category/index.php?category=$1 [NC,L]
+RewriteRule ^category/([a-z0-9\-]+)/$ site/category/index.php?category=$1 [NC,L]
+RewriteRule ^cart/$ site/cart/index.php [NC,L]
+RewriteRule ^search/$ site/search/index.php [NC,L]
+RewriteRule ^checkout/$ site/checkout/index.php [NC,L]
+RewriteRule ^checkout/pay/$ site/checkout/pay.php [NC,L]
+RewriteRule ^shop/([0-9]+)/(.*)/$ components/ShopItem.php?id=$1 [NC,L]
