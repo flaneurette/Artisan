@@ -8,12 +8,12 @@
 	include("../../resources/PHP/Artisan.php");
 	
 	$cryptography 	= new Cryptography;
-	$db 			= new sql();
-	$shop 			= new Artisan();
+	$db 		= new sql();
+	$shop 		= new Artisan();
 	
-	$pages 			= $db->query("SELECT * FROM `pages` order by ordering ASC");
-	$menu 			= $db->query("SELECT * FROM `shop.categories` order by `category.order` ASC");
-	$settings 		= $db->query("SELECT * from `shop.settings`"); 
+	$pages 		= $db->query("SELECT * FROM `pages` order by ordering ASC");
+	$menu 		= $db->query("SELECT * FROM `shop.categories` order by `category.order` ASC");
+	$settings 	= $db->query("SELECT * from `shop.settings`"); 
 	
 	if(isset($_SESSION['token'])) {
 		$token = $_SESSION['token'];
@@ -76,9 +76,9 @@
 	}
 	
 	$meta = array();
-	$meta[0]['meta_title'] 		 = 'Shopping cart';
-	$meta[0]['meta_description'] = 'This is your shopping cart';
-	$meta[0]['meta_tags'] 		 = 'Shopping cart, cart, basket'; 
+	$meta[0]['meta_title'] 		= 'Shopping cart';
+	$meta[0]['meta_description'] 	= 'This is your shopping cart';
+	$meta[0]['meta_tags'] 	 	= 'Shopping cart, cart, basket'; 
 	
 ?>
 
@@ -157,7 +157,9 @@
 							<tr style="<?php echo $color;?>">
 								<td><?php echo $shop->clean($_SESSION['cart'][$i]['product.title'],'encode');?></td>
 								<td><?php echo $shop->clean($settings[0]['settings.currency'],'encode').number_format($item_result[0]['product.price'],2);?></td>
-								<td><input type="number" name="qty" placeholder="Qty" onchange="document.location='<?php echo $shop->clean(WEBSITE,'encode');?>cart/?update='+this.value+'&id=<?php echo $shop->intcast($_SESSION['cart'][$i]['product.id']);?>&token=<?php echo $token;?>';" value="<?php echo $shop->intcast($max_qty);?>" min="1" max="<?php echo $max_order;?>" required/>
+								<td><input type="number" name="qty" placeholder="Qty" 
+								onchange="document.location='<?php echo $shop->clean(WEBSITE,'encode');?>cart/?update='+this.value+'&id=<?php echo $shop->intcast($_SESSION['cart'][$i]['product.id']);?>&token=<?php echo $token;?>';" 
+								value="<?php echo $shop->intcast($max_qty);?>" min="1" max="<?php echo $max_order;?>" required/>
 								</td>
 								<td><?php echo $shop->clean($settings[0]['settings.currency'],'encode'). number_format($item_result[0]['product.price'] * $max_qty,2);?></td>			
 								<td><a href="<?php echo $shop->clean(WEBSITE,'encode');?>cart/delete/<?php echo $shop->intcast($_SESSION['cart'][$i]['product.id']);?>/<?php echo $token;?>/"><span class="material-symbols-outlined">delete</span></a></td>
