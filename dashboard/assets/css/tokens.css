@@ -585,6 +585,7 @@ hr {
     color: var(--lightgrey);
     border: 1px solid var(--blue);
     background-color: var(--blue);
+    transition: ease-in 0.4s;
   }
   
 	.intro-circle-green {
