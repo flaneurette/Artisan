@@ -581,6 +581,12 @@ hr {
 		box-shadow: var(--shadow-large);
 	}
 
+  .intro-circle:hover {
+    color: var(--lightgrey);
+    border: 1px solid var(--blue);
+    background-color: var(--blue);
+  }
+  
 	.intro-circle-green {
 		border-radius: 360px;
 		height: 100px;
