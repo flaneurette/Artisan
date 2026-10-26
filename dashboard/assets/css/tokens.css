@@ -254,7 +254,7 @@ hr {
 	background-color: var(--lightgray);
 	text-align: center;
 	vertical-align: middle;
-}
+} 
 
 .dots {
 	padding: var(--spacing-small);
