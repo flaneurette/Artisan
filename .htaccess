@@ -3,16 +3,19 @@ Options +FollowSymLinks -MultiViews
 
 RewriteEngine On
 
-# Rewrite URI's
-RewriteCond %{HTTPS} !on
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
-
-RewriteRule ^pages/([a-z0-9\-]+)/$ components/Pages.php?page=$1 [NC,L]
-RewriteRule ^categories/([a-z0-9\-]+)/$ site/category/index.php?category=$1 [NC,L]
-RewriteRule ^category/([a-z0-9\-]+)/$ site/category/index.php?category=$1 [NC,L]
-RewriteRule ^cart/delete/([a-z0-9\-]+)/([a-z0-9\-]+)/$ site/cart/index.php?delete=$1&token=$2 [NC,L]
+# CART
+RewriteRule ^cart/delete/([0-9]+)/([^/]+)/?$ site/cart/index.php?delete=$1&token=$2 [QSA,NC,L]
 RewriteRule ^cart/$ site/cart/index.php [NC,L]
-RewriteRule ^search/$ site/search/index.php [NC,L]
 RewriteRule ^checkout/$ site/checkout/index.php [NC,L]
 RewriteRule ^checkout/pay/$ site/checkout/pay.php [NC,L]
+
+# CATEGORIES
+RewriteRule ^categories/([a-z0-9\-]+)/$ site/category/index.php?category=$1 [NC,L]
+RewriteRule ^category/([a-z0-9\-]+)/$ site/category/index.php?category=$1 [NC,L]
+
+# GENERAL PAGES
+RewriteRule ^search/$ site/search/index.php [NC,L]
+
+# COMPONENTS
+RewriteRule ^pages/([a-z0-9\-]+)/$ components/Pages.php?page=$1 [NC,L]
 RewriteRule ^shop/([0-9]+)/(.*)/$ components/ShopItem.php?id=$1 [NC,L]
