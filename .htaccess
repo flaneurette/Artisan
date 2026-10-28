@@ -3,6 +3,10 @@ Options +FollowSymLinks -MultiViews
 
 RewriteEngine On
 
+# Rewrite URI's to HTTPS
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
 # CART
 RewriteRule ^cart/delete/([0-9]+)/([^/]+)/?$ site/cart/index.php?delete=$1&token=$2 [QSA,NC,L]
 RewriteRule ^cart/$ site/cart/index.php [NC,L]
