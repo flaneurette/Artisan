@@ -5,8 +5,26 @@ include("../../dashboard/resources/PHP/Class.DB.php");
 include("../../dashboard/resources/PHP/Cryptography.php");
 include("../../resources/PHP/Artisan.php");
 
-require_once("../mollie/vendor/autoload.php");
-require_once("../mollie/examples/functions.php");
+// Tell PHP to load all Composer packages
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use Mollie\Api\Http\Data\Money;
+use Mollie\Api\Http\Requests\GetPaymentRequest;
+use Mollie\Api\Types\PaymentStatus;
+
+# Get API key
+$table    = '`shop.settings`';
+$column   = '`id`';
+$value    =  1;
+$operator = '*';
+$result = $db->select($table,$operator,$column,$value);
+			
+if(isset($result[0]['settings.mollie.api'])) {		
+	$mollie = new \Mollie\Api\MollieApiClient();
+    $mollie->setToken($result[0]['settings.mollie.api']);
+} else {
+	echo "<p>There has been an error: API key for Mollie is not found in shop settings!</p>";
+}
 
 $cryptography 	= new Cryptography;
 $db 			= new sql();
@@ -14,33 +32,57 @@ $shop 			= new Artisan();
 
 try {
 
-    include("../mollie/examples/initialize.php");
+    // Retrieve the payment's current state
+    $payment = $mollie->send(
+        new GetPaymentRequest(
+            id: $shop->clean($_REQUEST["id"],'encode')
+        )
+    );
 
-    $payment = $mollie->payments->get($shop->clean($_REQUEST["id"],'encode'));
     $orderId = $payment->metadata->order_id;
-	
-    database_write($orderId, $payment->status);
-	
-    if ($payment->isPaid() && !$payment->hasRefunds() && !$payment->hasChargebacks()) {
-		$status = 'paid';
-    } elseif ($payment->isOpen()) {
-		$status = 'open';
-    } elseif ($payment->isPending()) {
-		$status = 'pending';
-    } elseif ($payment->isFailed()) {
-		$status = 'failed';
-    } elseif ($payment->isExpired()) {
-		$status = 'expired';
-    } elseif ($payment->isCanceled()) {
-		$status = 'cancelled';
-    } elseif ($payment->hasRefunds()) {
-		$status = 'refunded';
-    } elseif ($payment->hasChargebacks()) {
-		$status = 'charged back';
+
+    // First handle status changes
+    if ($payment->status !== $previousPaymentStatus) {
+        // Update your order administration with the new status
+        $status = 'unpaid';
+        // Handle the status change
+        if ($payment->isPaid()) {
+            // The payment is paid
+            // Start the process of delivering the product to the customer
+            $status = 'paid';
+        } elseif ($payment->isFailed()) {
+            // The payment has failed
+            // Notify the customer
+            $status = 'failed';
+        } elseif ($payment->isExpired()) {
+            // The payment is expired
+            // Notify the customer
+            $status = 'expired';
+        } elseif ($payment->isCanceled()) {
+            // The payment is canceled
+            // Notify the customer
+            $status = 'cancelled';
+        }
     }
+
+    // Then handle refunds and chargebacks (these don't change the payment status)
+    if ($payment->hasRefunds()) {
+        // The payment has possibly been (partially) refunded
+        // Note: the payment status remains "paid"
+        $status = 'refund';
+    }
+    
+    if ($payment->hasChargebacks()) {
+        // The payment has possibly been (partially) charged back
+        // Note: the payment status remains "paid"
+        $status = 'chargebacks';
+    }
+
+    // Always return 200 OK to Mollie
+    http_response_code(200);
 } catch (\Mollie\Api\Exceptions\ApiException $e) {
-    echo "API call failed: " . \htmlspecialchars($e->getMessage());
-	echo "<p>Make sure the API key is correct. If you see this error, the Mollie API key might be wrong.</p>";
+    echo "<p>Make sure the API key is correct. If you see this error, the Mollie API key might be wrong.</p>";
+    exit;
 }
 
 if(isset($status)) {

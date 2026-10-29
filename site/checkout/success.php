@@ -11,10 +11,6 @@ include("../../dashboard/resources/PHP/Cryptography.php");
 require("../../dashboard/resources/PHP/Class.SecureMail.php");
 include("../../resources/PHP/Artisan.php");
 
-require_once("../mollie/vendor/autoload.php");
-require_once("../mollie/examples/functions.php");
-include("../mollie/examples/initialize.php");
-
 $cryptography 	= new Cryptography;
 $db 			= new sql();
 $shop 			= new Artisan();

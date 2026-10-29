@@ -6,9 +6,30 @@ include("../../dashboard/resources/PHP/Class.DB.php");
 include("../../dashboard/resources/PHP/Cryptography.php");
 include("../../resources/PHP/Artisan.php");
 
+// Now follow the Mollie logic.
+require_once '../../vendor/autoload.php';
+
+use Mollie\Api\Http\Data\Money;
+use Mollie\Api\Http\Requests\CreatePaymentRequest;
+use Mollie\Api\Types\PaymentStatus;
+
 $cryptography 	= new Cryptography;
 $db 			= new sql();
 $shop 			= new Artisan();
+
+# Get API key
+$table    = '`shop.settings`';
+$column   = '`id`';
+$value    =  1;
+$operator = '*';
+$result = $db->select($table,$operator,$column,$value);
+			
+if(isset($result[0]['settings.mollie.api'])) {		
+	$mollie = new \Mollie\Api\MollieApiClient();
+    $mollie->setToken($result[0]['settings.mollie.api']);
+} else {
+	echo "<p>There has been an error: API key for Mollie is not found in shop settings!</p>";
+}
 
 if(isset($_SESSION['token'])) {
 	$token = $_SESSION['token'];
@@ -100,12 +121,15 @@ if(isset($_SESSION['paytoken'])) {
 			$order_country 		= $shop->clean($_POST["country"],'encode'); 
 			$order_email		= $shop->clean($_POST["email"],'encode');
 			$order_token		= $shop->clean($_POST["token"],'encode');
-							
-			// Now follow the Mollie logic.
-			require_once("../mollie/vendor/autoload.php");
-			require_once("../mollie/examples/functions.php");
-			include("../mollie/examples/initialize.php");
 
+            $payment = $mollie->send(new CreatePaymentRequest(
+                description: "$orderid",
+                amount: new Money(currency: substr($shop->clean($settings[0]['settings.country.code'],'encode'),0,3), value: "$total"),
+                redirectUrl: $shop->clean(WEBSITE,'encode') . "site/checkout/success.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
+                webhookUrl: $shop->clean(WEBSITE,'encode') . "site/checkout/webhook.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode')
+            ));
+
+            /*
 			$payment = $mollie->payments->create([
 				"amount" => [
 					"currency" => substr($shop->clean($settings[0]['settings.country.code'],'encode'),0,3),
@@ -118,7 +142,8 @@ if(isset($_SESSION['paytoken'])) {
 					"order_id" => "$orderid",
 				],
 			]);
-			
+			*/
+
 			if(isset($payment->id)) { 
 				// Insert the order into database
 				$table    = '`shop.orders`';

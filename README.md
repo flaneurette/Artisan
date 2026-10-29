@@ -7,14 +7,25 @@ Artisan is a responsive and complete modern shopping cart software, specifically
 
 ### Composer: 
 
-	composer require flaneurette/artisan:dev-main
+```composer require flaneurette/artisan:dev-main```
  
 0. Download or clone Artisan.
 1. Edit dashboard/configuration.php and define the database and paths.
 2. Import the Artisan SQL file into MySQL
 4. Goto the /dashboard/ and login with: username: admin, password: admin.
    The password can be changed in the admin panel under admin settings.
-5. Change the mollie API key under settings to your Mollie API key.
+
+Browse to the folder where it is installed:
+
+```
+cd /var/www/html/artisan/
+```
+
+Then:
+
+```
+composer require mollie/mollie-api-php
+```
 
 # Payment API
 
