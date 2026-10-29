@@ -6,7 +6,7 @@ include("../../dashboard/resources/PHP/Cryptography.php");
 include("../../resources/PHP/Artisan.php");
 
 // Tell PHP to load all Composer packages
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
 
 use Mollie\Api\Http\Data\Money;
 use Mollie\Api\Http\Requests\GetPaymentRequest;
