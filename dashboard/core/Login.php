@@ -1,8 +1,8 @@
 <?php
 	header("X-Frame-Options: DENY"); 
-	header("X-XSS-Protection: 1; mode=block"); 
-	header("Strict-Transport-Security: max-age=30");
+	header("Strict-Transport-Security: max-age=15552000");
 	header("Referrer-Policy: same-origin");
+	header("X-Content-Type-Options: nosniff");
  
 	session_start(); 
 	
@@ -40,7 +40,7 @@
 	
 	if(isset($_POST['csrf'])) {
 		if($_POST['csrf'] === $_SESSION['uuid']) {
-			if(isset($_REQUEST['username']) && !empty($_REQUEST['password'])) {
+			if(isset($_POST['username']) && !empty($_POST['password'])) {
 				
 				$username = $db->clean($_POST["username"],'encode');
 				$password = $db->clean($_POST["password"],'encode');
@@ -54,13 +54,27 @@
 				$operator = '*';
 				$result = $db->select($table,$operator,$column,$value); 
 				$result_attempt = $db->query('select * from `users` WHERE role = 1');
-				
+
+				if($result_attempt[0]['attempts'] >= MAX_LOGIN_ATTEMPTS) {
+					header("location: ../error/1/");
+					$may_login = false;
+					exit;
+				}
+					
 				if(count($result) >= 1 && !password_verify($password, $result[0]['password'])) {
+					
 					if($result_attempt[0]['attempts'] >= MAX_LOGIN_ATTEMPTS) {
 						header("location: ../error/1/");
 						$may_login = false;
 						exit;
-					}	
+					}
+					
+					$id = 1;
+					$table    = 'users';
+					$columns  = ['attempts'];
+					$values   = [$result_attempt[0]['attempts'] + 1];
+					$db->update($table,$columns,$values,$id);
+					
 				} else if(count($result) >= 1 && password_verify($password, $result[0]['password'])) {
 					
 					$id = 1;
@@ -73,7 +87,7 @@
 					$_SESSION['profile'] = $result[0];
 					$_SESSION['loggedin'] = '1';
 					$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
-					session_regenerate_id();
+					session_regenerate_id(true);
 					session_commit();
 					 header("Location: ../index.php");
 					 exit;

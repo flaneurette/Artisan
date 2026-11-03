@@ -1,5 +1,7 @@
 <?php
 
+ini_set('display_errors', 0);
+
 // This must be defined.
 define('WEBSITE','https://localhost/artisan/'); 
 define('SITE','https://localhost/artisan/dashboard/'); 

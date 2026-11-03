@@ -52,6 +52,13 @@
 	
 		if($_SESSION['token'] === $_POST['token']) {
 			
+			// Make sure the quantity is never zero or below.
+			if($shop->intcast($_POST['qty']) <= 0) {
+				$qty = 1;
+				} else {
+				$qty = $shop->intcast($_POST['qty']);
+			}
+			
 			if(isset($_POST['product'])) {
 				
 				$table    		= 'shop';
@@ -64,7 +71,7 @@
 	
 					$arr = [
 						'product.id' => $shop->intcast($_POST['id']),
-						'product.qty' => $shop->intcast($_POST['qty']),
+						'product.qty' => $shop->intcast($qty),
 						'product.title' => $shop->clean($cart_result[0]['product.title'],'encode')
 					];
 					

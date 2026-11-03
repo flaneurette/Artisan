@@ -79,10 +79,14 @@ class Artisan {
 		
 		$c = $this->sessioncount();
 		
-		if($obj['product.qty'] > 200) {
+		if((int)$obj['product.qty'] > 200) {
 			$obj['product.qty'] = 1;
 		}
-	
+
+		if((int)$obj['product.qty'] <= 0) {
+			$obj['product.qty'] = 1;
+		}
+		
 		if(isset($_SESSION['cart'])) {
 			$_SESSION['cart'] = $this->unique_array($_SESSION['cart'], 'product.id');
 		} else {
@@ -153,6 +157,10 @@ class Artisan {
 	
 	
 	public function updatecart($id,$qty) {
+		
+		if((int)$qty <= 0) {
+			$qty = 1;
+		}
 		
 		$array = $_SESSION['cart'];
 		

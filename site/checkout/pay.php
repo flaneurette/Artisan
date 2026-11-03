@@ -126,23 +126,9 @@ if(isset($_SESSION['paytoken'])) {
                 description: "$orderid",
                 amount: new Money(currency: substr($shop->clean($settings[0]['settings.country.code'],'encode'),0,3), value: "$total"),
                 redirectUrl: $shop->clean(WEBSITE,'encode') . "site/checkout/success.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
-                webhookUrl: $shop->clean(WEBSITE,'encode') . "site/checkout/webhook.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode')
+                webhookUrl: $shop->clean(WEBSITE,'encode') . "site/checkout/webhook.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
+                metadata: ['order_id' => $orderid]
             ));
-
-            /*
-			$payment = $mollie->payments->create([
-				"amount" => [
-					"currency" => substr($shop->clean($settings[0]['settings.country.code'],'encode'),0,3),
-					"value" => "$total",
-				],
-				"description" => "$orderid",
-				"redirectUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/success.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
-				"webhookUrl" => $shop->clean(WEBSITE,'encode') . "site/checkout/webhook.php?cartid=".$cartid."&orderid=".$orderid."&paytoken=".$shop->clean($paytoken,'encode'),
-				"metadata" => [
-					"order_id" => "$orderid",
-				],
-			]);
-			*/
 
 			if(isset($payment->id)) { 
 				// Insert the order into database

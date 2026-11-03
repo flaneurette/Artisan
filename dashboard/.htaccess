@@ -5,7 +5,7 @@ RewriteEngine On
 
 # Rewrite URI's
 RewriteCond %{HTTPS} !on
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 RewriteRule ^login/$ core/Login.php [NC,L]
 RewriteRule ^pages/([a-z-0-9]+)/delete/([0-9]+)/$ core/Pages.php?csrf=$1&delete=$2 [NC,L]

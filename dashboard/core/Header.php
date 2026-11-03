@@ -1,10 +1,16 @@
 <?php
+
+	ini_set('display_errors', 0);
 	header("X-Frame-Options: DENY"); 
-	header("X-XSS-Protection: 1; mode=block"); 
-	header("Strict-Transport-Security: max-age=30");
+	header("Strict-Transport-Security: max-age=15552000"); // raised max age.
 	header("Referrer-Policy: same-origin");
+	header("X-Content-Type-Options: nosniff");
  
-	session_start(); 
+	session_start([
+    		'cookie_secure' => true,
+    		'cookie_httponly' => true,
+   	 	'cookie_samesite' => 'Lax',
+	];
 	
 	include("../resources/PHP/Class.DB.php");
 	include("Cryptography.php");

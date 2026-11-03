@@ -4,8 +4,11 @@
 	header("Strict-Transport-Security: max-age=30");
 	header("Referrer-Policy: same-origin");
  
-	session_start(); 
-	session_regenerate_id();
+	session_start([
+    		'cookie_secure' => true,
+    		'cookie_httponly' => true,
+   	 	'cookie_samesite' => 'Lax',
+	];
 
 	require("configuration.php");
 	include("resources/PHP/Class.DB.php");
@@ -16,8 +19,19 @@
 		header("Location: ".SITE."login/");
 		exit;	
 	}
+	
+	if(!isset($_SESSION['ip'])) {
+		header("Location: ".SITE."login/");
+		exit;	
+	}
+	
+	if($_SESSION['ip'] != $_SERVER['REMOTE_ADDR']) {
+		header("Location: ".SITE."login/");
+		exit;	
+	}	
+	
 	if($_SESSION['loggedin'] != '1') {
-		header("Location: login/");
+		header("Location: ".SITE."login/");
 		exit;
 	} 
 	

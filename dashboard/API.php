@@ -1,9 +1,10 @@
 <?php
 
 	header("X-Frame-Options: DENY"); 
-	header("X-XSS-Protection: 1; mode=block"); 
-	header("Strict-Transport-Security: max-age=30");
+	header("Strict-Transport-Security: max-age=15552000");
 	header("Referrer-Policy: same-origin");
+	header("X-Content-Type-Options: nosniff");
+	header("Content-Type: application/json");
 	
 	session_start(); 
 	require("configuration.php");

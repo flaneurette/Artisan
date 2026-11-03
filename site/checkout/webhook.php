@@ -5,6 +5,10 @@ include("../../dashboard/resources/PHP/Class.DB.php");
 include("../../dashboard/resources/PHP/Cryptography.php");
 include("../../resources/PHP/Artisan.php");
 
+$cryptography 	= new Cryptography;
+$db 		= new sql();
+$shop 		= new Artisan();
+
 // Tell PHP to load all Composer packages
 require_once '../../vendor/autoload.php';
 
@@ -25,10 +29,6 @@ if(isset($result[0]['settings.mollie.api'])) {
 } else {
 	echo "<p>There has been an error: API key for Mollie is not found in shop settings!</p>";
 }
-
-$cryptography 	= new Cryptography;
-$db 			= new sql();
-$shop 			= new Artisan();
 
 try {
 
