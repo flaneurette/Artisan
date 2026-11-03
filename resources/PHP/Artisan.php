@@ -247,6 +247,8 @@ class Artisan {
 		    } else {
 		    return false;
 		}
+		
+		return true;
 	}
 	
 	/**
