@@ -3,10 +3,6 @@
 	require("../configuration.php");
 	include("Header.php");
 	
-	include("../../resources/PHP/Artisan.php");
-
-	$shop 	= new Artisan();
-	
 	if(isset($_GET['csrf'])) {
 		
 		if($_GET['csrf'] === $_SESSION['uuid']) {

@@ -8,11 +8,16 @@
     		'cookie_secure' => true,
     		'cookie_httponly' => true,
    	 	'cookie_samesite' => 'Lax',
-	];
+	]);
 
 	require("configuration.php");
 	include("resources/PHP/Class.DB.php");
+	include("../resources/PHP/Artisan.php");
 	include("core/Cryptography.php");
+	
+	$cryptography = new Cryptography;
+	$db = new sql();
+	$shop = new Artisan();
 	
 	// login check
 	if(!isset($_SESSION['loggedin'])) {
@@ -34,9 +39,6 @@
 		header("Location: ".SITE."login/");
 		exit;
 	} 
-	
-	$cryptography = new Cryptography;
-	$db = new sql();
 	
 	if(isset($_SESSION['token'])) {
 		$token = $_SESSION['token'];

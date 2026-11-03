@@ -4,14 +4,20 @@
 	header("Referrer-Policy: same-origin");
 	header("X-Content-Type-Options: nosniff");
  
-	session_start(); 
+	session_start([
+    		'cookie_secure' => true,
+    		'cookie_httponly' => true,
+   	 	'cookie_samesite' => 'Lax',
+	]);
 	
 	require("../configuration.php");
 	include("../resources/PHP/Class.DB.php");
-	include("Cryptography.php");
+	include("../../resources/PHP/Artisan.php");
+	include("../core/Cryptography.php");
 
 	$cryptography = new Cryptography;
 	$db = new sql();
+	$shop = new Artisan();
 	
 	if(isset($_SESSION['token'])) {
 		$token = $_SESSION['token'];
@@ -39,7 +45,9 @@
 	}
 	
 	if(isset($_POST['csrf'])) {
-		if($_POST['csrf'] === $_SESSION['uuid']) {
+	
+		if($shop->checkhashes($_POST['csrf'],$_SESSION['uuid'])) {
+		
 			if(isset($_POST['username']) && !empty($_POST['password'])) {
 				
 				$username = $db->clean($_POST["username"],'encode');

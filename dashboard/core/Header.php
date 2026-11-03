@@ -10,9 +10,10 @@
     		'cookie_secure' => true,
     		'cookie_httponly' => true,
    	 	'cookie_samesite' => 'Lax',
-	];
+	]);
 	
 	include("../resources/PHP/Class.DB.php");
+	include("../../resources/PHP/Artisan.php");
 	include("Cryptography.php");
 	
 	// login check
@@ -39,6 +40,7 @@
 	
 	$cryptography = new Cryptography;
 	$db = new sql();
+	$shop = new Artisan();
 	
 	if(isset($_SESSION['token'])) {
 		$token = $_SESSION['token'];

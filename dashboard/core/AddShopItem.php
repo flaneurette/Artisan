@@ -2,10 +2,9 @@
 	require("../configuration.php");
 	include("Header.php");
 	
-	
 	if(isset($_POST['csrf'])) {
 		
-		if($_POST['csrf'] === $_SESSION['uuid']) {
+		if($shop->checkhashes($_POST['csrf'],$_SESSION['uuid'])) {
 			
 			if(isset($_POST['add']) && !empty($_POST['add'])) {
 				
