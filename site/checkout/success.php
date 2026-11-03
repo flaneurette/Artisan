@@ -12,12 +12,12 @@ require("../../dashboard/resources/PHP/Class.SecureMail.php");
 include("../../resources/PHP/Artisan.php");
 
 $cryptography 	= new Cryptography;
-$db 			= new sql();
-$shop 			= new Artisan();
+$db 		= new sql();
+$shop 		= new Artisan();
 
 if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken'])) { 
 	
-		if($_SESSION['paytoken'] === $_REQUEST['paytoken']) {
+		if($shop->checkhashes($_SESSION['paytoken'],$_REQUEST['paytoken'])) {
 			
 			// this should never happen
 			if(!isset($_REQUEST['cartid'])) {
@@ -39,7 +39,7 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken'])) {
 
 			if(isset($result)) { 
 			
-				if($result[0]['order.token'] == $_REQUEST['paytoken']) {
+				if($shop->checkhashes($result[0]['order.token'],$_REQUEST['paytoken'])) {
 					
 					// Update database with a status of processing order.
 					
@@ -99,7 +99,7 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken'])) {
 			unset($_SESSION['cartid']);
 			unset($_SESSION['cart']);
 			$_SESSION['cartid'] = [];
-			$_SESSION['cart'] 	= [];
+			$_SESSION['cart'] = [];
 			session_destroy();
 			
 			// redirect to shop again.

@@ -226,6 +226,30 @@ class Artisan {
 	}
 
 	/**
+	* Check hashes
+	* @param int
+	* @return integer
+	*/
+	
+	public function checkhashes($h1,$h2) {
+		// Ensure the tokens exist
+		if(!isset($h1) || !isset($h2)) {
+		    return false;
+		}
+		
+		if (!is_string($h1) || !is_string($h2) || $h1 === '' || $h2 === '') {
+        	    return false;
+   	        }
+   
+		// Perform the safe, constant-time comparison
+		if (hash_equals($h1, $h2)) {
+		    return true;
+		    } else {
+		    return false;
+		}
+	}
+	
+	/**
 	* Cast integers
 	* @param int
 	* @return integer

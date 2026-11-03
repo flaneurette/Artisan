@@ -14,8 +14,8 @@ use Mollie\Api\Http\Requests\CreatePaymentRequest;
 use Mollie\Api\Types\PaymentStatus;
 
 $cryptography 	= new Cryptography;
-$db 			= new sql();
-$shop 			= new Artisan();
+$db 		= new sql();
+$shop 		= new Artisan();
 
 # Get API key
 $table    = '`shop.settings`';
@@ -52,7 +52,7 @@ if(isset($_SESSION['paytoken'])) {
 
 	if(isset($_SESSION['token']) && isset($_POST['token'])) { 
 	
-		if($_SESSION['token'] === $_POST['token']) {
+		if($shop->checkhashes($_SESSION['token'],$_POST['token'])) {
 			
 			if(!isset($_SESSION['cart'])) {
 				header("Location: ../../cart/");
@@ -65,8 +65,8 @@ if(isset($_SESSION['paytoken'])) {
 				$cartid  = $_SESSION['cartid'];
 				$orderid = $_SESSION['orderid'];
 				} else {
-				$cartid  				= 'C' . time().'-'.$cryptography->uniqueID();
-				$orderid 				= 'O' . time().'-'.$cryptography->uniqueID();
+				$cartid  = 'C' . time().'-'.$cryptography->uniqueID();
+				$orderid = 'O' . time().'-'.$cryptography->uniqueID();
 				$_SESSION['cartid'] 	= $cartid;
 				$_SESSION['orderid']	= $orderid;		
 			}

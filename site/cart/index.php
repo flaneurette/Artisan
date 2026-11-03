@@ -24,7 +24,7 @@
 	
 	if(isset($_GET['delete'])) {
 		if(isset($_SESSION['token']) && isset($_GET['token'])) { 
-			if($_SESSION['token'] === $_GET['token']) {
+			if($shop->checkhashes($_SESSION['token'], $_GET['token'])) {
 				$_SESSION['cart'] = $shop->deletefromcart($_GET['delete']);
 				header("Location: ../../../../cart/");
 				exit;
@@ -34,7 +34,7 @@
 
 	if(isset($_GET['update'])) {
 		if(isset($_SESSION['token']) && isset($_GET['token'])) {
-			if($_SESSION['token'] === $_GET['token']) {			
+			if($shop->checkhashes($_SESSION['token'], $_GET['token'])) {			
 				$_SESSION['cart'] = $shop->updatecart($shop->intcast($_GET['id']),$shop->intcast($_GET['update']));
 				header("Location: ../cart/");
 				exit;
@@ -50,8 +50,8 @@
 	
 	if(isset($_SESSION['token']) && isset($_POST['token'])) { 
 	
-		if($_SESSION['token'] === $_POST['token']) {
-			
+		if($shop->checkhashes($_SESSION['token'], $_POST['token'])) {
+
 			// Make sure the quantity is never zero or below.
 			if($shop->intcast($_POST['qty']) <= 0) {
 				$qty = 1;

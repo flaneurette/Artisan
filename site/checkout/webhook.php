@@ -25,8 +25,8 @@ $result = $db->select($table,$operator,$column,$value);
 			
 if(isset($result[0]['settings.mollie.api'])) {		
 	$mollie = new \Mollie\Api\MollieApiClient();
-    $mollie->setToken($result[0]['settings.mollie.api']);
-} else {
+    	$mollie->setToken($result[0]['settings.mollie.api']);
+	} else {
 	echo "<p>There has been an error: API key for Mollie is not found in shop settings!</p>";
 }
 
