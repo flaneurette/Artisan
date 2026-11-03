@@ -31,45 +31,49 @@ var plainui = {
 
 class dragndrop {
 
-    static htmlId = '';
-    static html = '';
+    tableClass = '';
+    tableId = '';
+    inputId = '';
+    dragged = null;
 
-    init = function() {
-        let elems = document.getElementsByClassName(this.tableClass);
-        var j = 1;
-        for (var i = 0; i <= elems.length; i++) {
-            if (elems[i]) {
-                let att = document.getElementById(this.tableId + j);
-                if (att) {
-                    elems[i].setAttribute("draggable", true);
-                    elems[i].addEventListener('drag', (event) => {
-                        this.drag(event);
-                    });
-                }
-            }
-            j++;
+    init = () => {
+        const rows = document.getElementsByClassName(this.tableClass);
+        for (const row of rows) {
+            row.setAttribute('draggable', true);
+
+            row.addEventListener('dragstart', (e) => {
+                this.dragged = row;
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', ''); // required for Firefox
+            });
+
+            row.addEventListener('dragover', (e) => {
+                e.preventDefault(); // marks this as a valid drop target
+                if (!this.dragged || row === this.dragged) return;
+                if (row.parentNode !== this.dragged.parentNode) return;
+
+                const rect = row.getBoundingClientRect();
+                const after = e.clientY > rect.top + rect.height / 2;
+                row.parentNode.insertBefore(this.dragged, after ? row.nextSibling : row);
+            });
+
+            row.addEventListener('drop', (e) => {
+                e.preventDefault();
+                this.end();
+            });
+
+            row.addEventListener('dragend', () => {
+                this.dragged = null;
+                this.end();
+            });
         }
     }
-	
-    drag = function(event) {
-	let xy = document.elementFromPoint(event.clientX, event.clientY).parentNode;
-	if (event.target.parentNode == xy.parentNode) {
-		if(xy == event.target.nextSibling) {
-			xy = xy.nextSibling;
-		}
-		event.target.parentNode.insertBefore(event.target, xy);
-	}
-	this.end();
-    }
-	
-    end = function(e) {
-        let elems = document.getElementsByClassName(this.tableClass);
-        let j = 1;
-        for (var i = 0; i < elems.length; i++) {
-            let ordering = elems[i].getAttribute('id').split(this.tableId).toString();
-            ordering = ordering.replace(',', '').toString();
-            document.getElementById(this.inputId + j).value = ordering + ':' + i;
-            j++;
+
+    end = () => {
+        const rows = document.getElementsByClassName(this.tableClass);
+        for (let i = 0; i < rows.length; i++) {
+            const original = rows[i].id.replace(this.tableId, '');
+            document.getElementById(this.inputId + (i + 1)).value = original + ':' + i;
         }
     }
 }
