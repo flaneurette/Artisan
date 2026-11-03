@@ -5,20 +5,29 @@ Artisan is a responsive and complete modern shopping cart software, specifically
 
 # Installation
 
+0. Download or clone Artisan.
+
 ### Composer: 
+
+```
+cd /var/www/html/
+mkdir -p webshop
+cd webshop
+```
 
 ```composer require flaneurette/artisan:dev-main```
  
-0. Download or clone Artisan.
 1. Edit dashboard/configuration.php and define the database and paths.
 2. Import the Artisan SQL file into MySQL: `mysql -u root -p artisan < /var/www/html/artisan/artisan.sql`
-4. Goto the /dashboard/ and login with: username: admin, password: admin.
+3. Goto the /dashboard/ and login with: username: admin, password: admin.
    The password can be changed in the admin panel under admin settings.
+
+If Mollie wasn't installed, you can do it manually:
 
 Browse to the folder where it is installed:
 
 ```
-cd /var/www/html/artisan/
+cd /var/www/html/webshop/
 ```
 
 Then:
