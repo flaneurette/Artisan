@@ -87,7 +87,7 @@ try {
 
 if(isset($status)) {
 	
-	echo $status;
+	echo $status; 
 	
 	$table    = '`shop.orders`';
 	$column   = '`order.mollie.id`';
