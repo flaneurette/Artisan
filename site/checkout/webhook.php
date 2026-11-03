@@ -41,8 +41,6 @@ try {
 
     $orderId = $payment->metadata->order_id;
 
-    // First handle status changes
-    if ($payment->status !== $previousPaymentStatus) {
         // Update your order administration with the new status
         $status = 'unpaid';
         // Handle the status change
@@ -63,7 +61,6 @@ try {
             // Notify the customer
             $status = 'cancelled';
         }
-    }
 
     // Then handle refunds and chargebacks (these don't change the payment status)
     if ($payment->hasRefunds()) {
