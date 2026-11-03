@@ -12,7 +12,7 @@
 	}
 	
 	if(isset($_POST['csrf'])) {
-		if($_POST['csrf'] === $_SESSION['uuid']) {
+		if($shop->checkhashes($_POST['csrf'],$_SESSION['uuid'])) {
 			if(isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 				// update catgories
 				$category_title_vars = $db->clean($_REQUEST['category_name'],'encode');

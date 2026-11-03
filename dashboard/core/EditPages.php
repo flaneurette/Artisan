@@ -12,7 +12,7 @@
 	}
 	
 	if(isset($_POST['csrf'])) {
-		if($_POST['csrf'] === $_SESSION['uuid']) {
+		if($shop->checkhashes($_POST['csrf'],$_SESSION['uuid'])) {
 			if(isset($_REQUEST['page']) && !empty($_REQUEST['page'])) {
 				// update component
 				$component_title_vars = $db->clean($_REQUEST['page'],'encode');

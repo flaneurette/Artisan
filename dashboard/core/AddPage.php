@@ -3,7 +3,7 @@
 	include("Header.php");
 
 	if(isset($_POST['csrf'])) {
-		if($_POST['csrf'] === $_SESSION['uuid']) {
+		if($shop->checkhashes($_POST['csrf'],$_SESSION['uuid'])) {
 			
 			if(isset($_REQUEST['page']) && !empty($_REQUEST['page'])) {
 				// insert page

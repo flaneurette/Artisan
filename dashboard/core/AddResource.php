@@ -3,7 +3,7 @@
 	include("Header.php");
 	
 	if(isset($_POST['csrf'])) {
-		if($_POST['csrf'] === $_SESSION['uuid']) {
+		if($shop->checkhashes($_POST['csrf'],$_SESSION['uuid'])) {
 			if(isset($_FILES['resource']) && !empty($_FILES['resource'])) {
 				foreach ($_FILES["resource"]["error"] as $key => $error) {
 					$name = basename($_FILES["resource"]["name"][$key]);
