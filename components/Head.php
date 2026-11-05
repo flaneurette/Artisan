@@ -1,8 +1,8 @@
 <header class="header">
 	<a href="<?php echo $shop->clean(WEBSITE,'encode');?>"><div id="logo"></div></a>
 	<div id="mobile-menu">
-		<span class="material-symbols-outlined">
-			<a href="#" onclick="plainui.show('mobile-nav');">menu</a>
+		<span>
+			<a href="#" onclick="plainui.show('mobile-nav');"><?php echo artisan_icon('menu');?></a>
 		</span>
 	</div>
 	<div id="mobile-nav">

@@ -54,7 +54,7 @@
 		echo "<a href=\"".UPLOAD_DIR.$db->clean($files[$i],'encode')."\" target=\"_blank\">";
 		echo "<img class=\"component-image\" src=\"".UPLOAD_DIR.$db->clean($files[$i],'encode')."\" />";
 		echo "</a>";
-		echo "<span><a href=\"?csrf=".$token."&file=".UPLOAD_DIR.$db->clean($files[$i],'encode')."\" onclick=\"return confirm('Are you sure you want to remove this item?');\"><span class=\"material-symbols-outlined\" id=\"material-icon-reset\">delete</span></a></span>";
+		echo "<span><a href=\"?csrf=".$token."&file=".UPLOAD_DIR.$db->clean($files[$i],'encode')."\" onclick=\"return confirm('Are you sure you want to remove this item?');\"><span id=\"material-icon-reset\">".artisan_icon('delete')."</span></a></span>";
 		echo "</div>";
 	}
 	

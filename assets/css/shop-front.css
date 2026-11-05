@@ -151,8 +151,14 @@ article {
 }
 
 #shop-cart-symbol {
-	font-size: 36px;
 	color: var(--white);
+	display: inline-block;
+	line-height: 1;
+}
+
+#shop-cart-symbol .icon {
+	width: 36px;
+	height: 36px;
 }
 
 /* Shop Highlight */
@@ -475,6 +481,13 @@ article {
 
 #shop-cart-symbols {
 	font-size: var(--fontsize-xlarge);
+	display: inline-block;
+	line-height: 1;
+}
+
+#shop-cart-symbols .icon {
+	width: 1em;
+	height: 1em;
 }
 
 .shop-tr {
@@ -718,19 +731,13 @@ article {
 }
 
 #mobile-menu span a {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 33px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
     display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
+    line-height: 1;
+}
+
+#mobile-menu .icon {
+    width: 33px;
+    height: 33px;
 }
 
 @media (min-width: 768px) and (max-width: 1024px){
@@ -851,4 +858,12 @@ article {
 		display:none;
 	}
 
+}
+/* Inline SVG icons (see resources/PHP/Icons.php) */
+.icon {
+	width: 24px;
+	height: 24px;
+	fill: currentColor;
+	display: inline-block;
+	vertical-align: middle;
 }

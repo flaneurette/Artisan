@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/Icons.php';
+
 class Artisan {
 
 	const MINMAX 	= 10000; // Constants. 

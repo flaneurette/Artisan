@@ -55,9 +55,7 @@ if(count($categories) <=0) {
 
 ?>
 	<div class="shop-cart-center">
-		<div class="material-symbols-outlined" id="shop-cart-symbols">
-		production_quantity_limits
-		</div>
+		<div id="shop-cart-symbols"><?php echo artisan_icon('production_quantity_limits', '');?></div>
 	<h2>No items found in this category.</h2>
 	</div>
 <?php
@@ -100,9 +98,7 @@ if(count($categories) <=0) {
 					} else {
 						?>
 							<div class="shop-cart-center">
-								<div class="material-symbols-outlined" id="shop-cart-symbols">
-								production_quantity_limits
-								</div>
+								<div id="shop-cart-symbols"><?php echo artisan_icon('production_quantity_limits', '');?></div>
 							<h2>Items in stock is too low.</h2>
 							</div>
 						<?php

@@ -46,9 +46,7 @@ if(count($search_results) <=0) {
 
 ?>
 	<div class="shop-cart-center">
-		<div class="material-symbols-outlined" id="shop-cart-symbols">
-		production_quantity_limits
-		</div>
+		<div id="shop-cart-symbols"><?php echo artisan_icon('production_quantity_limits', '');?></div>
 	<h2>No items found while searching.</h2>
 	</div>
 <?php

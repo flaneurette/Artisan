@@ -8,9 +8,7 @@
 		</div>
 		<div class="shop-search-box-2">
 			<a href="<?php echo $db->clean(WEBSITE,'encode');?>cart/">
-				<span class="material-symbols-outlined" id="shop-cart-symbol">
-					shopping_basket
-				</span>
+				<span id="shop-cart-symbol"><?php echo artisan_icon('shopping_basket');?></span>
 			</a>
 		</div>
 	</div>

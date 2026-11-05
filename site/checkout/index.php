@@ -77,9 +77,7 @@
 	if(count($_SESSION['cart']) <= 0) {	
 ?>
 	<div class="shop-cart-center">
-		<div class="material-symbols-outlined" id="shop-cart-symbols">
-		production_quantity_limits
-		</div>
+		<div id="shop-cart-symbols"><?php echo artisan_icon('production_quantity_limits', '');?></div>
 	<h2>Shopping cart is empty.</h2>
 	</div>
 <?php

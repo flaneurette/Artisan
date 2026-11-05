@@ -139,8 +139,8 @@
 		<td width="150"><img src="<?php echo $image;?>" class="shop-list-image" width="100"/></td>
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><?php echo $db->clean($result_shop[$i]['product.title'],'encode');?></a></td>
 		<td><?php echo $db->intcast($result_shop[$i]['product.stock']);?> left in stock</td>
-		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
-		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/'.$token;?>/delete/<?php echo $db->intcast($result_shop[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this shop item?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result_shop[$i]['id']);?>/"><?php echo artisan_icon('edit');?></a></td>
+		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/'.$token;?>/delete/<?php echo $db->intcast($result_shop[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this shop item?');"><?php echo artisan_icon('delete');?></a></td>
 		</tr>
 	
 	<?php
@@ -170,10 +170,10 @@
 		<tr style="<?php echo $color;?>">
 		<td width="150"><img src="<?php echo $image;?>" width="100"/></td>
 		<td valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $db->clean($result[$i]['component_title'],'encode');?></a></td>
-		<td valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>API.php?filetype=unique&id=<?php echo $db->intcast($result[$i]['id']);?>" target="_blank"><span class="material-symbols-outlined">database</span></a></td>
+		<td valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>API.php?filetype=unique&id=<?php echo $db->intcast($result[$i]['id']);?>" target="_blank"><?php echo artisan_icon('database', 'API data');?></a></td>
 		<td valign="top"></td>
-		<td width="50" valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
-		<td width="50" valign="top"><a href="<?php echo $db->clean(SITE,'encode') . 'components/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this component?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td width="50" valign="top"><a href="<?php echo $db->clean(SITE,'encode');?>components/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo artisan_icon('edit');?></a></td>
+		<td width="50" valign="top"><a href="<?php echo $db->clean(SITE,'encode') . 'components/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this component?');"><?php echo artisan_icon('delete');?></a></td>
 		</tr>
 	<?php
 	}

@@ -108,9 +108,7 @@
 	if(count($_SESSION['cart']) <= 0) {	
 ?>
 	<div class="shop-cart-center">
-		<div class="material-symbols-outlined" id="shop-cart-symbols">
-		production_quantity_limits
-		</div>
+		<div id="shop-cart-symbols"><?php echo artisan_icon('production_quantity_limits', '');?></div>
 	<h2>Shopping cart is empty.</h2>
 	</div>
 <?php
@@ -169,7 +167,7 @@
 								value="<?php echo $shop->intcast($max_qty);?>" min="1" max="<?php echo $max_order;?>" required/>
 								</td>
 								<td><?php echo $shop->clean($settings[0]['settings.currency'],'encode'). number_format($item_result[0]['product.price'] * $max_qty,2);?></td>			
-								<td><a href="<?php echo $shop->clean(WEBSITE,'encode');?>cart/delete/<?php echo $shop->intcast($_SESSION['cart'][$i]['product.id']);?>/<?php echo $token;?>/"><span class="material-symbols-outlined">delete</span></a></td>
+								<td><a href="<?php echo $shop->clean(WEBSITE,'encode');?>cart/delete/<?php echo $shop->intcast($_SESSION['cart'][$i]['product.id']);?>/<?php echo $token;?>/"><?php echo artisan_icon('delete');?></a></td>
 							<?php
 							}
 							

@@ -676,3 +676,12 @@ hr {
 		cursor: -moz-grab;
 		cursor: grab;
 	}
+
+/* Inline SVG icons (see resources/PHP/Icons.php) */
+.icon {
+	width: 24px;
+	height: 24px;
+	fill: currentColor;
+	display: inline-block;
+	vertical-align: middle;
+}

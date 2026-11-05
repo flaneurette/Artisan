@@ -37,10 +37,10 @@
 	?>
 		<tr style="<?php echo $color;?>">
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>pages/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['page_name'];?></a></td>
-		<td><a href="<?php echo $db->clean(SITE,'encode');?>pages/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
-		<td><a target="_blank" href="<?php echo $db->clean(SITE,'encode');?>API.php?catid=<?php echo $db->intcast($result[$i]['id']);?>"><span class="material-symbols-outlined">database</span></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>pages/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo artisan_icon('edit');?></a></td>
+		<td><a target="_blank" href="<?php echo $db->clean(SITE,'encode');?>API.php?catid=<?php echo $db->intcast($result[$i]['id']);?>"><?php echo artisan_icon('database', 'API data');?></a></td>
 		<td width="500"></td>
-		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'pages/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this item?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'pages/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this item?');"><?php echo artisan_icon('delete');?></a></td>
 		</tr>
 	
 	<?php

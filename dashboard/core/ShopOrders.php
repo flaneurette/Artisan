@@ -71,9 +71,9 @@
 		<td><small><?php echo date("M tS Y H:i",$db->clean($orders_unfulfilled[$i]['order.date'],'encode'));?></small></td>
 		<td><small class="<?php echo $css_paid;?>"><?php echo $db->clean($orders_unfulfilled[$i]['order.status'],'encode');?></small></td>
 		<td><small><?php echo $db->clean($settings[0]['settings.currency'],'encode').number_format($orders_unfulfilled[$i]['order.total'],2);?></small></td>
-		<td><a href="?fulfill=<?php echo $db->clean($orders_unfulfilled[$i]['id'],'encode');?>&token=<?php echo $token;?>" target="_self" onclick="return confirm('Are you sure you want to fulfill this order and mark it as shipped?');"><span class="material-symbols-outlined">published_with_changes</span></a></td>
-		<td><a href="order-pick/<?php echo $db->intcast($orders_unfulfilled[$i]['id']);?>/<?php echo $token;?>/" target="_blank"><span class="material-symbols-outlined">contract</span></a></td>
-		<td><a href="<?php echo $db->clean(SITE,'encode') . 'shop-orders/'.$token;?>/delete/<?php echo $db->intcast($orders_unfulfilled[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this order?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td><a href="?fulfill=<?php echo $db->clean($orders_unfulfilled[$i]['id'],'encode');?>&token=<?php echo $token;?>" target="_self" onclick="return confirm('Are you sure you want to fulfill this order and mark it as shipped?');"><?php echo artisan_icon('published_with_changes', 'Mark as fulfilled');?></a></td>
+		<td><a href="order-pick/<?php echo $db->intcast($orders_unfulfilled[$i]['id']);?>/<?php echo $token;?>/" target="_blank"><?php echo artisan_icon('contract', 'Pick list');?></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode') . 'shop-orders/'.$token;?>/delete/<?php echo $db->intcast($orders_unfulfilled[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this order?');"><?php echo artisan_icon('delete');?></a></td>
 		</tr>
 	<?php
 	}
@@ -110,8 +110,8 @@
 		<td><small><?php echo ucfirst($db->clean($orders_fulfilled[$i]['order.status'],'encode'));?></small></td>
 		<td><small><?php echo $db->clean($settings[0]['settings.currency'],'encode').number_format($orders_fulfilled[$i]['order.total'],2);?></small></td>
 		<td><small>Fulfilled</small></td>
-		<td><a href="order-pick/<?php echo $db->intcast($orders_fulfilled[$i]['id']);?>/<?php echo $token;?>/" target="_blank"><span class="material-symbols-outlined">contract</span></a></td>
-		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop-orders/'.$token;?>/delete/<?php echo $db->intcast($orders_fulfilled[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this order?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td><a href="order-pick/<?php echo $db->intcast($orders_fulfilled[$i]['id']);?>/<?php echo $token;?>/" target="_blank"><?php echo artisan_icon('contract', 'Pick list');?></a></td>
+		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop-orders/'.$token;?>/delete/<?php echo $db->intcast($orders_fulfilled[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this order?');"><?php echo artisan_icon('delete');?></a></td>
 		</tr>
 	
 	<?php

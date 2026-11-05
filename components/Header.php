@@ -1,11 +1,11 @@
 <?php
 if(isset($settings)) {
-	$theme_css = "shop-front.css?rev=1.0";
-	$tokens_css = "themes/". $shop->clean($settings[0]['settings.theme'],'encode') ."/tokens.css?rev=1.0";
+	$theme_css = "shop-front.css?rev=1.1";
+	$tokens_css = "themes/". $shop->clean($settings[0]['settings.theme'],'encode') ."/tokens.css?rev=1.1";
 	} else {
 	$settings = $db->query("SELECT * from `shop.settings`");
-	$theme_css = "shop-front.css?rev=1.0";
-	$tokens_css = "themes/". $shop->clean($settings[0]['settings.theme'],'encode') ."/tokens.css?rev=1.0";
+	$theme_css = "shop-front.css?rev=1.1";
+	$tokens_css = "themes/". $shop->clean($settings[0]['settings.theme'],'encode') ."/tokens.css?rev=1.1";
 }
 ?>
 
@@ -20,5 +20,4 @@ if(isset($settings)) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <title><?php echo $shop->clean($meta[0]['meta_title'],'encode');?></title>

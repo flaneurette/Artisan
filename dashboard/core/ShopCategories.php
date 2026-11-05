@@ -89,8 +89,8 @@ $result = $db->query("SELECT * from `shop.categories` ORDER BY `category.order` 
 	?>
 		<tr style="<?php echo $color;?>" id="table<?php echo $db->intcast($result[$i]['id']);?>" class="order">
 		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo $result[$i]['category.name'];?></a></td>
-		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/categories/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><span class="material-symbols-outlined">edit</span></a></td>
-		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/categories/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this category?');"><span class="material-symbols-outlined">delete</span></a></td>
+		<td><a href="<?php echo $db->clean(SITE,'encode');?>shop/categories/edit/<?php echo $db->intcast($result[$i]['id']);?>/"><?php echo artisan_icon('edit');?></a></td>
+		<td width="80"><a href="<?php echo $db->clean(SITE,'encode') . 'shop/categories/'.$token;?>/delete/<?php echo $db->intcast($result[$i]['id']);?>/" onclick="return confirm('Are you sure you want to remove this category?');"><?php echo artisan_icon('delete');?></a></td>
 		</tr>
 		<input type="hidden" name="order<?php echo $j;?>" id="input<?php echo $j;?>" value="" />
 	<?php
