@@ -7,7 +7,7 @@
 	include("dashboard/resources/PHP/Cryptography.php");
 	include("resources/PHP/Artisan.php");
 	
-	$db = new sql();
+	$db = new sql(); 
 	$shop = new Artisan();
 	$cryptography = new Cryptography;
 	
