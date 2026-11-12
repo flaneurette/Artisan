@@ -60,6 +60,6 @@ SET GLOBAL sql_mode = '';
 
 In dashboard/PHP/Cryptograhpy.php, the password needs to be changed manually. Look for the line at the top:
 
-```private $pwd 	= 'ArtisanIsAShoppingCart';```
+```private $pwd = 'ArtisanIsAShoppingCart';```
 
-And change it to whatever you want. 
+And change the value to whatever you want. 
