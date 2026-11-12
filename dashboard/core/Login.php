@@ -74,7 +74,7 @@
 					if($result_attempt[0]['attempts'] >= MAX_LOGIN_ATTEMPTS) {
 						header("location: ../error/1/");
 						$may_login = false;
-						exit;
+						exit; 
 					}
 					
 					$id = 1;
