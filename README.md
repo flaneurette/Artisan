@@ -55,3 +55,11 @@ Accepting iDEAL, Apple Pay, Bancontact, SOFORT Banking, Creditcard, SEPA Bank tr
 mysql -u <user> -p
 SET GLOBAL sql_mode = '';
 ```
+
+# Cryptography
+
+In dashboard/PHP/Cryptograhpy.php, the password needs to be changed manually. Look for the line at the top:
+
+```private $pwd 	= 'ArtisanIsAShoppingCart';```
+
+And change it to whatever you want. 
