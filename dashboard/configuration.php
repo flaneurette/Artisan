@@ -25,7 +25,7 @@ All user data is AES encrypted with a password.
 
 In `dashboard/resources/PHP/Cryptograhpy.php`, the password needs to be changed manually. Look for the line at the top:
 
-```private $pwd = 'ArtisanIsAShoppingCart';``` 
+private pwd = 'ArtisanIsAShoppingCart'; 
 
 And change the value to whatever you want. 
 
