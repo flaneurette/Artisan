@@ -2,6 +2,9 @@
 
 Security declaration: This software was built with the highest degree of security in mind, following the OWASP guidelines for security.
 
+### Cryptography
+All personal customer user data and API key(s) are AES and HMAC encrypted, using the latest standard and technique, and require a password to be deciphered. The database entries of customer data is fully encrypted. So in case of a database theft, the attacker also would need a key to decrypt customer data.
+
 ### Password
 By default the admin password is admin. Upon login, this can be changed under settings. The password is stored encrypted with bcrypt.
 
