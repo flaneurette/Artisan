@@ -203,7 +203,7 @@ CREATE TABLE `shop.settings` (
   `settings.free` varchar(40) NOT NULL,
   `settings.shipping` int(11) NOT NULL,
   `settings.announcement` varchar(255) NOT NULL,
-  `settings.mollie.api` varchar(255) NOT NULL,
+  `settings.mollie.api` VARBINARY(1024) NOT NULL,
   `settings.theme` varchar(255) NOT NULL DEFAULT 'black'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

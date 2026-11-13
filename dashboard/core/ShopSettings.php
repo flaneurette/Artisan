@@ -9,7 +9,7 @@
 				$id = 1;
 				$table    = '`shop.settings`';
 				$columns  = ['settings.announcement','settings.email','settings.currency','settings.country.code','settings.free','settings.shipping','settings.mollie.api','settings.theme'];
-				$values   = [$db->clean($_POST['settings_announcement'],'encode'),$db->clean($_POST['settings_email'],'encode'),$db->clean($_POST['settings_currency'],'encode'),$db->clean($_POST['settings_currency_code'],'encode'),$db->clean($_POST['settings_free'],'encode'),$db->clean($_POST['settings_shipping'],'encode'),$db->clean($_POST['settings_mollie_api'],'encode'),$db->clean($_POST['settings_theme'],'encode')];
+				$values   = [$db->clean($_POST['settings_announcement'],'encode'),$db->clean($_POST['settings_email'],'encode'),$db->clean($_POST['settings_currency'],'encode'),$db->clean($_POST['settings_currency_code'],'encode'),$db->clean($_POST['settings_free'],'encode'),$db->clean($_POST['settings_shipping'],'encode'),$cryptography->encrypt($_POST['settings_mollie_api']),$db->clean($_POST['settings_theme'],'encode')];
 				$db->update($table,$columns,$values,$id);
 				$success = "Settings successfully changed.";
 			}
@@ -53,7 +53,7 @@
 	<hr>
 	<label>Shop E-mail: </label><input type="text" name="settings_email" value="<?php echo $db->clean($settings[0]['settings.email'],'encode');?>" required>
 	<!-- <label>Paypal E-mail: </label> <input type="text" name="settings_paypal" value="<?php echo $db->clean($settings[0]['settings.paypal'],'encode');?>" required> -->
-	<label>Mollie API key: </label> <input type="text" name="settings_mollie_api" value="<?php echo $db->clean($settings[0]['settings.mollie.api'],'encode');?>" required>	
+	<label>Mollie API key: </label> <input type="text" name="settings_mollie_api" value="<?php echo $db->clean($cryptography->decrypt($settings[0]['settings.mollie.api']),'encode');?>" required>	
 	<label>Currency: </label> <input type="text" name="settings_currency" value="<?php echo $db->clean($settings[0]['settings.currency'],'encode');?>" required>
 	<label>Currency code: </label> <input type="text" name="settings_currency_code" minlength="3" maxlength="3" value="<?php echo $db->clean($settings[0]['settings.country.code'],'encode');?>" required>
 	<!-- <label>Tax: </label> <input type="text" name="settings_tax" value="<?php echo $db->clean($settings[0]['settings.tax'],'encode');?>" required> -->
