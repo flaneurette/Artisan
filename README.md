@@ -63,7 +63,9 @@ SET GLOBAL sql_mode = '';
 
 All user data is AES encrypted with a password.
 
-In `dashboard/resources/PHP/Cryptograhpy.php`, the password needs to be changed manually. Look for the line at the top:
+In `dashboard/resources/PHP/Cryptograhpy.php`, the password needs to be changed manually. 
+
+Look for the line at the top of that file:
 
 ```private $pwd = 'ArtisanIsAShoppingCart';``` 
 
