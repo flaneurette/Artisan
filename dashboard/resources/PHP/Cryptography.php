@@ -104,55 +104,65 @@ class Cryptography {
 		
 		return $uniqueid;
 	}
-	
+
 	/**
 	* Encryption function (requires OpenSSL)
 	* @param string $plaintext
-	* @return $ciphertext
-	*/	
-	
+	* @return string|false raw bytes: IV (16) + HMAC (32) + ciphertext
+	*/
+
 	public function encrypt($plaintext) {
 
 		if (!function_exists('openssl_encrypt')) {
 			$this->messages->message('Encryption failed: OpenSSL is not supported or enabled on this PHP instance.');
 			return false;
-    	}
-		
-		$key = $this->password(); // Password is set above at the Constants
-		$ivlen = openssl_cipher_iv_length($cipher="AES-256-CTR");
-		$iv = openssl_random_pseudo_bytes($ivlen);
-		$ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
-		$hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
-		$ciphertext = base64_encode($iv.$hmac.$ciphertext_raw );
-		return bin2hex($ciphertext);
+		}
+
+		// Separate keys for encryption and MAC, derived from the master key
+		$key    = $this->password(); // Password is set above at the Constants
+		$encKey = hash_hmac('sha256', 'enc', $key, true);
+		$macKey = hash_hmac('sha256', 'mac', $key, true);
+
+		$iv = random_bytes(16);
+		$ciphertext_raw = openssl_encrypt($plaintext, 'AES-256-CTR', $encKey, OPENSSL_RAW_DATA, $iv);
+		if ($ciphertext_raw === false) {
+			return false;
+		}
+
+		$hmac = hash_hmac('sha256', $iv . $ciphertext_raw, $macKey, true); // IV is covered too
+		return $iv . $hmac . $ciphertext_raw;
 	}
-	
+
 	/**
 	* Decryption function (requires OpenSSL)
-	* @param string $ciphertext
-	* @return $plaintext or false if there is no support for OpenSSL.
-	*/		
-	
+	* @param string $ciphertext raw bytes from encrypt()
+	* @return string|false plaintext, or false if tampered, wrong key, or no OpenSSL
+	*/
+
 	public function decrypt($ciphertext) {
-		
+
 		if (!function_exists('openssl_decrypt')) {
 			$this->messages->message('Decryption failed: OpenSSL is not supported or enabled on this PHP instance.');
 			return false;
-    	}
-		
-		$key = $this->password(); // Password is set above at the Constants
-		$ciphertext = hex2bin($ciphertext);
-		$c = base64_decode($ciphertext);
-		$ivlen = openssl_cipher_iv_length($cipher="AES-256-CTR");
-		$iv = substr($c, 0, $ivlen);
-		$hmac = substr($c, $ivlen, $sha2len=32);
-		$ciphertext_raw = substr($c, $ivlen+$sha2len);
-		$original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
-		$calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
-		
-		if (hash_equals($hmac, $calcmac)) { //PHP 5.6+ timing attack safe comparison
-			return $original_plaintext;
 		}
+		if (!is_string($ciphertext) || strlen($ciphertext) < 48) {
+			return false;
+		}
+
+		$key    = $this->password(); // Password is set above at the Constants
+		$encKey = hash_hmac('sha256', 'enc', $key, true);
+		$macKey = hash_hmac('sha256', 'mac', $key, true);
+
+		$iv             = substr($ciphertext, 0, 16);
+		$hmac           = substr($ciphertext, 16, 32);
+		$ciphertext_raw = substr($ciphertext, 48);
+
+		$calcmac = hash_hmac('sha256', $iv . $ciphertext_raw, $macKey, true);
+		if (!hash_equals($hmac, $calcmac)) { // timing-attack safe, checked BEFORE decrypting
+			return false;
+		}
+
+		return openssl_decrypt($ciphertext_raw, 'AES-256-CTR', $encKey, OPENSSL_RAW_DATA, $iv);
 	}
 	
 }

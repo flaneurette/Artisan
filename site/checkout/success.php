@@ -51,12 +51,12 @@ if(isset($_SESSION['paytoken']) && isset($_REQUEST['paytoken'])) {
 						// Mail the client.
 						
 						if(isset($result[0]['order.email'])) { 
-							$email = $result[0]['order.email'];
-							$name = $result[0]['order.firstname'];
+							$email = $cryptography->decrypt($result[0]['order.email']);
+							$name = $cryptography->decrypt($result[0]['order.firstname']);
 							$tpl = new \security\forms\SecureMail([]);
 							$template_location = '../../inc/templates/order.html';
 							$template_pairs = [
-								"name" => $result[0]['order.firstname'],
+								"name" => $cryptography->decrypt($result[0]['order.firstname']),
 								"shop" => $_SERVER['HTTP_HOST']
 							];
 							$html = $tpl->parseTemplate($template_location,$template_pairs);

@@ -134,7 +134,7 @@ if(isset($_SESSION['paytoken'])) {
 				// Insert the order into database
 				$table    = '`shop.orders`';
 				$columns  = ['`order.id`','`order.cart.id`','`order.mollie.id`','`order.firstname`','`order.lastname`','`order.address`','`order.city`','`order.zip`','`order.state`','`order.country`','`order.email`','`order.phone`','`order.status`','`order.paid`','`order.shipping.price`','`order.total`','`order.date`','`order.token`'];
-				$values   = [$orderid,$cartid,$payment->id,$order_firstname,$order_lastname,$order_address,$order_city,$order_zip,$order_state,$order_country,$order_email,0,'mollie transit',0,$shipping,$total,time(),$paytoken];
+				$values   = [$orderid,$cartid,$payment->id,$cryptography->encrypt($order_firstname),$cryptography->encrypt($order_lastname),$cryptography->encrypt($order_address),$cryptography->encrypt($order_city),$cryptography->encrypt($order_zip),$cryptography->encrypt($order_state),$cryptography->encrypt($order_country),$cryptography->encrypt($order_email),0,'mollie transit',0,$shipping,$total,time(),$paytoken];
 				$db->insert($table,$columns,$values);
 
 				header("Location: " . $payment->getCheckoutUrl(), \true, 303);

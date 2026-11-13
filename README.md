@@ -17,8 +17,8 @@ cd webshop
 
 ```composer require flaneurette/artisan:dev-main```
  
-1. Edit dashboard/configuration.php and define the database and paths.
-2. Import the Artisan SQL file into MySQL: `mysql -u root -p artisan < /var/www/html/artisan/artisan.sql`
+1. Edit `dashboard/configuration.php` and define the database and paths.
+2. Import the Artisan SQL file into MySQL: `mysql -u <username> -p artisan < /var/www/html/artisan/artisan.sql`
 3. Goto the /dashboard/ and login with: username: admin, password: admin.
    The password can be changed in the admin panel under admin settings.
 
@@ -52,14 +52,18 @@ Accepting iDEAL, Apple Pay, Bancontact, SOFORT Banking, Creditcard, SEPA Bank tr
 - MySQL STRICT_TRANS_TABLES need to be disabled, if not, Artisan will not work properly:
 
 ```
-mysql -u <user> -p
+mysql -u <username> -p
 SET GLOBAL sql_mode = '';
 ```
 
 # Cryptography
 
-In dashboard/PHP/Cryptograhpy.php, the password needs to be changed manually. Look for the line at the top:
+All user data is AES encrypted with a password.
+
+In `dashboard/resources/PHP/Cryptograhpy.php`, the password needs to be changed manually. Look for the line at the top:
 
 ```private $pwd = 'ArtisanIsAShoppingCart';``` 
 
 And change the value to whatever you want. 
+
+The idea is, that it is stored in a file for the reason that if the encrypted database is stolen, an attacker still needs a key from a file to decrypt it. Hence this password is stored in a PHP file.

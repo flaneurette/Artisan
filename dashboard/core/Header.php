@@ -14,7 +14,7 @@
 	
 	include("../resources/PHP/Class.DB.php");
 	include("../../resources/PHP/Artisan.php");
-	include("Cryptography.php");
+	include("../resources/PHP/Cryptography.php");
 	
 	// login check
 	

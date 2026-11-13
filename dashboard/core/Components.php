@@ -9,7 +9,7 @@
 
 	require("../configuration.php");
 	include("../resources/PHP/Class.DB.php");
-	include("../core/Cryptography.php");
+	include("../resources/PHP/Cryptography.php");
 	
 	// login check
 	if(!isset($_SESSION['loggedin'])) {

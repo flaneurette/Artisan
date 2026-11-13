@@ -13,7 +13,7 @@
 	require("configuration.php");
 	include("resources/PHP/Class.DB.php");
 	include("../resources/PHP/Artisan.php");
-	include("core/Cryptography.php");
+	include("resources/PHP/Cryptography.php");
 	
 	$cryptography = new Cryptography;
 	$db = new sql();

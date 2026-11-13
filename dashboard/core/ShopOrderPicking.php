@@ -47,16 +47,15 @@
 </style>
 </head>
 <body>
-
 <div class="container">
 
 	<article class="print">
 		<?php
-		echo "<p>" . $shop->clean($order[0]['order.firstname'],'encode'). " " . $shop->clean($order[0]['order.lastname'],'encode'). "</p>";
-		echo "<p>" . $shop->clean($order[0]['order.address'],'encode'). "</p>"; 
-		echo "<p>" . $shop->clean($order[0]['order.zip'],'encode'). " " .$shop->clean($order[0]['order.city'],'encode'). "</p>";
-		echo "<p>" . $shop->clean($order[0]['order.state'],'encode'). " " .ucfirst($shop->clean($order[0]['order.country'],'encode')). "</p>";
-		echo "<p>" . $shop->clean($order[0]['order.email'],'encode'). "</p>"; 
+		echo "<p>" . $shop->clean($cryptography->decrypt($order[0]['order.firstname']),'encode'). " " . $shop->clean($cryptography->decrypt($order[0]['order.lastname']),'encode'). "</p>";
+		echo "<p>" . $shop->clean($cryptography->decrypt($order[0]['order.address']),'encode'). "</p>"; 
+		echo "<p>" . $shop->clean($cryptography->decrypt($order[0]['order.zip']),'encode'). " " . $shop->clean($cryptography->decrypt($order[0]['order.city']),'encode'). "</p>";
+		echo "<p>" . $shop->clean($cryptography->decrypt($order[0]['order.state']),'encode'). " " .ucfirst($shop->clean($cryptography->decrypt($order[0]['order.country']),'encode')). "</p>";
+		echo "<p>" . $shop->clean($cryptography->decrypt($order[0]['order.email']),'encode'). "</p>"; 
 		echo "<hr />";
 		echo "<p>" . "Order: " .$shop->clean($order_id[0],'encode'). "</p>";
 		echo "<hr />";
@@ -86,14 +85,21 @@
 	<?php
 	}
 	?>
+		<?php
+		$total    = (float) str_replace(',', '.', $order[0]['order.total']);
+		$shipping = (float) str_replace(',', '.', $order[0]['order.shipping.price']);
+		$cur      = $db->clean($settings[0]['settings.currency'],'encode');
+		?>
 		<tr>
 		<td></td>
-		<td>Subtotal: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . ($db->clean($order[0]['order.total'],'encode') - $order[0]['order.shipping.price']);?></td>
-		<td>Shipping: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . $db->clean($order[0]['order.shipping.price'],'encode');?></td>
-		<td>Total: <?php echo $db->clean($settings[0]['settings.currency'],'encode') . $db->clean($order[0]['order.total'],'encode');?></td>
+		<td>Subtotal: <?php echo $cur . number_format($total - $shipping, 2);?></td>
+		<td>Shipping: <?php echo $cur . number_format($shipping, 2);?></td>
+		<td>Total: <?php echo $cur . number_format($total, 2);?></td>
 		</tr>
 	</table>
 	</article>
 </div>
 </body>
 </html>
+
+
