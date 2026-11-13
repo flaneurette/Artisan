@@ -5,7 +5,7 @@ Artisan is a responsive and complete modern shopping cart software, specifically
 
 # Installation
 
-0. Download or clone Artisan.
+Download or clone Artisan.
 
 ### Composer: 
 
@@ -13,9 +13,8 @@ Artisan is a responsive and complete modern shopping cart software, specifically
 cd /var/www/html/
 mkdir -p webshop
 cd webshop
+composer require flaneurette/artisan:dev-main
 ```
-
-```composer require flaneurette/artisan:dev-main```
  
 1. Edit `dashboard/configuration.php` and define the database and paths.
 2. Import the Artisan SQL file into MySQL: `mysql -u <username> -p artisan < /var/www/html/artisan/artisan.sql`
