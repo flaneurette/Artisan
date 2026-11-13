@@ -1,9 +1,10 @@
 # Security
 
-Security declaration: This software was built with the highest degree of security in mind, following the OWASP guidelines for security.
+This software is designed with the OWASP Top 10 in mind. No software is perfectly secure, so please keep your server and PHP up to date.
 
 ### Cryptography
-All personal customer user data and API key(s) are AES and HMAC encrypted, using the latest standard and technique, and require a password to be deciphered. The database entries of customer data is fully encrypted. So in case of a database theft, the attacker also would need a key to decrypt customer data.
+
+Personal customer data (name, address, email, phone, etc.) is encrypted with AES-256-CTR and authenticated with HMAC-SHA256. The key is stored in a separate file, so a stolen database alone cannot be decrypted. Someone with full access to the server can read the key.
 
 ### Password
 By default the admin password is admin. Upon login, this can be changed under settings. The password is stored encrypted with bcrypt.
@@ -18,7 +19,7 @@ All pages are protected against CSRF (cross site request forgery) and only the a
 Where possible, all pages are protected against XSS, Header forgery and Iframe inclusion. Be mindful, though, as certain basic HTML is allowed in components and the editors. Yet, all other HTML is encoded before display, and where possible, stored as such in the database.
 
 ### SQL injection
-All data is checked upon database insertion, and properly binded as per the industry standard. 
+All data is checked upon database insertion, database queries use prepared statements and properly binded as per the industry standard. 
 
 ### Sessions
 Session data is protected and checked for any DDos attacks, if detected, a warning will be visible, and it won't be possible to modify data or to proceed further. This prevent overwriting and bruteforcing session data.
