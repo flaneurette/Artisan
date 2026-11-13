@@ -65,5 +65,5 @@ In `dashboard/resources/PHP/Cryptograhpy.php`, the password needs to be changed 
 ```private $pwd = 'ArtisanIsAShoppingCart';``` 
 
 And change the value to whatever you want. 
-
+ 
 The idea is, that it is stored in a file for the reason that if the encrypted database is stolen, an attacker still needs a key from a file to decrypt it. Hence this password is stored in a PHP file.
