@@ -4,7 +4,7 @@ This software is designed with the OWASP Top 10 in mind. No software is perfectl
 
 ### Cryptography
 
-Personal customer data (name, address, email, phone, etc.) is encrypted with AES-256-CTR and authenticated with HMAC-SHA256. The key is stored in a separate file, so a stolen database alone cannot be decrypted. Someone with full access to the server can read the key.
+Personal customer data (name, address, email, phone, etc.) and API keys(s) are encrypted with AES-256-CTR and authenticated with HMAC-SHA256. The key is stored in a separate file, so a stolen database alone cannot be decrypted. Someone with full access to the server can read the key.
 
 ### Password
 By default the admin password is admin. Upon login, this can be changed under settings. The password is stored encrypted with bcrypt.
