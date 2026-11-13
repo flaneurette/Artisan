@@ -34,4 +34,5 @@ an attacker still needs a key from a file to decrypt it.
 Hence this password is stored in a PHP file.
 
 */
+
 ?>
