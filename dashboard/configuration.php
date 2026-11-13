@@ -23,7 +23,9 @@ To do this, edit the paths to this file all PHP pages, and move this file below 
 
 All user data is AES encrypted with a password.
 
-In `dashboard/resources/PHP/Cryptograhpy.php`, the password needs to be changed manually. Look for the line at the top:
+In `dashboard/resources/PHP/Cryptograhpy.php`, the password needs to be changed manually. 
+
+Look for the line at the top:
 
 private pwd = 'ArtisanIsAShoppingCart'; 
 
