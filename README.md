@@ -70,3 +70,5 @@ In `dashboard/resources/PHP/Cryptograhpy.php`, the password needs to be changed 
 And change the value to whatever you want. 
  
 The idea is, that it is stored in a file for the reason that if the encrypted database is stolen, an attacker still needs a key from a file to decrypt it. Hence this password is stored in a PHP file.
+
+> Note: also store this key offline in a secure location, because without it, all user data will be unable to be decrypted!
