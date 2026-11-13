@@ -17,7 +17,7 @@ composer require flaneurette/artisan:dev-main
 ```
  
 1. Edit `dashboard/configuration.php` and define the database and paths.
-2. Import the Artisan SQL file into MySQL: `mysql -u <username> -p artisan < /var/www/html/artisan/artisan.sql`
+2. Import the Artisan SQL file into MySQL: `mysql -u <username> -p artisan < /var/www/html/webshop/artisan.sql`
 3. Goto the /dashboard/ and login with: username: admin, password: admin.
    The password can be changed in the admin panel under admin settings.
 
