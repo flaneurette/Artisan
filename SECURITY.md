@@ -1,6 +1,6 @@
 # Security
 
-This software is designed with the OWASP Top 10 in mind. No software is perfectly secure, so please keep your server and PHP up to date.
+This software is designed with the OWASP Top 10 in mind. No software is perfectly secure, so please keep your server and PHP up to date. The measures taken helps shop owners comply with the GDPR.
 
 ### Cryptography
 
