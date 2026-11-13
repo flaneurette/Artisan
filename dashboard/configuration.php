@@ -20,6 +20,8 @@ define('MAX_LOGIN_ATTEMPTS', 10);
 It is somewhat safer to store this file below the /www/ folder in case PHP shuts down and files become readable.
 To do this, edit the paths to this file all PHP pages, and move this file below /www/
 
+But this is up to you. 
+
 # Cryptography
 
 All user data is AES encrypted with a password.
